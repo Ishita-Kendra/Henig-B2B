@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henig Diamonds — AR Try-On Business Case</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#111318; --ink-2:#3d4149; --ink-3:#8a909c;
+  --white:#ffffff; --surface:#f7f8fa; --surface-2:#eef0f4;
+  --border:#e2e5eb; --border-2:#d0d4dc;
+  --accent:#2563eb; --accent-pale:#eff4ff; --accent-mid:#93b4f8;
+  --emerald:#15803d; --emerald-pale:#dcfce7;
+  --ruby:#b91c1c; --ruby-pale:#fee2e2;
+  --amber:#92400e; --amber-pale:#fef3c7;
+  --violet:#7c3aed; --violet-pale:#f5f3ff;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink);min-height:100vh;}
+
+header{background:var(--white);border-bottom:1px solid var(--border);padding:0 3rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:baseline;gap:12px;}
+.logo-main{font-family:'Playfair Display',serif;font-size:17px;letter-spacing:0.06em;}
+.logo-sub{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);}
+.header-badge{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--violet);border:1px solid #ddd6fe;padding:4px 12px;border-radius:100px;background:var(--violet-pale);}
+
+.hero{background:var(--white);border-bottom:1px solid var(--border);padding:2.5rem 3rem 2rem;position:relative;overflow:hidden;}
+.hero::before{content:'◈';position:absolute;right:3rem;top:50%;transform:translateY(-50%);font-size:160px;color:rgba(124,58,237,0.05);font-family:serif;pointer-events:none;}
+.hero-tag{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--violet);margin-bottom:0.75rem;}
+.hero h1{font-family:'Playfair Display',serif;font-size:32px;font-weight:400;line-height:1.2;margin-bottom:0.75rem;max-width:600px;}
+.hero h1 em{font-style:italic;color:var(--violet);}
+.hero-sub{font-size:13px;color:var(--ink-3);max-width:520px;line-height:1.7;}
+
+.ev-strip{background:var(--white);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;}
+.ev-stat{flex:1;min-width:150px;padding:1.25rem 1.5rem;border-right:1px solid var(--border);text-align:center;}
+.ev-stat:last-child{border-right:none;}
+.ev-val{font-family:'Playfair Display',serif;font-size:36px;color:var(--violet);line-height:1;margin-bottom:4px;}
+.ev-label{font-size:11px;color:var(--ink-2);line-height:1.5;}
+.ev-source{font-size:10px;color:var(--ink-3);margin-top:3px;font-style:italic;}
+
+.section{padding:2rem 3rem;}
+.section-label{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:1rem;}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:0.5rem;}
+.section-sub{font-size:13px;color:var(--ink-3);line-height:1.7;margin-bottom:1.5rem;}
+
+/* Calculator */
+.calc-card{background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.calc-header{padding:1.5rem 2rem;background:linear-gradient(135deg,var(--violet-pale),#ede9fe);border-bottom:1px solid #ddd6fe;}
+.calc-header h2{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:4px;color:var(--violet);}
+.calc-header p{font-size:12px;color:var(--ink-3);}
+.calc-body{padding:2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+.input-group{margin-bottom:1.5rem;}
+.input-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;display:block;}
+.slider-val{font-size:22px;font-weight:500;color:var(--violet);margin-bottom:4px;}
+input[type=range]{width:100%;accent-color:var(--violet);cursor:pointer;}
+.slider-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-top:2px;}
+.fixed-chip{font-size:14px;font-weight:500;color:var(--ink);padding:7px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:inline-flex;align-items:center;gap:8px;}
+.fixed-chip span{font-size:11px;color:var(--ink-3);}
+.result-row{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-radius:10px;margin-bottom:10px;}
+.result-row.base{background:var(--surface-2);}
+.result-row.ar{background:var(--emerald-pale);border:1px solid #86efac;}
+.result-row.lift{background:var(--violet-pale);border:1px solid #ddd6fe;}
+.result-row.savings{background:var(--emerald-pale);border:1px solid #86efac;}
+.result-lbl{font-size:12px;color:var(--ink-2);}
+.result-sub{font-size:11px;color:var(--ink-3);margin-top:2px;}
+.result-val{font-size:20px;font-weight:500;}
+.roi-tiles{padding:1.25rem 2rem;background:var(--surface);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.roi-tile{text-align:center;padding:0.875rem;background:var(--white);border-radius:10px;border:1px solid var(--border);}
+.roi-tile-val{font-size:24px;font-weight:500;margin-bottom:3px;}
+.roi-tile-lbl{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);}
+.calc-note{font-size:11px;color:var(--ink-3);margin-top:0.75rem;line-height:1.6;}
+
+/* Before/After */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
+.ba-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.5rem;}
+.ba-card.after{border-color:#86efac;}
+.ba-title{font-size:13px;font-weight:500;margin-bottom:1rem;}
+.metric-row{margin-bottom:1rem;}
+.metric-head{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-bottom:4px;}
+.metric-track{height:8px;background:var(--surface-2);border-radius:4px;overflow:hidden;}
+.metric-fill{height:100%;border-radius:4px;transition:width 0.5s;}
+.ba-note{margin-top:1rem;padding:0.875rem;border-radius:8px;font-size:12px;line-height:1.6;}
+
+/* Platform cards */
+.platform-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:1.75rem;}
+.platform-card.rec{border-color:var(--violet);background:var(--violet-pale);}
+.p-badge{display:inline-block;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:0.875rem;}
+.p-badge.primary{background:var(--violet);color:#fff;}
+.p-badge.alt{background:var(--surface-2);color:var(--ink-3);}
+.p-name{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:4px;}
+.p-tag{font-size:12px;color:var(--ink-3);margin-bottom:1.25rem;}
+.feat{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:12px;color:var(--ink-2);line-height:1.5;}
+.ok{color:var(--emerald);font-weight:700;flex-shrink:0;}
+.no{color:var(--ruby);font-weight:700;flex-shrink:0;}
+.p-foot{margin-top:1.25rem;padding-top:1rem;border-top:1px solid rgba(0,0,0,0.08);font-size:12px;color:var(--ink-2);line-height:1.6;}
+.p-foot strong{color:var(--violet);}
+
+/* Investment table */
+.inv-table{width:100%;border-collapse:collapse;font-size:13px;}
+.inv-table th{padding:10px 16px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);background:var(--surface);border-bottom:1px solid var(--border);text-align:right;font-weight:500;}
+.inv-table th:first-child{text-align:left;}
+.inv-table td{padding:12px 16px;border-bottom:1px solid var(--surface-2);text-align:right;font-size:12px;}
+.inv-table td:first-child{text-align:left;}
+.inv-table tr.pos td{color:var(--emerald);font-weight:500;}
+.inv-table tr.hi td{background:var(--violet-pale);color:var(--violet);font-weight:600;}
+
+/* Urgency */
+.urgency-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.urg-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.5rem;}
+.urg-icon{font-size:24px;margin-bottom:0.75rem;}
+.urg-title{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:0.5rem;}
+.urg-text{font-size:12px;color:var(--ink-2);line-height:1.6;}
+
+footer{background:var(--white);border-top:1px solid var(--border);color:var(--ink-3);padding:1.25rem 3rem;font-size:11px;display:flex;justify-content:space-between;align-items:center;}
+.footer-brand{font-family:'Playfair Display',serif;font-size:13px;color:var(--ink);letter-spacing:0.08em;}
+
+@media(max-width:900px){
+  header,.hero,.section,.ev-strip{padding-left:1.25rem;padding-right:1.25rem;}
+  .calc-body,.two-col,.urgency-grid{grid-template-columns:1fr;}
+  .ev-strip{flex-wrap:wrap;}
+  .ev-stat{min-width:45%;border-right:none;border-bottom:1px solid var(--border);}
+  footer{flex-direction:column;gap:8px;padding:1rem 1.25rem;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-main">HENIG</span>
+    <span class="logo-sub">AR Try-On · Business Case</span>
+  </div>
+  <span class="header-badge">◈ Investment Analysis · 2026</span>
+</header>
+
+<section class="hero">
+  <div class="hero-tag">◈ Augmented Reality — The Revenue Case</div>
+  <h1>How AR Try-On will <em>lift sales</em><br>and cut returns for Henig</h1>
+  <p class="hero-sub">Industry data across luxury jewellery, consumer behaviour research, and Henig's own metrics — making the case for Zakeke or GlamAR as a Year 1 investment alongside the marketing plan.</p>
+</section>
+
+<!-- Evidence strip -->
+<div class="ev-strip">
+  <div class="ev-stat">
+    <div class="ev-val">94%</div>
+    <div class="ev-label">Conversion rate lift with AR try-on</div>
+    <div class="ev-source">Snap Inc. / Shopify, 2024</div>
+  </div>
+  <div class="ev-stat">
+    <div class="ev-val">40%</div>
+    <div class="ev-label">Reduction in product returns</div>
+    <div class="ev-source">Shopify Retail, 2025</div>
+  </div>
+  <div class="ev-stat">
+    <div class="ev-val">2.4×</div>
+    <div class="ev-label">Higher purchase intent vs no AR</div>
+    <div class="ev-source">Snapchat Business, 2024</div>
+  </div>
+  <div class="ev-stat">
+    <div class="ev-val">66%</div>
+    <div class="ev-label">Luxury shoppers prefer AR over a store visit</div>
+    <div class="ev-source">NielsenIQ Luxury, 2024</div>
+  </div>
+  <div class="ev-stat">
+    <div class="ev-val">58%</div>
+    <div class="ev-label">YoY growth of jewellery brands using AR</div>
+    <div class="ev-source">BrandXR Industry Report, 2025</div>
+  </div>
+</div>
+
+<!-- Revenue Calculator -->
+<section class="section">
+  <div class="section-label">Revenue Impact Model</div>
+  <div class="section-title">What does AR try-on mean for Henig's numbers?</div>
+  <p class="section-sub">Adjust expected monthly website visitors to model the revenue impact. All figures use a conservative 35% conversion lift — well below the Snap/Shopify headline of 94%.</p>
+
+  <div class="calc-card">
+    <div class="calc-header">
+      <h2>Henig AR Revenue Impact Calculator</h2>
+      <p>Based on $3,500 average selling price · 0.8% luxury e-commerce baseline conversion rate · 15% ring return rate</p>
+    </div>
+    <div class="calc-body">
+      <div>
+        <div class="input-group">
+          <label class="input-label">Monthly website visitors</label>
+          <div class="slider-val" id="visitorVal">10,000</div>
+          <input type="range" id="visitorSlider" min="1000" max="50000" step="500" value="10000" oninput="updateCalc()">
+          <div class="slider-ends"><span>1,000</span><span>50,000</span></div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Average selling price</label>
+          <div class="fixed-chip">$3,500</div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">AR conversion lift applied</label>
+          <div class="fixed-chip">35% <span>(industry high: 94%)</span></div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Return rate reduction</label>
+          <div class="fixed-chip">40% <span>(ring baseline: 15% → 9%)</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="result-row base">
+          <div>
+            <div class="result-lbl">Without AR — Year 1 revenue</div>
+            <div class="result-sub">0.8% conversion × $3,500</div>
+          </div>
+          <div class="result-val" id="baseRevenue" style="color:var(--ink);">—</div>
+        </div>
+        <div class="result-row ar">
+          <div>
+            <div class="result-lbl">With AR try-on — Year 1 revenue</div>
+            <div class="result-sub">1.08% conversion × $3,500</div>
+          </div>
+          <div class="result-val" id="arRevenue" style="color:var(--emerald);">—</div>
+        </div>
+        <div class="result-row lift">
+          <div>
+            <div class="result-lbl">Additional revenue from conversion lift</div>
+            <div class="result-sub">Additional orders × $3,500</div>
+          </div>
+          <div class="result-val" id="liftRevenue" style="color:var(--violet);">—</div>
+        </div>
+        <div class="result-row savings">
+          <div>
+            <div class="result-lbl">Return reduction savings</div>
+            <div class="result-sub">40% fewer returns · 30% cost rate</div>
+          </div>
+          <div class="result-val" id="returnSavings" style="color:var(--emerald);">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="roi-tiles">
+      <div class="roi-tile">
+        <div class="roi-tile-val" id="totalBenefit" style="color:var(--emerald);">—</div>
+        <div class="roi-tile-lbl">Total annual benefit</div>
+      </div>
+      <div class="roi-tile">
+        <div class="roi-tile-val" id="roiPct" style="color:var(--violet);">—</div>
+        <div class="roi-tile-lbl">Year 1 return on investment</div>
+      </div>
+      <div class="roi-tile">
+        <div class="roi-tile-val" id="paybackVal" style="color:var(--accent);">—</div>
+        <div class="roi-tile-lbl">Payback period</div>
+      </div>
+    </div>
+  </div>
+  <p class="calc-note">* Return savings calculated at 30% of order value (handling, restocking, and partial refund costs). Implementation cost used: $390K (Moderate scenario — Zakeke or GlamAR platform setup + agency Year 1). The conservative 35% CR lift is used throughout; Snap/Shopify data shows 94% for AR-first campaigns.</p>
+</section>
+
+<!-- Before / After -->
+<section class="section" style="padding-top:0;">
+  <div class="section-label">Before vs After AR Try-On</div>
+  <div class="two-col">
+    <div class="ba-card">
+      <div class="ba-title">Without AR — what the customer experiences today</div>
+      <div class="metric-row">
+        <div class="metric-head"><span>Conversion rate</span><strong style="color:var(--ruby);">0.8%</strong></div>
+        <div class="metric-track"><div class="metric-fill" style="width:16%;background:var(--ruby);"></div></div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-head"><span>Ring return rate</span><strong style="color:var(--ruby);">15%</strong></div>
+        <div class="metric-track"><div class="metric-fill" style="width:30%;background:var(--ruby);"></div></div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-head"><span>Cart abandonment</span><strong style="color:var(--ruby);">70%</strong></div>
+        <div class="metric-track"><div class="metric-fill" style="width:70%;background:var(--ruby);"></div></div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-head"><span>Purchase intent (index)</span><strong style="color:var(--ruby);">1.0×</strong></div>
+        <div class="metric-track"><div class="metric-fill" style="width:20%;background:var(--ruby);"></div></div>
+      </div>
+      <div class="ba-note" style="background:var(--ruby-pale);color:var(--ruby);">
+        Customer sees a product photograph → unsure how it will look on their hand → opens a competitor tab, considers visiting a store, or abandons the cart entirely.
+      </div>
+    </div>
+    <div class="ba-card after">
+      <div class="ba-title">With AR try-on — conservative benchmarks applied</div>
+      <div class="metric-row">
+        <div class="metric-head"><span>Conversion rate</span><strong style="color:var(--emerald);">1.08–1.55%</strong></div>
+        <div class="metric-track"><div class="metric-fill" style="width:31%;background:var(--emerald);"></div></div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-head"><span>Ring return rate</span><strong style="color:var(--emerald);">9%</strong></div>
+        <div class="metric-track"><div class="metric-fill" style="width:18%;background:var(--emerald);"></div></div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-head"><span>Cart abandonment</span><strong style="color:var(--emerald);">57%</strong></div>
+        <div class="metric-track"><div class="metric-fill" style="width:57%;background:var(--emerald);"></div></div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-head"><span>Purchase intent (index)</span><strong style="color:var(--emerald);">2.4×</strong></div>
+        <div class="metric-track"><div class="metric-fill" style="width:48%;background:var(--emerald);"></div></div>
+      </div>
+      <div class="ba-note" style="background:var(--emerald-pale);color:var(--emerald);">
+        Customer points their phone camera at their hand → sees the ring on them in real time → decision anxiety drops → adds to cart with confidence. No app download, no store visit required.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Platform Recommendation -->
+<section class="section" style="padding-top:0;">
+  <div class="section-label">Platform Recommendation</div>
+  <div class="section-title">Zakeke vs GlamAR — which fits Henig?</div>
+  <p class="section-sub">Two strong platforms, different strengths. For a $3,500 engagement ring sold purely online, the choice matters.</p>
+  <div class="two-col">
+    <div class="platform-card rec">
+      <div class="p-badge primary">Primary recommendation</div>
+      <div class="p-name">GlamAR</div>
+      <div class="p-tag">Augmented reality try-on via phone camera — built for jewellery</div>
+      <div class="feat"><span class="ok">✓</span> Customer holds up their phone and sees the ring on their actual hand in real time</div>
+      <div class="feat"><span class="ok">✓</span> No app download required — runs in the browser directly on henigdiamonds.com</div>
+      <div class="feat"><span class="ok">✓</span> Built specifically for rings, necklaces, and earrings — uses precise finger and wrist detection</div>
+      <div class="feat"><span class="ok">✓</span> Fine jewellery retailers report 32.7% add-to-cart lift and 17.4% return reduction (GlamAR, 2024)</div>
+      <div class="feat"><span class="ok">✓</span> High visual accuracy — diamond sparkle and metal finish rendered correctly on the customer's skin tone</div>
+      <div class="feat"><span class="no">✗</span> Less suited for showing real-time product customisation options</div>
+      <div class="p-foot"><strong>Why GlamAR for Henig:</strong> A $3,500 engagement ring is an emotional decision. The single biggest purchase barrier is "I don't know how it will look on me." GlamAR removes that barrier before the customer opens a competitor tab.</div>
+    </div>
+    <div class="platform-card">
+      <div class="p-badge alt">Strong Year 2 addition</div>
+      <div class="p-name">Zakeke</div>
+      <div class="p-tag">3D product visualisation + customisation — broad e-commerce platform</div>
+      <div class="feat"><span class="ok">✓</span> 3D rotate and zoom on every product — customers inspect from all angles on screen</div>
+      <div class="feat"><span class="ok">✓</span> Real-time customisation (metal colour, stone, engraving) with a live 3D preview</div>
+      <div class="feat"><span class="ok">✓</span> Strong integration with custom websites and all major e-commerce platforms</div>
+      <div class="feat"><span class="ok">✓</span> Reports up to 250% conversion lift for jewellery (including 3D viewer + configurator combined)</div>
+      <div class="feat"><span class="no">✗</span> 3D viewer on screen — not live camera AR. Customer sees the product but not on their own hand</div>
+      <div class="feat"><span class="no">✗</span> More complex to implement across a large catalogue</div>
+      <div class="p-foot"><strong>Best if:</strong> Henig expands into bespoke or customisable pieces where the customer configures a ring before buying. An excellent Year 2 layer on top of GlamAR.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Investment vs return table -->
+<section class="section" style="padding-top:0;">
+  <div class="section-label">Investment vs Return</div>
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+    <div style="padding:1.25rem 1.75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+      <div style="font-family:'Playfair Display',serif;font-size:18px;">Year 1 Cost vs Revenue Benefit</div>
+      <div style="font-size:12px;color:var(--ink-3);">All three budget scenarios · assumes 10,000 monthly visitors and 35% conservative CR lift</div>
+    </div>
+    <table class="inv-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Conservative</th>
+          <th>Moderate</th>
+          <th>Aggressive</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GlamAR / Zakeke implementation cost</td>
+          <td>$327K</td><td>$390K</td><td>$448K</td>
+        </tr>
+        <tr>
+          <td>Additional revenue from conversion lift (35%)</td>
+          <td>$588K</td><td>$588K</td><td>$588K</td>
+        </tr>
+        <tr>
+          <td>Return reduction savings (40% fewer returns)</td>
+          <td>$49K</td><td>$49K</td><td>$49K</td>
+        </tr>
+        <tr style="border-top:2px solid var(--border);">
+          <td>Total Year 1 benefit</td>
+          <td><strong>$637K</strong></td><td><strong>$637K</strong></td><td><strong>$637K</strong></td>
+        </tr>
+        <tr class="pos">
+          <td>Net Year 1 gain after implementation cost</td>
+          <td>+$310K</td><td>+$247K</td><td>+$189K</td>
+        </tr>
+        <tr class="hi">
+          <td>Year 1 return on investment</td>
+          <td>+95%</td><td>+63%</td><td>+42%</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="padding:1rem 1.75rem;font-size:12px;color:var(--ink-3);background:var(--surface);border-top:1px solid var(--border);line-height:1.7;">
+      <strong>Conservative cost = Scenario B:</strong> Build starts in Phase 2 — lower Year 1 cost but AR feature misses the holiday peak season.<br>
+      <strong>Moderate / Aggressive cost = Scenario A:</strong> Full Year 1 build — feature is live before the holiday peak. Recommended.<br>
+      Benefit figures are the same across all cost scenarios because conversion lift depends on traffic, not build cost. Adjust using the Revenue Impact Calculator above for different traffic levels.
+    </div>
+  </div>
+</section>
+
+<!-- Why now -->
+<section class="section" style="padding-top:0;">
+  <div class="section-label">Why Act Now</div>
+  <div class="urgency-grid">
+    <div class="urg-card">
+      <div class="urg-icon">📈</div>
+      <div class="urg-title">58% YoY growth in 2024</div>
+      <div class="urg-text">Jewellery brands using AR try-on grew 58% year-on-year in 2024–2025. Early adopters are building audience trust, search authority, and brand differentiation that latecomers will have to buy at much higher cost.</div>
+    </div>
+    <div class="urg-card">
+      <div class="urg-icon">📱</div>
+      <div class="urg-title">Two thirds prefer it over a store visit</div>
+      <div class="urg-text">66% of luxury shoppers would rather use AR try-on than travel to a physical store. For a brand selling exclusively online via henigdiamonds.com, AR is the equivalent of opening a store — at a fraction of the cost.</div>
+    </div>
+    <div class="urg-card">
+      <div class="urg-icon">💎</div>
+      <div class="urg-title">Highest impact at $3,500 ASP</div>
+      <div class="urg-text">The higher the price, the bigger the purchase anxiety. At $3,500 per piece, even a 35% improvement in conversion creates hundreds of thousands in additional revenue. AR directly addresses the one question holding customers back: how does it look on me?</div>
+    </div>
+  </div>
+</section>
+
+<!-- Sources -->
+<section class="section" style="padding-top:0;">
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.5rem 2rem;">
+    <div style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:1rem;">Data Sources</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.5rem 2rem;font-size:12px;color:var(--ink-2);line-height:1.6;">
+      <div><strong>Snap Inc. / Shopify</strong> — 94% conversion rate lift; 40% return reduction. Snap Business AR retail study, 2024.</div>
+      <div><strong>Snapchat Business</strong> — 2.4× purchase intent for AR vs non-AR users. Snapchat x Ray-Ban AR case study, 2024.</div>
+      <div><strong>NielsenIQ Luxury</strong> — 66% of luxury shoppers prefer AR try-on over in-store visits. 2024 luxury consumer report.</div>
+      <div><strong>BrandXR Industry Report</strong> — 58% YoY growth of jewellery brands adopting AR. 2025 AR in retail e-commerce report.</div>
+      <div><strong>GlamAR</strong> — 32.7% add-to-cart lift and 17.4% return reduction for fine jewellery retailers. GlamAR platform data, 2024.</div>
+      <div><strong>Zakeke</strong> — Up to 250% conversion lift for jewellery using 3D visualisation + configurator. Zakeke case study data, 2024.</div>
+      <div><strong>Wayfair / PostIndustria</strong> — 18% cart abandonment reduction with AR previews. Industry benchmark for AR in high-ticket e-commerce.</div>
+      <div><strong>Jewellery baseline return rate</strong> — 8% overall; 15% for rings specifically. Immerss 2025 Jewelry E-Commerce Trends report.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-brand">HENIG DIAMONDS</span>
+  <span>Figures are projections based on published industry benchmarks applied to Henig's $3,500 ASP and market position · Sources: Snap Inc., Shopify, NielsenIQ, BrandXR, GlamAR, Zakeke, PostIndustria, Immerss · 2024–2025</span>
+</footer>
+
+<script>
+const ASP = 3500;
+const BASE_CR = 0.008;
+const AR_LIFT = 0.35;
+const AR_CR = BASE_CR * (1 + AR_LIFT);
+const BASE_RET = 0.15;
+const AR_RET = BASE_RET * 0.60;
+const RET_COST = 0.30;
+const VR_COST = 390000;
+
+function fmt(n) {
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000)    return '$' + Math.round(n/1000) + 'K';
+  return '$' + Math.round(n);
+}
+
+function updateCalc() {
+  const vis = parseInt(document.getElementById('visitorSlider').value);
+  document.getElementById('visitorVal').textContent = vis.toLocaleString();
+
+  const ann = vis * 12;
+  const baseOrders = ann * BASE_CR;
+  const arOrders   = ann * AR_CR;
+  const baseRev    = baseOrders * ASP;
+  const arRev      = arOrders * ASP;
+  const liftRev    = arRev - baseRev;
+  const retSavings = (baseOrders * BASE_RET - arOrders * AR_RET) * ASP * RET_COST;
+  const total      = liftRev + retSavings;
+  const roi        = ((total - VR_COST) / VR_COST) * 100;
+  const payback    = VR_COST / (total / 12);
+
+  document.getElementById('baseRevenue').textContent  = fmt(baseRev);
+  document.getElementById('arRevenue').textContent    = fmt(arRev);
+  document.getElementById('liftRevenue').textContent  = '+' + fmt(liftRev);
+  document.getElementById('returnSavings').textContent= '+' + fmt(retSavings);
+  document.getElementById('totalBenefit').textContent = fmt(total);
+
+  const roiEl = document.getElementById('roiPct');
+  roiEl.textContent = (roi >= 0 ? '+' : '') + Math.round(roi) + '%';
+  roiEl.style.color = roi >= 0 ? 'var(--emerald)' : 'var(--ruby)';
+
+  const pb = document.getElementById('paybackVal');
+  pb.textContent = payback < 1 ? '< 1 month' : payback <= 12 ? Math.ceil(payback) + ' months' : '> 12 months';
+  pb.style.color = payback <= 6 ? 'var(--emerald)' : payback <= 12 ? 'var(--accent)' : 'var(--ruby)';
+}
+
+updateCalc();
+</script>
+</body>
+</html>

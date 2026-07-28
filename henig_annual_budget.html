@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henig — Annual Budget Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#111318;--ink-2:#3d4149;--ink-3:#8a909c;
+  --white:#ffffff;--surface:#f7f8fa;--surface-2:#eef0f4;
+  --border:#e2e5eb;--border-2:#d0d4dc;
+  --accent:#2563eb;--accent-pale:#eff4ff;--accent-mid:#93b4f8;
+  --emerald:#15803d;--emerald-pale:#dcfce7;
+  --ruby:#b91c1c;--ruby-pale:#fee2e2;
+  --amber:#92400e;--amber-pale:#fef3c7;
+  --gold:#b45309;--gold-pale:#fef9ef;
+  --violet:#7c3aed;--violet-pale:#f5f3ff;
+  --heat-lo:#dbeafe;--heat-hi:#1e40af;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink);min-height:100vh;}
+header{background:var(--white);border-bottom:1px solid var(--border);padding:0 3rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;}
+.main{max-width:1180px;margin:0 auto;padding:2rem 2rem 4rem;}
+/* Controls */
+.controls-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.5rem 2rem;margin-bottom:1.5rem;display:flex;flex-wrap:wrap;gap:1.25rem;align-items:flex-end;}
+.ctrl-group{display:flex;flex-direction:column;gap:6px;}
+.ctrl-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);}
+select,button{font-family:'DM Sans',sans-serif;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:8px 12px;background:var(--white);color:var(--ink);cursor:pointer;outline:none;}
+select:focus{border-color:var(--accent-mid);}
+.view-toggle{display:flex;gap:0;}
+.view-toggle button{border-radius:0;border-right:none;transition:background 0.15s,color 0.15s;}
+.view-toggle button:first-child{border-radius:8px 0 0 8px;}
+.view-toggle button:last-child{border-radius:0 8px 8px 0;border-right:1px solid var(--border);}
+.view-toggle button.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:1.5rem;}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;}
+.stat-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;color:var(--ink);}
+.stat-sub{font-size:11px;color:var(--ink-3);margin-top:3px;}
+/* Heatmap */
+.section-title{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:1rem;}
+.heatmap-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin-bottom:0.5rem;}
+.heat-cell{border-radius:10px;padding:10px 6px;text-align:center;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:transform 0.1s;}
+.heat-cell:hover{transform:translateY(-2px);}
+.heat-month{font-size:10px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;opacity:0.75;}
+.heat-amt{font-size:12px;font-weight:500;}
+.heat-star{font-size:14px;}
+/* Bar chart */
+.bar-chart{display:flex;gap:4px;align-items:flex-end;height:100px;margin-bottom:1.5rem;margin-top:1rem;}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bar-col{width:100%;border-radius:4px 4px 0 0;background:var(--accent);transition:height 0.4s;min-height:3px;}
+.bar-lbl{font-size:9px;color:var(--ink-3);letter-spacing:0.05em;}
+/* Key dates */
+.key-dates{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-top:1.5rem;}
+.kd-item{display:flex;gap:1rem;padding:10px 0;border-bottom:1px solid var(--border);}
+.kd-item:last-child{border-bottom:none;}
+.kd-date{font-size:11px;font-weight:500;color:var(--accent);min-width:130px;}
+.kd-label{font-size:13px;font-weight:500;margin-bottom:3px;}
+.kd-desc{font-size:12px;color:var(--ink-2);line-height:1.5;}
+/* Banner */
+.banner{background:var(--accent-pale);border:1px solid var(--accent-mid);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+.banner-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);font-weight:500;white-space:nowrap;}
+.banner-text{font-size:13px;color:var(--ink-2);line-height:1.6;}
+.banner select{background:var(--white);border-color:var(--accent-mid);font-size:12px;padding:6px 10px;}
+/* Monthly cards */
+.month-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.month-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;}
+.mc-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;}
+.mc-name{font-family:'Playfair Display',serif;font-size:18px;}
+.mc-year{font-size:11px;color:var(--ink-3);}
+.mc-amount{font-size:22px;font-weight:500;color:var(--accent);margin-bottom:8px;}
+.mc-bar-bg{background:var(--surface-2);height:5px;border-radius:99px;margin-bottom:10px;}
+.mc-bar-fill{height:5px;border-radius:99px;background:var(--accent);transition:width 0.4s;}
+.mc-peak{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:2px 8px;border-radius:99px;margin-bottom:10px;}
+.mc-peak.high{background:var(--ruby-pale);color:var(--ruby);}
+.mc-peak.mid{background:var(--amber-pale);color:var(--amber);}
+.mc-peak.low{background:var(--surface-2);color:var(--ink-3);}
+.mc-channels{margin-bottom:10px;}
+.ch-row{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.ch-name{font-size:10px;color:var(--ink-2);min-width:110px;}
+.ch-bar-bg{flex:1;background:var(--surface-2);height:4px;border-radius:99px;}
+.ch-bar-fill{height:4px;border-radius:99px;}
+.ch-pct{font-size:10px;color:var(--ink-3);min-width:28px;text-align:right;}
+.mc-reason{font-size:11px;color:var(--ink-2);line-height:1.5;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;}
+.mc-plan{font-size:10px;color:var(--ink-3);margin-top:4px;font-style:italic;}
+/* Channel colors */
+.ch-google{background:#f59e0b;}
+.ch-meta{background:#3b82f6;}
+.ch-pinterest{background:#ec4899;}
+.ch-email{background:#10b981;}
+.ch-influencer{background:#8b5cf6;}
+.panel{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.5rem;}
+@media(max-width:900px){.stats-row{grid-template-columns:1fr 1fr;}.month-grid{grid-template-columns:1fr 1fr;}.heatmap-grid{grid-template-columns:repeat(6,1fr);}}
+@media(max-width:600px){.stats-row{grid-template-columns:1fr;}.month-grid{grid-template-columns:1fr;}.controls-card{flex-direction:column;}}
+</style>
+</head>
+<body>
+<header>
+  <div style="display:flex;align-items:baseline;gap:12px;">
+    <span style="font-family:'Playfair Display',serif;font-size:17px;letter-spacing:0.06em;">HENIG</span>
+    <span style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);">Annual Budget Planner</span>
+  </div>
+  <a href="index.html" style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--border);padding:4px 12px;border-radius:100px;background:var(--surface);text-decoration:none;">← All Tools</a>
+</header>
+
+<div class="main">
+  <div class="controls-card">
+    <div class="ctrl-group">
+      <span class="ctrl-label">Country</span>
+      <select id="countrySelect">
+        <option value="USA">🇺🇸 USA</option>
+        <option value="Germany">🇩🇪 Germany</option>
+        <option value="France">🇫🇷 France</option>
+        <option value="Canada">🇨🇦 Canada</option>
+        <option value="Ireland">🇮🇪 Ireland</option>
+      </select>
+    </div>
+    <div class="ctrl-group">
+      <span class="ctrl-label">Segment</span>
+      <select id="segmentSelect">
+        <option value="luxury">Luxury</option>
+        <option value="mid">Mid-Luxury</option>
+        <option value="mix">Mid-Luxury → Luxury</option>
+      </select>
+    </div>
+    <div class="ctrl-group">
+      <span class="ctrl-label">Budget Intensity</span>
+      <select id="intensitySelect">
+        <option value="mid">Moderate</option>
+        <option value="low">Conservative</option>
+        <option value="high">Aggressive</option>
+      </select>
+    </div>
+    <div class="ctrl-group">
+      <span class="ctrl-label">View</span>
+      <div class="view-toggle">
+        <button id="btnYear" class="active" onclick="setView('year')">Year Overview</button>
+        <button id="btnMonth" onclick="setView('month')">Monthly Calendar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats row -->
+  <div class="stats-row" id="statsRow"></div>
+
+  <!-- Views -->
+  <div id="viewYear">
+    <div class="panel" style="margin-bottom:1.5rem;">
+      <div class="section-title">Spend Intensity Heatmap</div>
+      <p style="font-size:12px;color:var(--ink-3);margin-bottom:1rem;">Darker = higher spend. ★ marks top-3 spend months. Starting May 2026.</p>
+      <div class="heatmap-grid" id="heatmap"></div>
+      <div style="font-size:11px;color:var(--ink-3);margin-bottom:0.5rem;margin-top:0.5rem;">Monthly spend</div>
+      <div class="bar-chart" id="barChart"></div>
+    </div>
+    <div class="key-dates panel" id="keyDates"></div>
+  </div>
+
+  <div id="viewMonth" style="display:none;">
+    <div class="banner" id="bannerRec">
+      <span class="banner-label">▶ Best Time to Start</span>
+      <select id="targetPeak" onchange="updateBanner()">
+        <option value="christmas">Christmas / Holiday</option>
+        <option value="valentine">Valentine's Day</option>
+        <option value="mothers">Mother's Day</option>
+        <option value="engagement">Engagement Season</option>
+      </select>
+      <span class="banner-text" id="bannerText"></span>
+    </div>
+    <div class="month-grid" id="monthGrid"></div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const CH = {
+  'Google Search':  { cls:'ch-google',  label:'Google Search'  },
+  'Instagram/Meta': { cls:'ch-meta',    label:'Instagram/Meta' },
+  'Pinterest/YT':   { cls:'ch-pinterest',label:'Pinterest/YT'  },
+  'Email+SMS':      { cls:'ch-email',   label:'Email + SMS'    },
+  'Influencers':    { cls:'ch-influencer',label:'Influencers'  },
+};
+
+// Months starting May 2026 (index 0 = May)
+const MONTH_NAMES=['May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr'];
+const MONTH_YEARS=[2026,2026,2026,2026,2026,2026,2026,2026,2027,2027,2027,2027];
+
+// Annual % allocations per country, starting May (index 0)
+// Reordered from the annual data: USA starts May(6.5%), Jun(6%), Jul(5%), Aug(5.5%), Sep(7%), Oct(12%), Nov(19%), Dec(8.5%), Jan(9%), Feb(8%), Mar(4%), Apr(7%)
+const ALLOC = {
+  USA:     [0.065,0.060,0.050,0.055,0.070,0.120,0.190,0.085,0.090,0.080,0.040,0.070],
+  Germany: [0.080,0.050,0.040,0.045,0.075,0.115,0.150,0.160,0.060,0.110,0.040,0.070],
+  France:  [0.070,0.085,0.040,0.020,0.095,0.100,0.140,0.145,0.090,0.110,0.045,0.060],
+  Canada:  [0.095,0.060,0.040,0.050,0.070,0.125,0.155,0.135,0.070,0.110,0.040,0.050],
+  Ireland: [0.080,0.060,0.040,0.040,0.070,0.095,0.145,0.130,0.070,0.110,0.090,0.070],
+};
+
+// Channel mix by month index (0=May), for USA baseline; others similar
+const CHANNEL_MIX = [
+  // May - Mother's Day
+  {'Google Search':0.33,'Instagram/Meta':0.30,'Pinterest/YT':0.20,'Email+SMS':0.10,'Influencers':0.07},
+  // Jun - Engagement season
+  {'Pinterest/YT':0.30,'Instagram/Meta':0.28,'Google Search':0.22,'Email+SMS':0.12,'Influencers':0.08},
+  // Jul
+  {'Pinterest/YT':0.28,'Instagram/Meta':0.30,'Google Search':0.22,'Email+SMS':0.12,'Influencers':0.08},
+  // Aug
+  {'Instagram/Meta':0.30,'Pinterest/YT':0.25,'Google Search':0.20,'Email+SMS':0.15,'Influencers':0.10},
+  // Sep
+  {'Google Search':0.30,'Instagram/Meta':0.28,'Pinterest/YT':0.20,'Email+SMS':0.12,'Influencers':0.10},
+  // Oct - fill funnel
+  {'Google Search':0.35,'Instagram/Meta':0.30,'Pinterest/YT':0.15,'Email+SMS':0.12,'Influencers':0.08},
+  // Nov - peak
+  {'Instagram/Meta':0.35,'Google Search':0.28,'Email+SMS':0.18,'Pinterest/YT':0.12,'Influencers':0.07},
+  // Dec - peak
+  {'Instagram/Meta':0.34,'Google Search':0.28,'Email+SMS':0.20,'Pinterest/YT':0.11,'Influencers':0.07},
+  // Jan - Valentine buildup
+  {'Instagram/Meta':0.35,'Google Search':0.30,'Email+SMS':0.18,'Pinterest/YT':0.10,'Influencers':0.07},
+  // Feb - Valentine peak
+  {'Instagram/Meta':0.38,'Google Search':0.28,'Email+SMS':0.18,'Pinterest/YT':0.09,'Influencers':0.07},
+  // Mar - off-peak
+  {'Email+SMS':0.30,'Instagram/Meta':0.25,'Google Search':0.22,'Pinterest/YT':0.15,'Influencers':0.08},
+  // Apr
+  {'Google Search':0.30,'Instagram/Meta':0.28,'Pinterest/YT':0.20,'Email+SMS':0.14,'Influencers':0.08},
+];
+
+const REASONS = {
+  USA:[
+    'Mother\'s Day peak (9% of annual US diamond demand, $7B in 2024). Google Shopping + Pinterest dominate.',
+    'Engagement season begins. Pinterest summer boards + bridal content drive discovery.',
+    'Summer engagement proposals; steady influencer content seeding.',
+    'Late summer; holiday content planning begins; influencer seeding for Q4.',
+    'Holiday awareness buildup; brand story content; email list building before CPMs spike.',
+    'Fill-funnel window (Oct 21–27, Week 43). CPMs still low — prime awareness window before 25–66% Q4 CPM spike.',
+    'Peak spend: Nov 18–Dec 8 highest CTR of the year. Black Friday. Maximum conversion window.',
+    'Christmas closing. CPMs spike 25–66% above off-peak. Concentrate spend on retargeting only.',
+    'Valentine\'s buildup. Google search intent rising 40%. CPMs 15–20% below peak. Launch by Jan 20.',
+    'Valentine\'s Day peak (7% of annual US diamond demand, $7B projected 2026). Meta retargeting.',
+    'Off-peak trough. Maintain minimum brand presence; CRM nurture and influencer relationship.',
+    'Mother\'s Day preparation begins. Pinterest gift boards launch; Google Shopping campaigns set up.',
+  ],
+  Germany:[
+    'Muttertag (2nd Sunday May) gifting peak. Google Shopping + Meta.',
+    'Paris Fashion Week June visibility; brand content; steady digital presence.',
+    'Summer slowdown in Germany. Maintain influencer relationships.',
+    'Rebuild ahead of autumn. Pre-Christmas content planning begins.',
+    'Herbst awareness; pre-Weihnachten content begins; ESG provenance storytelling.',
+    'Pre-Weihnachten buildup. ESG + diamond provenance storytelling peak. CPMs still manageable.',
+    'Advent begins; Black Friday adoption growing; paid media at peak intensity.',
+    'Weihnachten peak — Germany\'s biggest gifting season. Highest monthly allocation.',
+    'Post-Weihnachten quiet period; Valentine\'s prep mid-month. ESG content push.',
+    'Valentine\'s Day growing strongly in Germany. ESG-driven content resonates.',
+    'Off-peak. Maintain minimum presence; build spring campaign assets.',
+    'EU ESG regulations context (April 2025 compliance); spring relaunch campaigns.',
+  ],
+  France:[
+    'Fête des Mères (last Sunday May). Gifting campaigns + self-gifting professional women.',
+    'Paris Fashion Week June. Brand visibility + digital content amplification.',
+    'Slight summer slowdown before August national vacation.',
+    'MINIMAL spend — France national vacation period. Near-zero consumer engagement this month.',
+    'Rentrée — strongest EU return-to-market moment. Luxury re-engagement campaigns. High ROI.',
+    'Pre-Christmas awareness; self-gifting professional women campaign peak.',
+    'Holiday peak begins. Black Friday adoption growing in France. Paid media intensive.',
+    'Noël — biggest gifting month in France. Maximum conversion window.',
+    'Paris Fashion Week (Jan SS27) + Soldes (winter sales). Brand visibility moment.',
+    'Valentine\'s Day peak. Self-gifting professional women campaign at maximum.',
+    'Off-peak. Brand content; CRM nurture; spring asset creation.',
+    'Spring; Easter gifting provides minor lift. Pre-Fête des Mères warm-up.',
+  ],
+  Canada:[
+    'Mother\'s Day (aligns closely with US — 9%+ of annual demand). Google + Meta peak.',
+    'Engagement season; wedding season in Canada. Pinterest + YouTube inspiration.',
+    'Summer slowdown. Maintain influencer content cadence.',
+    'Holiday content planning. Influencer seeding for Q4.',
+    'Pre-Thanksgiving awareness. Email list building before CPM spike.',
+    'Canadian Thanksgiving (mid-Oct) + pre-Christmas fill-funnel. Unique Canadian timing vs US.',
+    'Black Friday (very large in Canada). Holiday peak begins. Maximum paid spend.',
+    'Christmas + Boxing Day (Dec 26 = uniquely large Canadian gifting event). 30% online market.',
+    'Valentine\'s prep + Boxing Day follow-through for late buyers.',
+    'Valentine\'s Day peak. Meta retargeting + last-mile Google conversion.',
+    'Off-peak. CRM nurture; spring content planning.',
+    'Spring awareness. Pre-Mother\'s Day setup. Pinterest gift boards launch.',
+  ],
+  Ireland:[
+    'Mother\'s Day. High e-commerce rate (30%) means strong online conversion.',
+    'Engagement season. Pinterest + YouTube inspiration. Post-Brexit Italy-sourced supply story.',
+    'Summer slowdown. Influencer content.',
+    'Late summer. Holiday planning begins.',
+    'Autumn awareness. Email list building.',
+    'Pre-Christmas buildup. 18.2% annual market growth amplifies this window.',
+    'Holiday peak. 30% e-commerce rate = high online conversion rate.',
+    'Christmas peak. Strong online conversion in Ireland.',
+    'Valentine\'s prep. Growing e-commerce channel.',
+    'Valentine\'s Day peak. Strong digital conversion.',
+    'St Patrick\'s Day proximity (March 17) — spring mood and gifting lift.',
+    'Easter gifting. Minor but measurable lift.',
+  ],
+};
+
+const PLAN_HINTS = [
+  'Set up campaigns by Apr 14',
+  'Launch by May 15 for June weddings',
+  'Maintain campaigns; seed Oct influencers',
+  'Seed Oct influencer content now',
+  'Begin holiday creative by Aug 15',
+  'Launch fill-funnel campaigns by Oct 14',
+  'Scale up by Nov 10; Black Friday live by Nov 18',
+  'Retargeting only after Dec 10; reduce new acquisition',
+  'Launch Valentine\'s campaigns by Jan 20 (latest)',
+  'Last-mile retargeting; conversion focus',
+  'Plan spring campaigns; build CRM segments',
+  'Mother\'s Day campaigns launch by Apr 14',
+];
+
+const PEAK_LABELS = {
+  USA:     ['★ Mother\'s Day','Engagement Season',null,null,'Holiday Buildup','★ Fill-Funnel','★ Holiday Peak','Holiday Peak','Valentine\'s Buildup','Valentine\'s Peak',null,'Spring Prep'],
+  Germany: ['★ Muttertag',null,null,null,'Herbst Buildup','Pre-Weihnachten','Advent / Black Friday','★ Weihnachten Peak',null,'★ Valentine\'s',null,null],
+  France:  ['Fête des Mères','★ PFW June',null,null,'★ Rentrée','Pre-Noël','★ Holiday Peak','★ Noël','PFW January','★ Valentine\'s',null,null],
+  Canada:  ['★ Mother\'s Day','Engagement Season',null,null,'Pre-Thanksgiving','★ Thanksgiving','★ Black Friday','★ Christmas + Boxing Day',null,'Valentine\'s Peak',null,null],
+  Ireland: ['★ Mother\'s Day',null,null,null,null,'Pre-Christmas','★ Holiday Peak','★ Christmas',null,'★ Valentine\'s','St Patrick\'s','Easter'],
+};
+
+const KEY_DATES = {
+  USA:[
+    {date:'Oct 21–27, 2026',label:'Fill-Funnel Window',desc:'CPMs still low — build awareness before holiday CPM surge (25–66% spike in Nov). Source: Madgicx 2025'},
+    {date:'Nov 18 – Dec 8, 2026',label:'Holiday Peak CTR Window',desc:'Highest CTR and consumer demand of the year. Maximum spend here. Source: Statista/Tenoris'},
+    {date:'Jan 20, 2027',label:'Valentine\'s Launch Deadline',desc:'46% of Valentine\'s shoppers begin in early February — campaigns must be live by Jan 20. Source: NDC Trends Report 2025'},
+    {date:'Feb 14, 2027',label:"Valentine's Day Peak",desc:'7% of annual US natural diamond demand ($7B projected 2026). Meta retargeting dominates. Source: NDC 2025'},
+    {date:'Apr 14, 2027',label:"Mother's Day Campaign Launch",desc:'9% of annual US diamond demand ($7B in 2024). Google Shopping + Pinterest dominate. Source: NDC/Diamond World'},
+    {date:'May 2027',label:"Mother's Day Peak",desc:'Largest gifting occasion by diamond spend. 47% of engagements happen Nov–Feb (The Knot 2024).'},
+  ],
+  Germany:[
+    {date:'Oct 14–Nov 1, 2026',label:'Pre-Weihnachten Buildup',desc:'Advent season starts Dec 1 — awareness must land by late October for recall. ESG provenance storytelling peak.'},
+    {date:'Nov 1 – Dec 6, 2026',label:'Advent / Black Friday Window',desc:'Black Friday adoption growing in Germany. Weihnachten = dominant gifting peak for diamonds.'},
+    {date:'Dec 6 – Dec 24, 2026',label:'Weihnachten Peak',desc:'Germany\'s biggest gifting season. Highest monthly allocation (16%). Source: German Retail Federation'},
+    {date:'Jan 20, 2027',label:'Valentine\'s Launch',desc:'Valentine\'s growing in Germany; ESG content resonates. Launch campaigns by Jan 20.'},
+    {date:'Mar–Apr 2027',label:'EU ESG Compliance Context',desc:'April 2025 EU ESG regulations context — provenance storytelling is a competitive differentiator in Germany.'},
+    {date:'May 2027',label:'Muttertag',desc:'2nd Sunday of May. Growing gifting occasion for jewellery in Germany.'},
+  ],
+  France:[
+    {date:'Aug 2026',label:'⚠ National Vacation — Minimal Spend',desc:'France national vacation period. Near-zero consumer engagement. Reduce spend to absolute minimum. Resume Rentrée Sep 1.'},
+    {date:'Sep 1, 2026',label:'Rentrée Launch',desc:'Strongest EU return-to-market moment. Luxury re-engagement; highest ROI of the year for brand relaunch spend.'},
+    {date:'Nov 1 – Dec 25, 2026',label:'Noël Peak Window',desc:'Biggest gifting month in France. Black Friday adoption growing. Meta + Google at maximum intensity.'},
+    {date:'Jan 2027',label:'Paris Fashion Week (SS27)',desc:'PFW January = brand visibility moment. Align brand content with fashion narrative. Soldes (sales) also active.'},
+    {date:'Jan 20, 2027',label:'Valentine\'s Campaign Launch',desc:'Valentine\'s + self-gifting professional women = France\'s strongest diamond demand driver.'},
+    {date:'Jun 2027',label:'Paris Fashion Week (June)',desc:'PFW June = second brand visibility moment. Digital content amplification for engaged luxury audience.'},
+  ],
+  Canada:[
+    {date:'Oct 12, 2026',label:'Canadian Thanksgiving',desc:'Mid-October timing (earlier than US) creates unique fill-funnel + gifting window. Mirrors US seasonal pattern.'},
+    {date:'Nov 27 – Dec 25, 2026',label:'Black Friday + Christmas',desc:'Black Friday = very large in Canada. 30% online jewellery market (highest in sample) amplifies digital returns.'},
+    {date:'Dec 26, 2026',label:'Boxing Day',desc:'Uniquely large Canadian gifting event with no US equivalent. Strong online conversion. Source: Statistics Canada'},
+    {date:'Jan 20, 2027',label:'Valentine\'s Launch Deadline',desc:'Aligns with US. Launch Meta campaigns by Jan 20 for Feb 14 peak.'},
+    {date:'Apr 14, 2027',label:'Mother\'s Day Campaign Launch',desc:'Canadian Mother\'s Day aligns with US (2nd Sunday May). 9%+ of annual diamond demand.'},
+  ],
+  Ireland:[
+    {date:'Oct 14 – Nov 30, 2026',label:'Pre-Christmas Buildup',desc:'18.2% annual market growth amplifies this window. 30% e-commerce rate = strong digital conversion.'},
+    {date:'Nov – Dec 2026',label:'Christmas Peak',desc:'Highest conversion months. Ireland\'s e-commerce rate (30%, highest in EU) makes this the primary digital window.'},
+    {date:'Jan 20, 2027',label:'Valentine\'s Launch',desc:'Growing digital channel in Ireland. Launch campaigns Jan 20.'},
+    {date:'Feb 28 – Mar 17, 2027',label:'St Patrick\'s Day Proximity',desc:'March 17 creates a spring mood and small gifting lift. Unique to Ireland — no other market has this.'},
+    {date:'Apr 2027',label:'Easter Gifting',desc:'Minor but measurable gifting lift. Supplement with spring engagement season content.'},
+    {date:'May 2027',label:'Mother\'s Day',desc:'Strong online conversion expected given 30% e-commerce rate and 18.2% market growth trend.'},
+  ],
+};
+
+const ANNUAL_BUDGETS = {
+  USA:     { low: 346000,  mid: 928000,  high: 1508000 },
+  Germany: { low: 108000,  mid: 234000,  high: 380000  },
+  France:  { low: 108000,  mid: 234000,  high: 380000  },
+  Canada:  { low: 108000,  mid: 234000,  high: 380000  },
+  Ireland: { low:  52000,  mid: 108000,  high: 175000  },
+};
+
+const SEG_MULT = { luxury: 1.0, mid: 0.31, mix: 0.65 };
+
+const TAM_DATA = {
+  USA:     { luxury: '$13.5B', mid: '$11.2B', mix: '$13.5B' },
+  Germany: { luxury: '$1.71B', mid: '$1.71B', mix: '$1.71B' },
+  France:  { luxury: '$1.06B', mid: '$0.74B', mix: '$1.06B' },
+  Canada:  { luxury: '$0.83B', mid: '$0.83B', mix: '$0.83B' },
+  Ireland: { luxury: '$0.26B', mid: '$0.19B', mix: '$0.26B' },
+};
+
+const BANNER_RECS = {
+  christmas:{
+    USA:    'Start Phase 1 foundation by <strong>Sep 1, 2026</strong>. Launch fill-funnel campaigns by Oct 21. Scale to maximum by Nov 18.',
+    Germany:'Start brand awareness by <strong>Sep 1, 2026</strong>. Pre-Weihnachten campaigns live by Oct 15. Advent push Nov 1.',
+    France: 'Start Rentrée campaigns <strong>Sep 1, 2026</strong> (strong relaunch moment). Noël campaigns live by Nov 1.',
+    Canada: 'Start by <strong>Sep 15, 2026</strong>. Canadian Thanksgiving (Oct 12) fill-funnel. Black Friday campaigns live Nov 20.',
+    Ireland:'Start by <strong>Sep 15, 2026</strong>. Scale to peak by Nov 1. Leverage 30% e-commerce rate for strong online conversion.',
+  },
+  valentine:{
+    USA:    'Seed influencer content <strong>Nov–Dec 2026</strong>. Launch paid campaigns by <strong>Jan 20, 2027</strong>. 46% of shoppers start buying in early February.',
+    Germany:'Launch awareness by <strong>Jan 10, 2027</strong>. Valentine\'s growing in Germany — ESG provenance content resonates.',
+    France: 'Launch by <strong>Jan 10, 2027</strong>. Pair with PFW Jan brand visibility. Self-gifting professional women angle.',
+    Canada: 'Launch by <strong>Jan 20, 2027</strong>. Mirror US Valentine\'s strategy with 30% online market advantage.',
+    Ireland:'Launch by <strong>Jan 20, 2027</strong>. Strong digital channel. Pair with St Patrick\'s Day spring mood content.',
+  },
+  mothers:{
+    USA:    'Launch Google Shopping + Pinterest by <strong>Apr 14, 2027</strong>. Mother\'s Day = 9% of annual US diamond demand ($7B in 2024).',
+    Germany:'Launch Muttertag campaigns by <strong>Apr 20, 2027</strong>. Google Shopping + gifting intent content.',
+    France: 'Fête des Mères (last Sunday May). Launch by <strong>Apr 21, 2027</strong>. Self-gifting women angle.',
+    Canada: 'Canadian Mother\'s Day aligns with US. Launch by <strong>Apr 14, 2027</strong>. Google Shopping + Meta.',
+    Ireland:'Launch by <strong>Apr 21, 2027</strong>. 18.2% market growth + 30% e-commerce rate = strong conversion.',
+  },
+  engagement:{
+    USA:    'Seed Pinterest + YouTube inspiration content <strong>May–Jun 2026</strong>. 47% of engagements happen Nov–Feb (The Knot 2024) — build awareness now.',
+    Germany:'Launch bridal/engagement content <strong>May–Jun 2026</strong>. Provenance + ESG certification angle for German market.',
+    France: 'Launch by <strong>May 2026</strong>. Align with PFW Jun brand visibility. Luxury inspiration content on Pinterest.',
+    Canada: 'Wedding season June–Aug. Launch awareness by <strong>May 1, 2026</strong>. Pinterest + YouTube dominant.',
+    Ireland:'Launch by <strong>May 2026</strong>. Post-Brexit Italy-sourced supply story works well. Pinterest + influencer.',
+  },
+};
+
+// ── STATE ──────────────────────────────────────────────────────────────────────
+let currentView = 'year';
+let state = { country:'USA', segment:'luxury', intensity:'mid' };
+
+function getAnnualBudget() {
+  const base = ANNUAL_BUDGETS[state.country][state.intensity];
+  return Math.round(base * SEG_MULT[state.segment]);
+}
+
+function fmt(n) {
+  if(n >= 1000000) return '$' + (n/1000000).toFixed(2) + 'M';
+  if(n >= 1000) return '$' + Math.round(n/1000) + 'K';
+  return '$' + n;
+}
+
+function lerp(a, b, t) {
+  return Math.round(a + (b - a) * t);
+}
+
+function heatColor(pct, min, max) {
+  const t = max === min ? 0 : (pct - min) / (max - min);
+  // Interpolate from --heat-lo to --heat-hi
+  const r = lerp(219, 30, t);
+  const g = lerp(234, 64, t);
+  const b2 = lerp(254, 175, t);
+  return `rgb(${r},${g},${b2})`;
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('viewYear').style.display = v==='year' ? '' : 'none';
+  document.getElementById('viewMonth').style.display = v==='month' ? '' : 'none';
+  document.getElementById('btnYear').classList.toggle('active', v==='year');
+  document.getElementById('btnMonth').classList.toggle('active', v==='month');
+  render();
+}
+
+function render() {
+  const annual = getAnnualBudget();
+  const alloc = ALLOC[state.country];
+  const amounts = alloc.map(p => Math.round(annual * p));
+  const sorted = [...amounts].sort((a,b) => b-a);
+  const top3 = new Set(sorted.slice(0,3));
+  const maxAmt = Math.max(...amounts);
+  const minAmt = Math.min(...amounts);
+  const peakIdx = amounts.indexOf(maxAmt);
+
+  // Stats row
+  const q4months = [5,6,7]; // Oct, Nov, Dec in our array (indices)
+  const q4spend = q4months.reduce((s,i)=>s+amounts[i],0);
+  const q1months = [10,11,0,1]; // Mar, Apr, May, Jun
+  const q1spend = [10,11].reduce((s,i)=>s+amounts[i],0);
+
+  const tam = (TAM_DATA[state.country] || {})[state.segment] || '—';
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-label">Year 1 Budget</div>
+      <div class="stat-val">${fmt(annual)}</div>
+      <div class="stat-sub">${state.intensity.charAt(0).toUpperCase()+state.intensity.slice(1)} intensity · ${state.country}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Segment TAM</div>
+      <div class="stat-val" style="color:var(--accent)">${tam}</div>
+      <div class="stat-sub">${state.country} · ${state.segment==='luxury'?'Luxury':state.segment==='mid'?'Mid-Luxury':'Mixed'} · 2025</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Top Peak Month</div>
+      <div class="stat-val">${MONTH_NAMES[peakIdx]} '${String(MONTH_YEARS[peakIdx]).slice(2)}</div>
+      <div class="stat-sub">${fmt(maxAmt)} · ${(alloc[peakIdx]*100).toFixed(1)}% of annual</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Q4 Spend (Oct–Dec)</div>
+      <div class="stat-val">${fmt(q4spend)}</div>
+      <div class="stat-sub">${((q4spend/annual)*100).toFixed(0)}% of annual budget</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Quietest Quarter</div>
+      <div class="stat-val">${fmt(q1spend)}</div>
+      <div class="stat-sub">Mar–Apr · ${((q1spend/annual)*100).toFixed(0)}% of annual</div>
+    </div>`;
+
+  if(currentView === 'year') renderYear(amounts, alloc, maxAmt, minAmt, top3);
+  else renderMonth(amounts, alloc, top3);
+}
+
+function renderYear(amounts, alloc, maxAmt, minAmt, top3) {
+  // Heatmap
+  const heat = document.getElementById('heatmap');
+  heat.innerHTML = MONTH_NAMES.map((m,i) => {
+    const a = amounts[i];
+    const bg = heatColor(a, minAmt, maxAmt);
+    const t = maxAmt === minAmt ? 0 : (a - minAmt)/(maxAmt - minAmt);
+    const txtColor = t > 0.55 ? '#fff' : '#1e3a8a';
+    const star = top3.has(a) ? '<div class="heat-star">★</div>' : '';
+    return `<div class="heat-cell" style="background:${bg};color:${txtColor};">
+      <div class="heat-month">${m}</div>
+      <div class="heat-amt">${fmt(a)}</div>
+      ${star}
+    </div>`;
+  }).join('');
+
+  // Bar chart
+  const bar = document.getElementById('barChart');
+  bar.innerHTML = amounts.map((a,i) => {
+    const h = Math.max(4, Math.round((a/maxAmt)*90));
+    return `<div class="bar-wrap">
+      <div class="bar-col" style="height:${h}px;opacity:${0.5+0.5*(a/maxAmt)};"></div>
+      <div class="bar-lbl">${MONTH_NAMES[i].slice(0,3)}</div>
+    </div>`;
+  }).join('');
+
+  // Key dates
+  const kd = document.getElementById('keyDates');
+  const dates = KEY_DATES[state.country];
+  kd.innerHTML = `<div class="section-title" style="margin-bottom:1rem;">Key Dates — ${state.country}</div>` +
+    dates.map(d => `<div class="kd-item">
+      <div class="kd-date">${d.date}</div>
+      <div>
+        <div class="kd-label">${d.label}</div>
+        <div class="kd-desc">${d.desc}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderMonth(amounts, alloc, top3) {
+  updateBanner();
+  const maxAmt = Math.max(...amounts);
+  const reasons = REASONS[state.country];
+  const peaks = PEAK_LABELS[state.country];
+
+  document.getElementById('monthGrid').innerHTML = MONTH_NAMES.map((m,i) => {
+    const a = amounts[i];
+    const pct = alloc[i] * 100;
+    const barW = Math.round((a/maxAmt)*100);
+    const peakLabel = peaks[i];
+    let peakCls = 'low', peakTxt = 'Quiet Period';
+    if(peakLabel && peakLabel.startsWith('★')) { peakCls='high'; peakTxt=peakLabel; }
+    else if(peakLabel) { peakCls='mid'; peakTxt=peakLabel; }
+
+    const chans = CHANNEL_MIX[i];
+    const chHTML = Object.entries(chans).map(([k,v])=>{
+      const info = CH[k] || { cls:'ch-google', label:k };
+      return `<div class="ch-row">
+        <span class="ch-name">${info.label}</span>
+        <div class="ch-bar-bg"><div class="ch-bar-fill ${info.cls}" style="width:${Math.round(v*100)}%"></div></div>
+        <span class="ch-pct">${Math.round(v*100)}%</span>
+      </div>`;
+    }).join('');
+
+    return `<div class="month-card">
+      <div class="mc-header">
+        <div class="mc-name">${m}</div>
+        <div class="mc-year">${MONTH_YEARS[i]}</div>
+      </div>
+      <div class="mc-amount">${fmt(a)}</div>
+      <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:${barW}%"></div></div>
+      <div style="font-size:10px;color:var(--ink-3);margin-bottom:8px;">${pct.toFixed(1)}% of annual budget</div>
+      ${peakLabel ? `<span class="mc-peak ${peakCls}">${peakTxt}</span>` : ''}
+      <div class="mc-channels">${chHTML}</div>
+      <div class="mc-reason">${reasons[i]}</div>
+      <div class="mc-plan">${PLAN_HINTS[i]}</div>
+    </div>`;
+  }).join('');
+}
+
+function updateBanner() {
+  const target = document.getElementById('targetPeak').value;
+  const recs = BANNER_RECS[target];
+  document.getElementById('bannerText').innerHTML = recs[state.country] || '';
+}
+
+// Wire controls
+['countrySelect','segmentSelect','intensitySelect'].forEach(id => {
+  document.getElementById(id).addEventListener('change', () => {
+    state.country  = document.getElementById('countrySelect').value;
+    state.segment  = document.getElementById('segmentSelect').value;
+    state.intensity= document.getElementById('intensitySelect').value;
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>

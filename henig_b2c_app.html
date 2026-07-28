@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henig Diamonds — B2C Market Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #111318;
+  --ink-2: #3d4149;
+  --ink-3: #8a909c;
+  --white: #ffffff;
+  --surface: #f7f8fa;
+  --surface-2: #eef0f4;
+  --border: #e2e5eb;
+  --border-2: #d0d4dc;
+  --accent: #2563eb;
+  --accent-pale: #eff4ff;
+  --accent-mid: #93b4f8;
+  --emerald: #15803d;
+  --emerald-pale: #dcfce7;
+  --ruby: #b91c1c;
+  --ruby-pale: #fee2e2;
+  --amber: #92400e;
+  --amber-pale: #fef3c7;
+  --gold: #b45309;
+  --gold-pale: #fef9ef;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--surface);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* HEADER */
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.logo-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.logo-sub {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.header-badge {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: var(--surface);
+}
+
+/* HERO */
+.hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '◆';
+  position: absolute;
+  right: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 160px;
+  color: rgba(37,99,235,0.04);
+  font-family: serif;
+  pointer-events: none;
+}
+
+.hero-tag {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.875rem;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 0.875rem;
+  max-width: 560px;
+  color: var(--ink);
+}
+
+.hero h1 em { font-style: italic; color: var(--accent); }
+
+.hero-sub {
+  font-size: 14px;
+  color: var(--ink-3);
+  max-width: 500px;
+  line-height: 1.7;
+}
+
+/* WINNER CARD */
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 1rem;
+}
+
+/* CONTROLS */
+.controls-section {
+  padding: 2rem 3rem 2.5rem;
+  background: var(--surface);
+}
+
+.controls-bar {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.ctrl { display: flex; flex-direction: column; gap: 6px; }
+.ctrl-lbl {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.seg-pills { display: flex; gap: 6px; }
+.pill {
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-size: 12px;
+  color: var(--ink-2);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.pill:hover { border-color: var(--accent); color: var(--accent); }
+.pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+select {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 28px 7px 10px;
+  color: var(--ink);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a909c'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  min-width: 170px;
+}
+
+.margin-ctrl { display: flex; align-items: center; gap: 10px; }
+input[type=range] {
+  width: 130px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.margin-val {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  min-width: 36px;
+}
+
+/* FOOTER */
+footer {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  color: var(--ink-3);
+  padding: 1.25rem 3rem;
+  font-size: 11px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 0.05em;
+}
+footer .footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  color: var(--ink);
+  letter-spacing: 0.08em;
+}
+
+.bf-apply-verdict-btn {
+  padding: 7px 14px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: opacity .15s, transform .1s;
+  white-space: nowrap;
+}
+.bf-apply-verdict-btn:hover { opacity: .88; transform: scale(1.02); }
+
+/* VERDICT BANNER */
+.bf-verdict {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+}
+.bf-verdict-solo { background: var(--emerald-pale); border-color: #86efac; }
+.bf-verdict-mix  { background: var(--accent-pale);  border-color: var(--accent-mid); }
+.bf-verdict-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.bf-verdict-body { flex: 1; }
+.bf-verdict-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.bf-verdict-sub   { font-size: 11px; color: var(--ink-3); line-height: 1.5; }
+.bf-verdict-roi {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  min-width: 72px;
+  line-height: 1.1;
+}
+.bf-mix-alloc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+.bf-mix-alloc-title {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+}
+.bf-mix-alloc-bars { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.bf-mix-bar-row { display: flex; align-items: center; gap: 8px; }
+.bf-mix-bar-flag { font-size: 16px; width: 22px; flex-shrink: 0; }
+.bf-mix-bar-info { flex: 1; }
+.bf-mix-bar-name { font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+.bf-mix-bar-track { height: 7px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+.bf-mix-bar-fill  { height: 100%; border-radius: 4px; transition: width .4s; }
+.bf-mix-bar-amount { font-size: 12px; font-weight: 500; color: var(--accent); width: 68px; text-align: right; flex-shrink: 0; }
+.bf-mix-bar-pct   { font-size: 11px; color: var(--ink-3); width: 30px; text-align: right; flex-shrink: 0; }
+.bf-mix-bar-roi   { font-size: 12px; font-weight: 600; width: 46px; text-align: right; flex-shrink: 0; }
+.bf-mix-apply-btn { padding: 6px 14px; background: var(--accent); color: white; border: none; border-radius: 8px; font-size: 12px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity .15s; }
+.bf-mix-apply-btn:hover { opacity: .88; }
+.bf-ranked-title { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+
+/* STEP LABELS */
+.step-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 1rem;
+}
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.step-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+
+/* SECTION SPACING */
+.controls-section,
+.budget-finder-section,
+.adspend-section
+.footnotes-section {
+  border-top: none;
+}
+
+.budget-finder-section {
+  padding: 2rem 3rem 2.5rem;
+  background: var(--surface);
+}
+.budget-finder-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  display: flex;
+  gap: 0;
+  overflow: hidden;
+  min-height: 180px;
+}
+.bf-left {
+  padding: 1.5rem 1.75rem;
+  border-right: 1px solid var(--border);
+  min-width: 380px;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+.bf-title {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Playfair Display', serif;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.bf-subtitle {
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+.bf-inputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.bf-input-group { display: flex; flex-direction: column; gap: 5px; }
+.bf-input-lbl { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.bf-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--white);
+  width: 120px;
+}
+.bf-currency {
+  padding: 0 8px;
+  font-size: 13px;
+  color: var(--ink-3);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  height: 34px;
+  display: flex;
+  align-items: center;
+}
+.bf-input-wrap input[type=number] {
+  border: none;
+  outline: none;
+  padding: 0 8px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+  width: 100%;
+  height: 34px;
+  background: var(--white);
+  -moz-appearance: textfield;
+}
+.bf-input-wrap input[type=number]::-webkit-outer-spin-button,
+.bf-input-wrap input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.bf-range-sep { font-size: 16px; color: var(--ink-3); padding-bottom: 6px; }
+.bf-find-btn {
+  padding: 0 16px;
+  height: 34px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.bf-find-btn:hover { opacity: 0.88; }
+
+.bf-right {
+  flex: 1;
+  padding: 1.5rem 1.75rem;
+  overflow-y: auto;
+}
+.bf-placeholder {
+  font-size: 13px;
+  color: var(--ink-3);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-style: italic;
+}
+.bf-results-title {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 1rem;
+}
+.bf-country-list { display: flex; flex-direction: column; gap: 8px; }
+.bf-country-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.bf-country-item:hover { border-color: var(--accent); background: var(--accent-pale); }
+.bf-country-item.bf-top { border-color: var(--accent); background: var(--accent-pale); }
+.bf-country-item.bf-stretch { border-color: var(--amber); background: var(--amber-pale); }
+.bf-country-item.bf-nomatch { border-color: var(--border); background: var(--surface); opacity: 0.6; }
+.bf-rank {
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+  background: var(--accent);
+  border-radius: 100px;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.bf-rank.gold { background: var(--gold); }
+.bf-rank.amber { background: var(--amber); }
+.bf-rank.muted { background: var(--ink-3); }
+.bf-country-body { flex: 1; }
+.bf-country-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+.bf-country-meta { font-size: 11px; color: var(--ink-3); margin-bottom: 3px; }
+.bf-country-why { font-size: 11px; color: var(--ink-2); line-height: 1.45; }
+.bf-country-fit {
+  flex-shrink: 0;
+  text-align: right;
+}
+.bf-fit-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+.bf-fit-val {
+  font-size: 14px;
+  font-weight: 500;
+}
+.bf-fit-val.fit-perfect { color: var(--emerald); }
+.bf-fit-val.fit-good    { color: var(--accent); }
+.bf-fit-val.fit-stretch { color: var(--amber); }
+.bf-fit-val.fit-over    { color: var(--ruby); }
+.bf-apply-row {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+.bf-apply-link {
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 500;
+}
+.bf-no-match {
+  padding: 1rem;
+  background: var(--ruby-pale);
+  border: 1px solid var(--ruby);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--ruby);
+}
+@media (max-width: 900px) {
+  .budget-finder-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .budget-finder-card { flex-direction: column; }
+  .bf-left { border-right: none; border-bottom: 1px solid var(--border); min-width: 0; }
+}
+
+/* ── CONFIGURATOR (Step 3) ────────────────────────────────────── */
+.adspend-section {
+  padding: 2rem 3rem 2.5rem;
+  background: var(--surface);
+}
+.cfg-row { margin-bottom: 1.25rem; }
+.cfg-country-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.cfg-country-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border: 1.5px solid var(--border);
+  border-radius: 10px; background: var(--white);
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s; min-width: 130px;
+}
+.cfg-country-btn:hover { border-color: var(--accent); background: var(--accent-pale); }
+.cfg-country-btn.active { border-color: var(--accent); background: var(--accent-pale); }
+.cfg-country-btn.active .cfg-cbtn-name { color: var(--accent); font-weight: 600; }
+.cfg-cbtn-flag { font-size: 20px; flex-shrink: 0; }
+.cfg-cbtn-body { display: flex; flex-direction: column; gap: 3px; text-align: left; }
+.cfg-cbtn-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.cfg-cbtn-segs { display: flex; gap: 4px; flex-wrap: wrap; }
+.cfg-seg-tag {
+  font-size: 10px; padding: 2px 7px; border-radius: 100px;
+  cursor: pointer; font-weight: 500; border: 1px solid transparent; transition: all 0.12s;
+}
+.cfg-seg-tag.lux { background: var(--accent-pale); color: var(--accent); }
+.cfg-seg-tag.mid { background: var(--emerald-pale); color: var(--emerald); }
+.cfg-seg-tag.active-seg { box-shadow: 0 0 0 2px currentColor; font-weight: 700; }
+.cfg-panel {
+  display: grid; grid-template-columns: 1fr 320px; gap: 1rem; align-items: start;
+}
+.cfg-left {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.25rem 1.5rem;
+}
+.cfg-left-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.1rem; flex-wrap: wrap; gap: 8px;
+}
+.cfg-left-title { font-size: 13px; font-weight: 500; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+.cfg-total-badge { font-size: 20px; font-weight: 700; color: var(--accent); }
+.cfg-preset-row { display: flex; gap: 6px; }
+.cfg-preset-btn {
+  padding: 5px 12px; border-radius: 100px; border: 1px solid var(--border);
+  background: var(--white); font-size: 11px; color: var(--ink-3);
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+}
+.cfg-preset-btn:hover { border-color: var(--accent); color: var(--accent); }
+.cfg-preset-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cfg-channels { display: flex; flex-direction: column; gap: 12px; margin-bottom: 1.25rem; }
+.cfg-channel-row {
+  display: grid; grid-template-columns: 32px 1fr auto 52px;
+  align-items: center; gap: 10px;
+}
+.cfg-ch-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0; color: white;
+}
+.cfg-ch-slider { width: 100%; accent-color: var(--accent); cursor: pointer; }
+.cfg-ch-val { font-size: 13px; font-weight: 600; color: var(--accent); text-align: right; }
+.cfg-ch-pct { font-size: 11px; color: var(--ink-3); text-align: right; }
+.cfg-mix-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3); margin-bottom: 6px; }
+.cfg-mix-track { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; display: flex; margin-bottom: 8px; }
+.cfg-mix-seg { height: 100%; transition: width 0.3s; }
+.cfg-mix-legend { display: flex; flex-wrap: wrap; gap: 5px 12px; }
+.cfg-mix-item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--ink-3); }
+.cfg-mix-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.cfg-right {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.25rem 1.5rem;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.cfg-roi-header { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.cfg-market-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.cfg-stat { background: var(--surface); border-radius: 8px; padding: 8px 10px; }
+.cfg-stat-val { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 1px; }
+.cfg-stat-val.accent { color: var(--accent); }
+.cfg-stat-val.green  { color: var(--emerald); }
+.cfg-stat-val.amber  { color: var(--amber); }
+.cfg-stat-lbl { font-size: 10px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; }
+.cfg-margin-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; background: var(--surface); border-radius: 8px;
+}
+.cfg-margin-label { font-size: 12px; color: var(--ink-3); flex: 1; }
+.cfg-margin-row input[type=range] { width: 80px; accent-color: var(--accent); cursor: pointer; }
+.cfg-margin-val { font-size: 13px; font-weight: 600; color: var(--accent); min-width: 34px; text-align: right; }
+.cfg-roi-cards { display: flex; flex-direction: column; gap: 6px; }
+.cfg-roi-card {
+  border-radius: 10px; padding: 11px 14px;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.cfg-roi-card.pos { background: var(--emerald-pale); }
+.cfg-roi-card.neg { background: var(--ruby-pale); }
+.cfg-roi-card.amb { background: var(--amber-pale); }
+.cfg-roi-card-label { font-size: 11px; color: var(--ink-2); flex: 1; line-height: 1.4; }
+.cfg-roi-card-val { font-size: 22px; font-weight: 700; flex-shrink: 0; }
+.cfg-roi-card.pos .cfg-roi-card-val { color: var(--emerald); }
+.cfg-roi-card.neg .cfg-roi-card-val { color: var(--ruby); }
+.cfg-roi-card.amb .cfg-roi-card-val { color: var(--amber); }
+.cfg-rev-row {
+  font-size: 12px; color: var(--ink-3); line-height: 1.6;
+  padding: 8px 10px; background: var(--surface); border-radius: 8px;
+}
+.cfg-apply-btn {
+  width: 100%; padding: 10px; background: var(--accent); color: white;
+  border: none; border-radius: 8px; font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity 0.15s;
+}
+.cfg-apply-btn:hover { opacity: 0.88; }
+.cfg-empty { text-align: center; padding: 3rem 1rem; color: var(--ink-3); }
+.cfg-empty-icon { font-size: 32px; margin-bottom: 0.75rem; opacity: 0.2; }
+.cfg-empty-text { font-size: 14px; }
+@media (max-width: 1000px) {
+  .cfg-panel { grid-template-columns: 1fr; }
+  .adspend-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+}
+
+/* FOOTNOTES */
+.footnotes-section {
+  padding: 2rem 3rem 2.5rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.fn-title {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 1.25rem;
+}
+.fn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.fn-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+.fn-item strong { color: var(--ink-2); font-weight: 500; }
+.fn-num {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-pale);
+  border-radius: 100px;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+@media (max-width: 900px) {
+  .fn-grid { grid-template-columns: 1fr; }
+  
+  
+  .footnotes-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+}
+
+@media (max-width: 900px) {
+  header, .hero, .controls-section
+  .hero h1 { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-main">HENIG</span>
+    <span class="logo-sub">B2C Market Intelligence</span>
+  </div>
+  <a href="index.html" style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--border);padding:4px 12px;border-radius:100px;background:var(--surface);text-decoration:none;">← All Tools</a>
+</header>
+
+
+<section class="hero">
+  <div class="hero-tag">◆ Strategic Expansion Analysis</div>
+  <h1>Where should Henig<br>launch <em>first?</em></h1>
+  <p class="hero-sub">Enter your monthly budget → see which markets fit → configure your ad spend by country and channel → view the full ROI breakdown.</p>
+</section>
+
+<section class="budget-finder-section">
+  <div class="step-label"><span class="step-num">1</span> Enter your monthly budget</div>
+  <div class="budget-finder-card">
+    <div class="bf-left">
+      <div class="section-label" style="margin-bottom:6px;">Budget finder</div>
+      <div class="bf-title">How much can you spend per month?</div>
+      <div class="bf-subtitle">Set your min and max monthly budget — we'll suggest the best country mix.</div>
+      <div class="bf-inputs">
+        <div class="bf-input-group">
+          <label class="bf-input-lbl">Minimum ($/mo)</label>
+          <div class="bf-input-wrap">
+            <span class="bf-currency">$</span>
+            <input type="number" id="budgetMin" min="0" max="200000" step="500" value="5000" placeholder="Min">
+          </div>
+        </div>
+        <div class="bf-range-sep">→</div>
+        <div class="bf-input-group">
+          <label class="bf-input-lbl">Maximum ($/mo)</label>
+          <div class="bf-input-wrap">
+            <span class="bf-currency">$</span>
+            <input type="number" id="budgetMax" min="0" max="200000" step="500" value="20000" placeholder="Max">
+          </div>
+        </div>
+        <button class="bf-find-btn" onclick="runBudgetFinder()">Find best markets →</button>
+      </div>
+    </div>
+    <div class="bf-right" id="bfResults">
+      <div class="bf-placeholder">← Enter a budget range to see country recommendations</div>
+    </div>
+  </div>
+</section>
+
+<section class="adspend-section">
+  <div class="step-label"><span class="step-num">2</span> Configure ad spend by country, channel &amp; ROI</div>
+
+  <!-- Country + Segment Selector -->
+  <div class="cfg-row">
+    <div class="cfg-country-grid" id="cfgCountryGrid"></div>
+  </div>
+
+  <!-- Main configurator panel -->
+  <div class="cfg-panel" id="cfgPanel" style="display:none;">
+
+    <!-- Left: Channel sliders -->
+    <div class="cfg-left">
+      <div class="cfg-left-header">
+        <div class="cfg-left-title">Channel spend <span class="cfg-total-badge" id="cfgTotalBadge">$0/mo</span></div>
+        <div class="cfg-preset-row">
+          <button class="cfg-preset-btn active" onclick="cfgApplyPreset('mid',this)">Moderate</button>
+          <button class="cfg-preset-btn" onclick="cfgApplyPreset('low',this)">Conservative</button>
+          <button class="cfg-preset-btn" onclick="cfgApplyPreset('high',this)">Aggressive</button>
+        </div>
+      </div>
+
+      <div class="cfg-channels" id="cfgChannels">
+        <!-- Injected by JS -->
+      </div>
+
+      <div class="cfg-mix-bar-wrap">
+        <div class="cfg-mix-label">Channel mix</div>
+        <div class="cfg-mix-track" id="cfgMixTrack"></div>
+        <div class="cfg-mix-legend" id="cfgMixLegend"></div>
+      </div>
+    </div>
+
+    <!-- Right: ROI panel -->
+    <div class="cfg-right">
+      <div class="cfg-roi-header">ROI at this spend</div>
+
+      <!-- Market stats -->
+      <div class="cfg-market-stats" id="cfgMarketStats"></div>
+
+      <!-- Margin control -->
+      <div class="cfg-margin-row">
+        <span class="cfg-margin-label">Gross margin</span>
+        <input type="range" id="cfgMargin" min="20" max="65" value="40" step="1" oninput="cfgRender()">
+        <span class="cfg-margin-val" id="cfgMarginVal">40%</span>
+      </div>
+
+      <!-- ROI cards -->
+      <div class="cfg-roi-cards" id="cfgRoiCards"></div>
+
+      <!-- Revenue estimate -->
+      <div class="cfg-rev-row" id="cfgRevRow"></div>
+
+      <!-- Apply button -->
+      <button class="cfg-apply-btn" onclick="cfgApplyMargin()">Apply this margin to all ROI →</button>
+    </div>
+
+  </div>
+
+  <!-- Empty state -->
+  <div class="cfg-empty" id="cfgEmpty">
+    <div class="cfg-empty-icon">◆</div>
+    <div class="cfg-empty-text">Select a country and segment above to configure spend</div>
+  </div>
+
+</section>
+
+<section class="footnotes-section">
+  <div class="fn-title">Methodology &amp; footnotes</div>
+  <div class="fn-grid">
+    <div class="fn-item"><span class="fn-num">1</span><div><strong>Opportunity score</strong> is a weighted composite (out of 10) across six criteria: market size/TAM (25%), ASP alignment with Henig's product range (20%), Henig credential fit — GIA/IGI, KP, RJC (20%), market growth rate 2024–25 (15%), ease of market entry (10%), and margin potential (10%). Source: Henig internal scoring model based on Bain, Statista, Grand View Research data.</div></div>
+    <div class="fn-item"><span class="fn-num">2</span><div><strong>ROI — TAM capture</strong> estimates Henig's realistic first-year revenue by applying a score-weighted capture rate (0.08% of TAM per score point) to the 2025 market size. Gross profit is then calculated at the selected margin %, and ROI = (gross profit − annual promo spend) ÷ annual promo spend. This method is conservative and market-size sensitive — larger markets yield higher absolute returns even at low capture rates.</div></div>
+    <div class="fn-item"><span class="fn-num">3</span><div><strong>ROI — units × margin</strong> estimates revenue from the bottom up: a score-weighted unit capture rate (0.12% of available unit pool) is applied to each market's estimated unit volume, multiplied by the segment ASP, then gross-margined. ROI is calculated identically to method 1. This method is more sensitive to ASP and unit availability, making it a better proxy for Henig's actual sales pipeline potential.</div></div>
+    <div class="fn-item"><span class="fn-num">4</span><div><strong>Monthly promo budget ranges</strong> represent estimated all-in digital marketing spend (paid search, Meta/Instagram, influencer fees, and trade event allowance) based on Henig's Shopify Promotion Plan benchmarks. Conservative = low-end of range; Aggressive = high-end; Moderate = midpoint. Actual spend may vary by channel mix and seasonality.</div></div>
+    <div class="fn-item"><span class="fn-num">5</span><div><strong>Gross margin slider</strong> applies a single blended gross margin assumption across all markets for comparability. Henig's actual margin will vary by product category (LGD vs natural diamond), channel (DTC vs wholesale), and geography. Recommended starting assumption: 38–45% for mid-luxury, 45–60% for luxury.</div></div>
+    <div class="fn-item"><span class="fn-num">6</span><div><strong>Data sources</strong>: Market size and growth figures — Bain &amp; Company Altagamma 2024, Grand View Research 2025, Cognitive Market Research, Statista Diamond Jewellery Report 2025. ESG and consumer trend data — The Plumb Club 2025, IndexBox Ireland 2025. Trade show recommendations — JA New York, Inhorgenta Munich, Couture Las Vegas show directories.</div></div>
+  </div>
+</section>
+<footer>
+  <span class="footer-brand">HENIG DIAMONDS</span>
+  <span>Sources: Henig Research · Bain · Grand View Research · Statista · Cognitive Market Research · 2024–2025</span>
+</footer>
+
+<script>
+// ── MARKET DATA ───────────────────────────────────────────────────────────────
+const DATA = [
+  {market:'USA',flag:'🇺🇸',seg:'Luxury',score:9.3,size:13.5,yoy:5.1,asp:3500,bLow:28833,bHigh:125667,units:3857},
+  {market:'USA',flag:'🇺🇸',seg:'Mid-Luxury',score:8.0,size:11.2,yoy:4.7,asp:1200,bLow:10000,bHigh:38000,units:9333},
+  {market:'Germany',flag:'🇩🇪',seg:'Luxury',score:8.3,size:1.71,yoy:4.3,asp:2800,bLow:9000,bHigh:30083,units:611},
+  {market:'Germany',flag:'🇩🇪',seg:'Mid-Luxury',score:8.0,size:1.71,yoy:4.9,asp:1400,bLow:5000,bHigh:16000,units:1221},
+  {market:'France',flag:'🇫🇷',seg:'Luxury',score:7.7,size:1.06,yoy:6.0,asp:2900,bLow:9000,bHigh:30000,units:365},
+  {market:'France',flag:'🇫🇷',seg:'Mid-Luxury',score:6.6,size:0.74,yoy:4.2,asp:1300,bLow:4000,bHigh:14000,units:569},
+  {market:'Canada',flag:'🇨🇦',seg:'Luxury',score:7.2,size:0.83,yoy:5.1,asp:2700,bLow:9000,bHigh:30000,units:307},
+  {market:'Canada',flag:'🇨🇦',seg:'Mid-Luxury',score:7.2,size:0.83,yoy:6.4,asp:1100,bLow:5000,bHigh:16000,units:755},
+  {market:'Ireland',flag:'🇮🇪',seg:'Luxury',score:6.9,size:0.26,yoy:18.2,asp:2800,bLow:4000,bHigh:14000,units:93},
+  {market:'Ireland',flag:'🇮🇪',seg:'Mid-Luxury',score:6.0,size:0.19,yoy:18.8,asp:1100,bLow:1800,bHigh:6500,units:173},
+];
+
+// ── CHANNEL CONFIG ────────────────────────────────────────────────────────────
+const CHANNELS = [
+  { key:'meta',       label:'Meta',       sub:'Instagram + Facebook',  icon:'M', bg:'#1877f2', max:60000 },
+  { key:'google',     label:'Google',     sub:'Search + Shopping',      icon:'G', bg:'#ea4335', max:50000 },
+  { key:'tiktok',     label:'TikTok',     sub:'Spark Ads',              icon:'T', bg:'#111',    max:25000 },
+  { key:'pinterest',  label:'Pinterest',  sub:'Bridal + Discovery',     icon:'P', bg:'#e60023', max:15000 },
+  { key:'email',      label:'Email/SMS',  sub:'Klaviyo',                icon:'E', bg:'#15803d', max:5000  },
+  { key:'influencer', label:'Influencers',sub:'Micro (10K–100K)',        icon:'I', bg:'#b45309', max:20000 },
+];
+
+// Country-specific recommended channel mix (% of total)
+const CHANNEL_MIX = {
+  'USA|Luxury':      { meta:40, google:30, tiktok:6,  pinterest:10, email:2,  influencer:12 },
+  'USA|Mid-Luxury':  { meta:38, google:28, tiktok:10, pinterest:8,  email:4,  influencer:12 },
+  'Germany|Luxury':  { meta:28, google:38, tiktok:0,  pinterest:6,  email:10, influencer:18 },
+  'Germany|Mid-Luxury':{ meta:28,google:38,tiktok:0,  pinterest:6,  email:10, influencer:18 },
+  'France|Luxury':   { meta:35, google:22, tiktok:0,  pinterest:12, email:6,  influencer:25 },
+  'France|Mid-Luxury':{ meta:35,google:22, tiktok:0,  pinterest:12, email:6,  influencer:25 },
+  'Canada|Luxury':   { meta:38, google:28, tiktok:15, pinterest:5,  email:2,  influencer:12 },
+  'Canada|Mid-Luxury':{ meta:38,google:28, tiktok:15, pinterest:5,  email:2,  influencer:12 },
+  'Ireland|Luxury':  { meta:42, google:20, tiktok:0,  pinterest:3,  email:7,  influencer:28 },
+  'Ireland|Mid-Luxury':{ meta:42,google:20,tiktok:0,  pinterest:3,  email:7,  influencer:28 },
+};
+
+// Budget presets per market at moderate/low/high
+const BUDGET_PRESETS = {
+  low:  { meta:0.38, google:0.28, tiktok:0.10, pinterest:0.08, email:0.04, influencer:0.12 },
+  mid:  { meta:0.38, google:0.28, tiktok:0.10, pinterest:0.08, email:0.04, influencer:0.12 },
+  high: { meta:0.40, google:0.30, tiktok:0.12, pinterest:0.08, email:0.03, influencer:0.07 },
+};
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let cfgMarket = null;   // e.g. 'Germany'
+let cfgSeg    = null;   // e.g. 'Mid-Luxury'
+let cfgSpend  = { meta:0, google:0, tiktok:0, pinterest:0, email:0, influencer:0 };
+let marginApplied = false; // true after "Apply this margin" is clicked; prevents auto-reset on segment switch
+let budgetFinderHasResults = false; // true if budget finder has been run
+
+// Best realistic gross margin by segment (based on Henig product positioning)
+// Luxury: 45–60% range → use 52% midpoint; Mid-Luxury: 38–45% → use 42% midpoint
+function getBestMargin(seg) {
+  if (!seg) return 42;
+  if (seg === 'Luxury') return 52;
+  if (seg === 'Mid-Luxury') return 42;
+  return 46; // blended / Mix
+}
+
+function setMarginDisplay(pct) {
+  const slider = document.getElementById('cfgMargin');
+  const label  = document.getElementById('cfgMarginVal');
+  if (slider) slider.value = pct;
+  if (label)  label.textContent = pct + '%';
+}
+
+// ── INIT: Build country grid ──────────────────────────────────────────────────
+function cfgInit() {
+  const markets = [...new Set(DATA.map(d => d.market))];
+  const grid = document.getElementById('cfgCountryGrid');
+  grid.innerHTML = markets.map(m => {
+    const d = DATA.find(r => r.market === m);
+    // Always show both Luxury and Mid-Luxury for every country
+    const allSegs = ['Luxury', 'Mid-Luxury'];
+    return `
+      <div class="cfg-country-btn" id="cfgBtn-${m}">
+        <span class="cfg-cbtn-flag">${d.flag}</span>
+        <div class="cfg-cbtn-body">
+          <span class="cfg-cbtn-name">${m}</span>
+          <div class="cfg-cbtn-segs">
+            ${allSegs.map(s => `<span class="cfg-seg-tag ${s==='Luxury'?'lux':'mid'}" id="cfgTag-${m}-${s.replace('-','')}" onclick="cfgSelectSeg('${m}','${s}')">${s==='Luxury'?'Luxury':'Mid-Luxury'}</span>`).join('')}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function cfgSelectMarket(market) {
+  cfgMarket = market;
+  // Auto-select first available segment
+  const segs = DATA.filter(d => d.market === market).map(d => d.seg);
+  cfgSelectSeg(market, segs[0]);
+}
+
+function cfgSelectSeg(market, seg) {
+  cfgMarket = market;
+  cfgSeg    = seg;
+
+  // Only set best-scenario margin if user hasn't explicitly applied a custom one
+  if (!marginApplied) {
+    setMarginDisplay(getBestMargin(seg));
+  }
+  // Switching country/segment clears the "applied" lock so next switch resets again
+  marginApplied = false;
+
+  // Update country button active states
+  document.querySelectorAll('.cfg-country-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('cfgBtn-' + market);
+  if (btn) btn.classList.add('active');
+
+  // Update seg tag active states
+  document.querySelectorAll('.cfg-seg-tag').forEach(t => t.classList.remove('active-seg'));
+  const tag = document.getElementById('cfgTag-' + market + '-' + seg.replace('-',''));
+  if (tag) tag.classList.add('active-seg');
+
+  // Apply recommended channel mix as default
+  const mixKey = market + '|' + seg;
+  const mix = CHANNEL_MIX[mixKey] || BUDGET_PRESETS.mid;
+  const row = DATA.find(d => d.market === market && d.seg === seg);
+  const midBudget = row ? (row.bLow + row.bHigh) / 2 : 10000;
+
+  CHANNELS.forEach(ch => {
+    const pct = (mix[ch.key] || 0) / 100;
+    cfgSpend[ch.key] = Math.round(midBudget * pct / 100) * 100;
+  });
+
+  // Show panel
+  document.getElementById('cfgPanel').style.display = 'grid';
+  document.getElementById('cfgEmpty').style.display = 'none';
+
+  cfgBuildSliders();
+  cfgRender();
+}
+
+function cfgBuildSliders() {
+  const container = document.getElementById('cfgChannels');
+  container.innerHTML = CHANNELS.map(ch => `
+    <div class="cfg-channel-row">
+      <div class="cfg-ch-icon" style="background:${ch.bg}">${ch.icon}</div>
+      <input type="range" class="cfg-ch-slider" id="cfgSlider-${ch.key}"
+        min="0" max="${ch.max}" step="100" value="${cfgSpend[ch.key]}"
+        oninput="cfgOnSlider('${ch.key}', this.value)">
+      <span class="cfg-ch-val" id="cfgVal-${ch.key}">$0</span>
+      <span class="cfg-ch-pct" id="cfgPct-${ch.key}">0%</span>
+    </div>
+  `).join('');
+}
+
+function cfgOnSlider(key, val) {
+  cfgSpend[key] = +val;
+  cfgRender();
+}
+
+function cfgApplyPreset(level, el) {
+  document.querySelectorAll('.cfg-preset-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const mixKey = cfgMarket + '|' + cfgSeg;
+  const mix = CHANNEL_MIX[mixKey] || {};
+  const row = DATA.find(d => d.market === cfgMarket && d.seg === cfgSeg);
+  const budget = row ? (level==='low' ? row.bLow : level==='high' ? row.bHigh : (row.bLow+row.bHigh)/2) : 10000;
+  CHANNELS.forEach(ch => {
+    const pct = (mix[ch.key] || 0) / 100;
+    cfgSpend[ch.key] = Math.round(budget * pct / 100) * 100;
+    const slider = document.getElementById('cfgSlider-' + ch.key);
+    if (slider) slider.value = cfgSpend[ch.key];
+  });
+  cfgRender();
+}
+
+function cfgRender() {
+  const total = CHANNELS.reduce((s, ch) => s + (cfgSpend[ch.key] || 0), 0);
+  const annual = total * 12;
+  const margin = parseInt(document.getElementById('cfgMargin').value);
+  document.getElementById('cfgMarginVal').textContent = margin + '%';
+  document.getElementById('cfgTotalBadge').textContent = '$' + fmtK(total) + '/mo';
+
+  // Update sliders
+  CHANNELS.forEach(ch => {
+    const v = cfgSpend[ch.key] || 0;
+    const el = document.getElementById('cfgSlider-' + ch.key);
+    if (el) el.value = v;
+    const valEl = document.getElementById('cfgVal-' + ch.key);
+    if (valEl) valEl.textContent = '$' + fmtK(v);
+    const pctEl = document.getElementById('cfgPct-' + ch.key);
+    if (pctEl) pctEl.textContent = total > 0 ? (v/total*100).toFixed(0) + '%' : '0%';
+  });
+
+  // Mix bar
+  const track = document.getElementById('cfgMixTrack');
+  const legend = document.getElementById('cfgMixLegend');
+  if (track && total > 0) {
+    track.innerHTML = CHANNELS.filter(ch => cfgSpend[ch.key] > 0).map(ch =>
+      `<div class="cfg-mix-seg" style="width:${(cfgSpend[ch.key]/total*100).toFixed(1)}%;background:${ch.bg};"></div>`
+    ).join('');
+    legend.innerHTML = CHANNELS.filter(ch => cfgSpend[ch.key] > 0).map(ch =>
+      `<div class="cfg-mix-item"><div class="cfg-mix-dot" style="background:${ch.bg};"></div>${ch.label}: ${(cfgSpend[ch.key]/total*100).toFixed(0)}%</div>`
+    ).join('');
+  } else if (track) {
+    track.innerHTML = '';
+    legend.innerHTML = '';
+  }
+
+  // Market stats
+  const row = DATA.find(d => d.market === cfgMarket && d.seg === cfgSeg);
+  if (!row) return;
+
+  const statsEl = document.getElementById('cfgMarketStats');
+  statsEl.innerHTML = `
+    <div class="cfg-stat"><div class="cfg-stat-val accent">${row.score}/10</div><div class="cfg-stat-lbl">Opp. score</div></div>
+    <div class="cfg-stat"><div class="cfg-stat-val">$${row.size.toFixed(2)}B</div><div class="cfg-stat-lbl">Mkt size 2025</div></div>
+    <div class="cfg-stat"><div class="cfg-stat-val green">+${row.yoy}%</div><div class="cfg-stat-lbl">YoY growth</div></div>
+    <div class="cfg-stat"><div class="cfg-stat-val">$${row.asp.toLocaleString()}</div><div class="cfg-stat-lbl">Avg ASP</div></div>
+  `;
+
+  // ROI calculations (budget-scaled)
+  const idealMid = (row.bLow + row.bHigh) / 2;
+  const budgetScale = total > 0 ? Math.min(1.5, total / idealMid) : 0;
+
+  // Method 1: TAM capture
+  const cap1 = (row.score / 10) * 0.0008 * budgetScale;
+  const rev1  = row.size * 1e9 * cap1;
+  const gp1   = rev1 * (margin / 100);
+  const roi1  = annual > 0 ? ((gp1 - annual) / annual) * 100 : 0;
+
+  // Method 2: Units × margin
+  const cap2  = (row.score / 10) * 0.0012 * budgetScale;
+  const units = Math.round(row.units * 1000 * cap2);
+  const rev2  = units * row.asp;
+  const gp2   = rev2 * (margin / 100);
+  const roi2  = annual > 0 ? ((gp2 - annual) / annual) * 100 : 0;
+
+  function roiClass(r) { return r >= 80 ? 'pos' : r >= 0 ? 'amb' : 'neg'; }
+  function roiFmt(r) { return (r >= 0 ? '+' : '') + r.toFixed(0) + '%'; }
+
+  document.getElementById('cfgRoiCards').innerHTML = `
+    <div class="cfg-roi-card ${roiClass(roi1)}">
+      <div class="cfg-roi-card-label">ROI — TAM capture<br><small style="opacity:.7">Est. revenue vs annual spend</small></div>
+      <div class="cfg-roi-card-val">${roiFmt(roi1)}</div>
+    </div>
+    <div class="cfg-roi-card ${roiClass(roi2)}">
+      <div class="cfg-roi-card-label">ROI — units × margin<br><small style="opacity:.7">Unit pipeline vs annual spend</small></div>
+      <div class="cfg-roi-card-val">${roiFmt(roi2)}</div>
+    </div>
+  `;
+
+  const budgetFitNote = total < row.bLow
+    ? `⚠ Below minimum ($${fmtK(row.bLow)}/mo). Increase spend for better results.`
+    : total > row.bHigh
+    ? `ℹ Above ideal max ($${fmtK(row.bHigh)}/mo). Consider splitting across markets.`
+    : `✓ Within ideal budget range ($${fmtK(row.bLow)}–$${fmtK(row.bHigh)}/mo).`;
+
+  document.getElementById('cfgRevRow').innerHTML = `
+    <strong>Est. revenue:</strong> $${fmtK(Math.round(rev1))} (TAM method) · $${fmtK(Math.round(rev2))} (units method)<br>
+    <strong>Annual spend:</strong> $${fmtK(annual)} · <strong>Gross profit:</strong> $${fmtK(Math.round((gp1+gp2)/2))}<br>
+    ${budgetFitNote}
+  `;
+
+}
+
+function cfgApplyMargin() {
+  // Lock margin so switching country/segment doesn't override it
+  marginApplied = true;
+  // Re-run budget finder with the locked margin if results are showing
+  if (budgetFinderHasResults) {
+    runBudgetFinder();
+    // runBudgetFinder resets marginApplied internally — re-lock it after
+    marginApplied = true;
+  }
+  // Flash confirmation
+  const btn = document.querySelector('.cfg-apply-btn');
+  if (btn) {
+    const orig = btn.textContent;
+    const pct = document.getElementById('cfgMargin')?.value || '?';
+    btn.textContent = `✓ ROI updated at ${pct}% margin`;
+    btn.style.background = 'var(--emerald)';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2000);
+  }
+}
+
+function fmtK(n) {
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'K';
+  return Math.round(n).toString();
+}
+
+// ── BUDGET FINDER HELPERS (still referenced by Step 2) ───────────────────────
+function fmtShort(n) {
+  if (n >= 1000) return (n/1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'K';
+  return Math.round(n).toString();
+}
+function fmtROI(n) {
+  if (n > 500) return '+' + (n/100).toFixed(1) + 'x';
+  return (n >= 0 ? '+' : '') + n.toFixed(0) + '%';
+}
+function fmtUSD(n) {
+  if (n >= 1e9) return '$' + (n/1e9).toFixed(1) + 'B';
+  if (n >= 1e6) return '$' + (n/1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return '$' + (n/1e3).toFixed(0) + 'K';
+  return '$' + Math.round(n);
+}
+
+const BUDGET_PROFILES = [
+  { market:'Ireland', seg:'Mid-Luxury', flag:'🇮🇪', score:6.0, minMonthly:1800, maxMonthly:6500, asp:1100, yoy:18.8, size:0.19, units:173, why:'Lowest entry cost. 44% e-commerce share — digital-only viable. Best test market.' },
+  { market:'Ireland', seg:'Luxury',     flag:'🇮🇪', score:6.9, minMonthly:4000, maxMonthly:14000, asp:2800, yoy:18.2, size:0.26, units:93,  why:'18.2% YoY — fastest in the study. Natural diamond preference 85%.' },
+  { market:'Germany', seg:'Mid-Luxury', flag:'🇩🇪', score:8.0, minMonthly:5000, maxMonthly:16000, asp:1400, yoy:4.9, size:1.71, units:1221, why:'Best ROI-per-dollar in EU. RJC + KP compliance = instant access. ESG tailwind.' },
+  { market:'Canada',  seg:'Mid-Luxury', flag:'🇨🇦', score:7.2, minMonthly:5000, maxMonthly:16000, asp:1100, yoy:6.4, size:0.83, units:755,  why:'Fastest-growing mid-luxury. 50% LGD. Mirrors USA at lower cost.' },
+  { market:'France',  seg:'Mid-Luxury', flag:'🇫🇷', score:6.6, minMonthly:4000, maxMonthly:14000, asp:1300, yoy:4.2, size:0.74, units:569,  why:'ESG-conscious buyers. Necklaces beat earrings — unique to France.' },
+  { market:'Canada',  seg:'Luxury',     flag:'🇨🇦', score:7.2, minMonthly:9000, maxMonthly:30000, asp:2700, yoy:5.1, size:0.83, units:307,  why:'Lower-risk mirror of USA luxury. GIA standard. Toronto + Vancouver.' },
+  { market:'France',  seg:'Luxury',     flag:'🇫🇷', score:7.7, minMonthly:9000, maxMonthly:30000, asp:2900, yoy:6.0, size:1.06, units:365,  why:'Fastest luxury growth at 6.0% YoY. Haute couture + GIA = premium positioning.' },
+  { market:'Germany', seg:'Luxury',     flag:'🇩🇪', score:8.3, minMonthly:9000, maxMonthly:30083, asp:2800, yoy:4.3, size:1.71, units:611,  why:'Highest EU score 8.3/10. Quality-led buyers. Inhorgenta Munich gateway.' },
+  { market:'USA',     seg:'Mid-Luxury', flag:'🇺🇸', score:8.0, minMonthly:10000,maxMonthly:38000, asp:1200, yoy:4.7, size:11.2, units:9333, why:'$11.2B market. 55% LGD. Professional women 30–45 are repeat buyers.' },
+  { market:'USA',     seg:'Luxury',     flag:'🇺🇸', score:9.3, minMonthly:28833,maxMonthly:125667,asp:3500, yoy:5.1, size:13.5, units:3857, why:'Largest TAM $13.5B. Score 9.3/10. GIA mandatory. Bridal +18% YoY.' },
+];
+
+function getFitLabel(budget, profile) {
+  const inIdeal = budget >= profile.minMonthly && budget <= profile.maxMonthly;
+  const inRange = budget >= profile.minMonthly * 0.7 && budget <= profile.maxMonthly * 1.5;
+  if (inIdeal) return { label:'Perfect fit', cls:'fit-perfect', score:3 };
+  if (inRange)  return { label:'Good fit',    cls:'fit-good',    score:2 };
+  if (budget >= profile.minMonthly * 0.5) return { label:'Stretch', cls:'fit-stretch', score:1 };
+  return { label:'Under budget', cls:'fit-over', score:0 };
+}
+
+let seg = 'both';
+function setSeg(s, el) {
+  seg = s;
+  document.querySelectorAll('.seg-pills .pill').forEach(p => p.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+function render() { /* no-op — configurator handles its own rendering */ }
+function updateChannelDisplay() { /* no-op */ }
+
+// ── BUDGET FINDER ─────────────────────────────────────────────────────────────
+function runBudgetFinder() {
+  const minB = parseInt(document.getElementById('budgetMin').value) || 0;
+  const maxB = parseInt(document.getElementById('budgetMax').value) || 0;
+  const budget = maxB || minB;
+  const container = document.getElementById('bfResults');
+  if (!minB && !maxB) {
+    container.innerHTML = '<div class="bf-placeholder">← Enter a budget range to see country recommendations</div>';
+    return;
+  }
+  const margin = parseInt(document.getElementById('cfgMargin')?.value) || 40;
+
+  function computeRoi(p, monthly) {
+    const annual = monthly * 12;
+    const idealMid = (p.minMonthly + p.maxMonthly) / 2;
+    const budgetScale = Math.min(1.5, monthly / idealMid);
+    const cap1 = (p.score/10)*0.0008*budgetScale;
+    const rev1 = p.size*1e9*cap1;
+    const gp1  = rev1*(margin/100);
+    const roi1 = ((gp1-annual)/annual)*100;
+    const cap2 = (p.score/10)*0.0012*budgetScale;
+    const units = Math.round(p.units*1000*cap2);
+    const rev2  = units*p.asp;
+    const gp2   = rev2*(margin/100);
+    const roi2  = ((gp2-annual)/annual)*100;
+    return { roi1, roi2, blended:(roi1+roi2)/2, rev1, rev2, units, annual };
+  }
+
+  const viable = BUDGET_PROFILES.filter(p => budget >= p.minMonthly*0.6 && budget <= p.maxMonthly*2)
+    .map(p => { const monthly=Math.min(budget,p.maxMonthly); return {...p, monthly, roi:computeRoi(p,monthly)}; })
+    .sort((a,b) => b.roi.blended - a.roi.blended);
+
+  if (!viable.length) {
+    budgetFinderHasResults = false;
+    container.innerHTML = `<div class="bf-no-match">No markets are viable at $${budget.toLocaleString()}/mo. Minimum: 🇮🇪 Ireland Mid-Luxury at $1,800/mo.</div>`;
+    return;
+  }
+  budgetFinderHasResults = true;
+
+  const solo = viable[0];
+  function roiColor(v) { return v>=100?'#166534':v>=0?'#92400e':'#991b1b'; }
+  function roiBg(v) { return v>=100?'#dcfce7':v>=0?'#fef3c7':'#fee2e2'; }
+  const segBadge = (s) => `<span style="font-size:9px;font-weight:600;letter-spacing:.08em;background:${s==='Luxury'?'#eff4ff':'#dcfce7'};color:${s==='Luxury'?'#2563eb':'#15803d'};padding:2px 7px;border-radius:100px;margin-left:5px;">${s}</span>`;
+
+  const maxTam = Math.max(...viable.slice(0,6).map(p => p.size));
+  container.innerHTML = `
+    <div class="bf-verdict bf-verdict-solo">
+      <div class="bf-verdict-icon">◆</div>
+      <div class="bf-verdict-body">
+        <div class="bf-verdict-title">Best ROI — ${solo.flag} ${solo.market} · ${solo.seg}</div>
+        <div class="bf-verdict-sub">${solo.why} <strong style="color:var(--emerald);">✓ Loaded into configurator below ↓</strong></div>
+        <div style="margin-top:6px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
+          <span style="font-size:11px;color:var(--ink-3);">Segment TAM <strong style="color:var(--accent);font-size:13px;">${fmtUSD(solo.size*1e9)}</strong></span>
+          <span style="font-size:11px;color:var(--ink-3);">Est. capture <strong style="color:var(--ink-2);">~${(solo.roi.rev1/(solo.size*1e9)*100).toFixed(3)}%</strong> of TAM</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;">
+        <div class="bf-verdict-roi" style="background:${roiBg(solo.roi.blended)};color:${roiColor(solo.roi.blended)};">
+          ${solo.roi.blended>=0?'+':''}${solo.roi.blended.toFixed(0)}%<div style="font-size:9px;font-weight:400;opacity:.8;">est. ROI</div>
+        </div>
+      </div>
+    </div>
+    <div class="bf-ranked-title">All viable markets — ranked by ROI at $${fmtShort(budget)}/mo &nbsp;·&nbsp; click any to switch</div>
+    <div class="bf-country-list">
+      ${viable.slice(0,6).map((p,i) => {
+        const capPct = (p.roi.rev1/(p.size*1e9)*100).toFixed(3);
+        const tamBarW = Math.round(p.size/maxTam*100);
+        return `
+        <div class="bf-country-item ${i===0?'bf-top':''}" onclick="applyBudgetCountry('${p.market}','${p.seg}',${Math.round(Math.min(budget,p.maxMonthly))})">
+          <div class="bf-rank ${i===0?'gold':i===1?'':' muted'}">${i+1}</div>
+          <div class="bf-country-body">
+            <div class="bf-country-name">${p.flag} ${p.market}${segBadge(p.seg)} ${i===0?'<span style="font-size:9px;background:var(--emerald-pale);color:var(--emerald);padding:2px 7px;border-radius:100px;margin-left:4px;">Applied ✓</span>':''}</div>
+            <div class="bf-country-meta">$${fmtShort(Math.round(p.monthly))}/mo · Score ${p.score}/10 · ASP $${p.asp.toLocaleString()} · YoY +${p.yoy}%</div>
+            <div style="margin-top:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <span style="font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);">TAM</span>
+              <strong style="font-size:13px;color:var(--accent);">${fmtUSD(p.size*1e9)}</strong>
+              <div style="flex:1;min-width:60px;max-width:110px;height:5px;background:var(--surface-2);border-radius:3px;overflow:hidden;"><div style="height:100%;width:${tamBarW}%;background:var(--accent);border-radius:3px;opacity:.6;"></div></div>
+              <span style="font-size:10px;color:var(--ink-3);">~${capPct}% capture</span>
+            </div>
+            <div class="bf-country-why" style="margin-top:4px;">${p.why}</div>
+          </div>
+          <div style="flex-shrink:0;text-align:right;display:flex;flex-direction:column;gap:5px;align-items:flex-end;">
+            <div style="display:inline-flex;flex-direction:column;align-items:center;background:${roiBg(p.roi.blended)};color:${roiColor(p.roi.blended)};padding:6px 10px;border-radius:8px;min-width:60px;">
+              <span style="font-size:15px;font-weight:700;">${p.roi.blended>=0?'+':''}${p.roi.blended.toFixed(0)}%</span>
+              <span style="font-size:9px;opacity:.75;">ROI</span>
+            </div>
+            <div style="display:inline-flex;flex-direction:column;align-items:center;background:var(--accent-pale);color:var(--accent);padding:5px 10px;border-radius:8px;min-width:60px;">
+              <span style="font-size:13px;font-weight:700;">${fmtUSD(p.size*1e9)}</span>
+              <span style="font-size:9px;color:var(--ink-3);">Seg. TAM</span>
+            </div>
+          </div>
+        </div>`}).join('')}
+    </div>
+    <div class="bf-apply-row">Click any other market above to load it into the configurator instead.</div>
+  `;
+
+  // ── AUTO-APPLY best result to Step 3 immediately ──────────────────────────
+  // Reset margin lock — budget finder always starts fresh with best-scenario margin
+  marginApplied = false;
+  applyBudgetCountry(solo.market, solo.seg, budget);
+}
+
+function applyBudgetCountry(market, segName, monthly) {
+  // Trigger Step 3 configurator with this market
+  cfgSelectSeg(market, segName);
+  // Scale the channel mix to the budget
+  const mixKey = market + '|' + segName;
+  const mix = CHANNEL_MIX[mixKey] || {};
+  CHANNELS.forEach(ch => {
+    const pct = (mix[ch.key] || 0) / 100;
+    cfgSpend[ch.key] = Math.round(monthly * pct / 100) * 100;
+    const slider = document.getElementById('cfgSlider-' + ch.key);
+    if (slider) slider.value = cfgSpend[ch.key];
+  });
+  cfgRender();
+  document.querySelector('.adspend-section').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function applyMixAllocation(mixArr) {
+  if (!mixArr || !mixArr.length) return;
+  const top = mixArr.reduce((a,b) => a.share > b.share ? a : b);
+  applyBudgetCountry(top.market, top.seg, top.share);
+}
+
+// ── STEP 1 CONTROLS ───────────────────────────────────────────────────────────
+let customMode = false;
+const PRESETS = {
+  low:  { meta:8000,  google:6000,  tiktok:3000,  pinterest:2000, email:500,  influencer:2500  },
+  mid:  { meta:18000, google:14000, tiktok:7000,  pinterest:5000, email:1500, influencer:6000  },
+  high: { meta:44000, google:32000, tiktok:16000, pinterest:10000,email:3500, influencer:15000 },
+};
+function applyScenario() {}
+function applyPreset(key, el) {
+  document.querySelectorAll('.preset-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+}
+function resetCustom(el) {}
+function onCountryChange() {}
+function flashStep3() {
+  const s = document.querySelector('.adspend-section');
+  if (!s) return;
+  s.style.outline = '2px solid var(--accent)';
+  setTimeout(() => { s.style.outline = ''; }, 2000);
+}
+
+// ── BUDGET FINDER STATE ───────────────────────────────────────────────────────
+let lastSdpState = null;
+let sdpMethod = 'score';
+
+function renderSpendDist(rows, budget) {
+  lastSdpState = { matchingRows: rows, totalBudget: budget };
+  const panel = document.getElementById('spendDistPanel');
+  if (!panel) return;
+  if (!rows || !rows.length || !budget) { panel.style.display = 'none'; return; }
+  panel.style.display = 'block';
+  const margin = 40;
+  function gw(r) { return r.score; }
+  let pool = rows.filter(r => r.bLow <= budget);
+  if (!pool.length) { panel.style.display = 'none'; return; }
+  for (let i=0; i<10; i++) {
+    const tw = pool.reduce((s,r)=>s+gw(r),0);
+    const p2 = pool.filter(r => budget*gw(r)/tw >= r.bLow);
+    if (p2.length === pool.length) break;
+    if (!p2.length) { pool=[pool[0]]; break; }
+    pool = p2;
+  }
+  const tw = pool.reduce((s,r)=>s+gw(r),0);
+  const cards = pool.map(r => ({ r, share: Math.round(budget*gw(r)/tw) }));
+
+  document.getElementById('sdpTitle').textContent = `Split $${fmtShort(budget)}/mo across ${pool.length} market${pool.length>1?'s':''}`;
+  document.getElementById('sdpSubtitle').textContent = `Weighted by opportunity score. Click "Apply mix" to load into the configurator.`;
+  document.getElementById('sdpCards').innerHTML = cards.map(({r, share}, i) => {
+    const colors=['#2563eb','#15803d','#9333ea','#ea580c','#0891b2'];
+    const pct = (share/budget*100).toFixed(0);
+    return `<div class="sdp-card" onclick="applyBudgetCountry('${r.market}','${r.seg}',${share})">
+      <div class="sdp-card-top">
+        <div class="sdp-card-flag">${r.flag}</div>
+        <div class="sdp-card-name">${r.market}</div>
+        <div class="sdp-card-seg">${r.seg}</div>
+        <div class="sdp-card-amount">$${fmtShort(share)}<span style="font-size:11px;color:var(--ink-3)">/mo</span></div>
+        <div class="sdp-card-pct">${pct}% of total · ${share>=r.bLow?'✓ Within range':'⚠ Below min'}</div>
+      </div>
+      <div class="sdp-card-body">
+        <div class="sdp-card-bar-wrap"><div class="sdp-card-bar" style="width:${pct}%;background:${colors[i%colors.length]};"></div></div>
+        <div class="sdp-card-stat">Score <span>${r.score}/10</span></div>
+        <div class="sdp-card-stat">Min spend <span>$${fmtShort(r.bLow)}/mo</span></div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('sdpChannelBreakdown').innerHTML = '';
+  document.getElementById('sdpFooterNote').textContent = `$${fmtShort(budget)}/mo · ${pool.length} markets`;
+}
+
+function applySpendDist() {
+  if (!lastSdpState) return;
+  const { matchingRows, totalBudget } = lastSdpState;
+  applyMixAllocation(matchingRows.map(r => ({ ...r, share: totalBudget * r.score / matchingRows.reduce((s,q)=>s+q.score,0) })));
+}
+
+function setSdpMethod(m, el) {
+  sdpMethod = m;
+  document.querySelectorAll('.sdp-method').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  if (lastSdpState) renderSpendDist(lastSdpState.matchingRows, lastSdpState.totalBudget);
+}
+
+function clearRtBudget() {
+  document.getElementById('rtBudgetMin').value = '';
+  document.getElementById('rtBudgetMax').value = '';
+  const h = document.getElementById('rtBudgetHint');
+  if (h) { h.textContent = ''; h.className = 'rt-budget-hint'; }
+  const panel = document.getElementById('spendDistPanel');
+  if (panel) panel.style.display = 'none';
+  lastSdpState = null;
+  budgetFinderHasResults = false;
+}
+
+function getRtBudgetFilter() {
+  const mn = document.getElementById('rtBudgetMin');
+  const mx = document.getElementById('rtBudgetMax');
+  const min = mn && mn.value !== '' ? parseInt(mn.value) : null;
+  const max = mx && mx.value !== '' ? parseInt(mx.value) : null;
+  return { min, max, active: min !== null || max !== null };
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+cfgInit();
+</script>
+</body>
+</html>

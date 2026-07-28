@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henig Diamonds — Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: #f7f8fa; color: #111318; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
+.logo { font-family: 'Playfair Display', serif; font-size: 22px; letter-spacing: 0.08em; margin-bottom: 6px; }
+.sub { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #8a909c; margin-bottom: 3rem; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; max-width: 980px; width: 100%; }
+.card { background: #fff; border: 1px solid #e2e5eb; border-radius: 16px; padding: 2rem; text-decoration: none; color: inherit; transition: box-shadow 0.2s, border-color 0.2s; }
+.card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.08); border-color: #93b4f8; }
+.card-tag { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #2563eb; margin-bottom: 10px; }
+.card-title { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 8px; }
+.card-desc { font-size: 13px; color: #3d4149; line-height: 1.6; }
+.card-arrow { display: inline-block; margin-top: 1.25rem; font-size: 12px; font-weight: 500; color: #2563eb; }
+footer { margin-top: 3rem; font-size: 11px; color: #8a909c; }
+@media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <div class="logo">HENIG DIAMONDS</div>
+  <div class="sub">B2C Strategic Tools</div>
+  <div class="cards">
+    <a class="card" href="henig_b2c_app.html">
+      <div class="card-tag">◆ Market Intelligence</div>
+      <div class="card-title">B2C Market Intelligence</div>
+      <div class="card-desc">Interactive pivot across 5 countries and 2 segments — with dual ROI models, ad spend breakdown, and live scenario controls.</div>
+      <div class="card-arrow">Open tool →</div>
+    </a>
+    <a class="card" href="henig_phase_planner.html">
+      <div class="card-tag">◆ Launch Planner</div>
+      <div class="card-title">Phased Marketing Planner</div>
+      <div class="card-desc">Select a country and target event. Get a phase-by-phase launch plan with channels, costs, and KPI gates at three budget intensities.</div>
+      <div class="card-arrow">Open tool →</div>
+    </a>
+    <a class="card" href="henig_vr_roi.html">
+      <div class="card-tag">◆ AR Try-On</div>
+      <div class="card-title">AR Try-On Business Case</div>
+      <div class="card-desc">Data-driven ROI case for AR jewellery try-on — conversion lift, return reduction, revenue impact, and platform comparison (GlamAR vs Zakeke).</div>
+      <div class="card-arrow">Open tool →</div>
+    </a>
+    <a class="card" href="henig_stats_model.html">
+      <div class="card-tag">◆ Methodology</div>
+      <div class="card-title">Statistical Model</div>
+      <div class="card-desc">Full methodology behind the phased plan — market sizing, ROI formula, seasonal indices, digital benchmarks, and all data sources cited.</div>
+      <div class="card-arrow">Open tool →</div>
+    </a>
+  </div>
+  <footer>Henig Diamonds · B2C Strategic Deliverables · 2026</footer>
+</body>
+</html>
