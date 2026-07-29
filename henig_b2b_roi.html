@@ -87,11 +87,6 @@ table.roi-table tr:hover td{background:var(--surface);}
 .combined-summary .csum-label{font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px;}
 .combined-summary .csum-val{font-family:'Playfair Display',serif;font-size:18px;}
 
-.outreach-card{background:var(--white);border:2px solid var(--accent-mid);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem;}
-.outreach-tag{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-pale);padding:3px 10px;border-radius:99px;margin-bottom:10px;}
-.outreach-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:1rem;}
-.outreach-results{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
-
 /* Flow diagram */
 .flow-diagrams{display:grid;grid-template-columns:1.4fr 1fr;gap:1.25rem;margin-bottom:1.5rem;align-items:start;}
 .flow-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.5rem;}
@@ -108,7 +103,7 @@ table.roi-table tr:hover td{background:var(--surface);}
 .flow-engine-row{display:flex;align-items:center;gap:0.75rem;margin:0.6rem 0;}
 .flow-engine-row .flow-box{flex:1;}
 .flow-arrow-bidir{font-size:11px;color:var(--accent);text-align:center;white-space:nowrap;font-weight:500;}
-@media(max-width:900px){ .channel-grid{grid-template-columns:1fr;} .outreach-grid{grid-template-columns:1fr 1fr;} .flow-diagrams{grid-template-columns:1fr;} .flow-engine-row{flex-direction:column;} }
+@media(max-width:900px){ .channel-grid{grid-template-columns:1fr;} .flow-diagrams{grid-template-columns:1fr;} .flow-engine-row{flex-direction:column;} }
 
 .notmodeled-card{background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
 .notmodeled-item{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border-2);font-size:12.5px;}
@@ -158,7 +153,7 @@ table.roi-table tr:hover td{background:var(--surface);}
 <div class="main">
 
   <div class="honesty-banner">
-    <b>The model's shape:</b> <b>cold outreach</b> (email + LinkedIn DMs) is the continuous engine that actually closes accounts — it runs every month regardless of anything else. Trade bodies, press, and shows below build the recognition that makes outreach land instead of getting ignored. Paid ads (Google/Meta/LinkedIn) don't generate a separate cold audience — they <b>retarget the same contacts already reached via outreach and the visibility channels</b>, keeping Henig's name familiar between touches. Channels without a published, push-style audience (platforms you get found on, relationship-based referrals, visit-only venues) are <b>not run through this model</b> — they're listed separately with the reason why.
+    <b>What this page answers:</b> for each channel, "if Henig spends £X, what comes back?" Trade bodies/press/shows below have a fixed membership/listing cost, so their table shows the return on that fixed spend. <b>Paid ads (Google/Meta/LinkedIn) are the one place spend is variable</b> — type in any monthly budget there and see the return update live. Cold outreach (email + LinkedIn DMs) still matters as the "closer" that turns a warm contact into a sale — see the flow diagram below for how it fits — but it isn't run through a £-in/£-out calculator here, since there's no reliable data yet on Henig's own response/close rates to base one on. Channels without a published, push-style audience (platforms you get found on, relationship-based referrals, visit-only venues) are <b>not run through this model</b> either — they're listed separately with the reason why.
   </div>
 
   <div class="section-title">How the channels connect</div>
@@ -216,35 +211,6 @@ table.roi-table tr:hover td{background:var(--surface);}
   </div>
 
   <div class="formula-box" id="formulaBox"></div>
-
-  <div class="section-title">Cold outreach — the continuous engine</div>
-  <div class="section-desc">Cold email + LinkedIn DMs. This isn't a campaign with a start/end like a show or a magazine issue — it runs every month, all year, and it's what actually closes the account. "Contacts reached" below is the full monthly pool from every online source feeding in: names sourced from trade-body/press directories, companies identified by the website visitor-ID tool, and Henig's own prospect list — not just cold-sourced names. Everything else on this page exists to make this funnel convert better, not to replace it.</div>
-  <div class="outreach-card">
-    <span class="outreach-tag">Continuous · applies to every strategy path below</span>
-    <div class="outreach-grid">
-      <div class="assum-field">
-        <label>Contacts reached / month</label>
-        <div class="input-wrap"><input type="number" id="outContacts" value="150" min="0" step="10" oninput="renderAll()"></div>
-      </div>
-      <div class="assum-field">
-        <label>Response rate</label>
-        <div class="input-wrap"><input type="number" id="outResponse" value="8" min="0" max="100" step="0.5" oninput="renderAll()"><span>%</span></div>
-      </div>
-      <div class="assum-field">
-        <label>Response → meeting</label>
-        <div class="input-wrap"><input type="number" id="outMeeting" value="35" min="0" max="100" step="1" oninput="renderAll()"><span>%</span></div>
-      </div>
-      <div class="assum-field">
-        <label>Meeting → new account</label>
-        <div class="input-wrap"><input type="number" id="outClose" value="20" min="0" max="100" step="1" oninput="renderAll()"><span>%</span></div>
-      </div>
-      <div class="assum-field">
-        <label>Monthly cost (tools, if any)</label>
-        <div class="input-wrap"><span>£</span><input type="number" id="outCost" value="0" min="0" step="10" oninput="renderAll()"></div>
-      </div>
-    </div>
-    <div class="outreach-results" id="outreachResults"></div>
-  </div>
 
   <div class="section-title">Per-channel estimate — visibility &amp; recognition</div>
   <div class="section-desc">Only channels with a published, quantifiable audience size. Free channels show estimated annual value instead of a % (dividing by a £0 cost isn't meaningful) — the £ figure is what to weigh against the time it takes to run the channel.</div>
@@ -361,18 +327,38 @@ function fmtGBP(n){ return '£'+fmt(n); }
 
 function roiCell(roi, revenue, a){
   if(roi==='costna') return `<span class="roi-na">Cost not published</span>`;
-  if(roi==='free') return `<span class="roi-na">Free — ~${fmtGBP(revenue*(a.margin/100))} est. value/yr</span>`;
+  if(roi==='free') return `<span class="roi-na">No cash cost — see Revenue column</span>`;
   const cls = roi>=0 ? 'roi-pos' : 'roi-neg';
   return `<span class="${cls}">${roi>=0?'+':''}${fmt(roi)}%</span>`;
 }
 
 /* ================= RENDER ================= */
 function renderFormula(){
+  const a = getAssumptions();
+  const naj = ROI_CHANNELS.find(c=>c.id==='naj');
+  const r = computeChannel(naj.reach, naj.annualCost, a);
   document.getElementById('formulaBox').innerHTML =
-`<span class="step">Leads</span>        = Reach × (Lead conversion %)
-<span class="step">New Accounts</span> = Leads × (Close rate %)
-<span class="step">Revenue</span>      = New Accounts × (Avg. annual value)
-<span class="step">ROI</span>          = (Revenue × Margin − Annual Cost) / Annual Cost   <span style="color:#8a909c">— shown as £ value/yr instead, when Annual Cost = £0</span>`;
+`<b style="color:#fff;">The calculation, step by step</b> — worked using the NAJ row below as a real example:
+
+<span class="step">1. Reach</span>        — how many people/companies see this channel
+                    NAJ = ${fmt(naj.reach)} member businesses
+
+<span class="step">2. Leads</span>        = Reach × Lead conversion % (your assumption above)
+                    ${fmt(naj.reach)} × ${a.leadPct}% = ${fmt(r.leads,1)} leads/yr
+
+<span class="step">3. New Accounts</span> = Leads × Close rate % (your assumption above)
+                    ${fmt(r.leads,1)} × ${a.closePct}% = ${fmt(r.accounts,1)} new accounts/yr
+
+<span class="step">4. Revenue</span>      = New Accounts × Avg. annual value (your assumption above)
+                    ${fmt(r.accounts,1)} × ${fmtGBP(a.value)} = ${fmtGBP(r.revenue)} / yr
+
+<span class="step">5. Profit</span>       = Revenue × Gross margin % (your assumption above)
+                    ${fmtGBP(r.revenue)} × ${a.margin}% = ${fmtGBP(r.revenue*a.margin/100)} / yr
+
+<span class="step">6. ROI</span>          = (Profit − Annual Cost) ÷ Annual Cost
+                    (${fmtGBP(r.revenue*a.margin/100)} − ${fmtGBP(naj.annualCost)}) ÷ ${fmtGBP(naj.annualCost)} = <b style="color:#fff;">${r.roi>=0?'+':''}${fmt(r.roi)}%</b>
+
+<span style="color:#8a909c">If a channel is free (Annual Cost = £0), step 6 can't divide by zero — so the table just shows the Revenue/Profit figure and marks it "No cash cost" instead of a %.</span>`;
 }
 
 function renderChannelTable(){
@@ -393,39 +379,8 @@ function renderChannelTable(){
   document.getElementById('roiTableBody').innerHTML = rows;
 }
 
-/* Cold outreach — continuous engine. "Contacts" already includes names sourced
-   from trade-body/press directories and the website visitor-ID tool. */
-function computeColdOutreach(a){
-  const contacts = parseFloat(document.getElementById('outContacts').value)||0;
-  const responsePct = parseFloat(document.getElementById('outResponse').value)||0;
-  const meetingPct = parseFloat(document.getElementById('outMeeting').value)||0;
-  const closePct = parseFloat(document.getElementById('outClose').value)||0;
-  const monthlyCost = parseFloat(document.getElementById('outCost').value)||0;
-
-  const responsesMonth = contacts * (responsePct/100);
-  const meetingsMonth = responsesMonth * (meetingPct/100);
-  const accountsMonth = meetingsMonth * (closePct/100);
-  const accountsYear = accountsMonth*12;
-  const revenue = accountsYear * a.value;
-  const annualCost = monthlyCost*12;
-  let roi = null;
-  if(annualCost===0){ roi='free'; } else { roi = ((revenue*(a.margin/100))-annualCost)/annualCost*100; }
-  return {contacts, responsesMonth, meetingsMonth, accountsMonth, accountsYear, revenue, annualCost, roi};
-}
-
-function renderColdOutreach(a){
-  const r = computeColdOutreach(a);
-  document.getElementById('outreachResults').innerHTML = `
-    <div class="ads-metric"><div class="ads-metric-label">Meetings / month</div><div class="ads-metric-val">${fmt(r.meetingsMonth,1)}</div></div>
-    <div class="ads-metric"><div class="ads-metric-label">New accounts / yr</div><div class="ads-metric-val">${fmt(r.accountsYear,1)}</div></div>
-    <div class="ads-metric"><div class="ads-metric-label">Est. revenue / yr</div><div class="ads-metric-val">${fmtGBP(r.revenue)}</div></div>
-    <div class="ads-metric"><div class="ads-metric-label">Est. ROI</div><div class="ads-metric-val ${r.roi==='free'?'':(r.roi>=0?'roi-pos':'roi-neg')}">${r.roi==='free'?`Free — ~${fmtGBP(r.revenue*(a.margin/100))} value/yr`:(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</div></div>
-  `;
-  return r;
-}
-
-/* Paid ads — one calculator per platform, all reusing the outreach close rate
-   since their job is retargeting the same contacts, not sourcing new ones. */
+/* Paid ads — one calculator per platform, reusing the same lead → account
+   close rate as the per-channel visibility table above. */
 const AD_CHANNELS = [
   {id:'Google', name:'Google Ads'},
   {id:'Meta', name:'Meta Ads'},
@@ -472,7 +427,7 @@ function renderNotModeled(){
   ).join('');
 }
 
-function renderPathROI(a, outreach, adsCombined){
+function renderPathROI(a, adsCombined){
   const overlap = a.overlap/100;
   const html = PATH_ROI.map(p=>{
     const chans = p.channelIds.map(id=>ROI_CHANNELS.find(c=>c.id===id)).filter(Boolean);
@@ -480,16 +435,15 @@ function renderPathROI(a, outreach, adsCombined){
     const effReach = naiveReach*overlap;
     const bodiesPressCost = chans.reduce((s,c)=>s+(c.annualCost||0),0);
     const adsAnnual = p.adsMonthly*12;
-    const totalModeledCost = bodiesPressCost + adsAnnual + outreach.annualCost;
+    const totalModeledCost = bodiesPressCost + adsAnnual;
 
     // Visibility channels warm up leads; ads retarget proportionally to this path's ad
-    // budget share of the combined budget currently set above; cold outreach is constant
-    // across every path since it runs continuously regardless of which path is chosen.
+    // budget share of the combined budget currently set above.
     const adShare = adsCombined.totalBudget>0 ? (p.adsMonthly/adsCombined.totalBudget) : 0;
     const visibilityLeads = effReach*(a.leadPct/100);
     const adsLeadsYear = adsCombined.totalLeadsMonth*12*adShare;
     const leads = visibilityLeads + adsLeadsYear;
-    const accounts = leads*(a.closePct/100) + outreach.accountsYear;
+    const accounts = leads*(a.closePct/100);
     const revenue = accounts*a.value;
     const roi = totalModeledCost>0 ? ((revenue*(a.margin/100))-totalModeledCost)/totalModeledCost*100 : null;
 
@@ -498,7 +452,6 @@ function renderPathROI(a, outreach, adsCombined){
       <div class="path-roi-name">${p.name}</div>
       <div class="path-metric-row"><span class="lbl">Modeled annual cost</span><span class="val">${fmtGBP(totalModeledCost)}</span></div>
       <div class="path-metric-row"><span class="lbl">Real tracker monthly cost</span><span class="val">${fmtGBP(p.realTrackerMonthly)}/mo</span></div>
-      <div class="path-metric-row"><span class="lbl">+ Cold outreach (continuous, all paths)</span><span class="val">${fmt(outreach.accountsYear,1)} accounts/yr</span></div>
       <div class="path-metric-row"><span class="lbl">Effective reach (post-overlap)</span><span class="val">${fmt(effReach,0)}</span></div>
       <div class="path-metric-row"><span class="lbl">Est. new accounts / yr</span><span class="val">${fmt(accounts,1)}</span></div>
       <div class="path-metric-row"><span class="lbl">Est. revenue / yr</span><span class="val">${fmtGBP(revenue)}</span></div>
@@ -513,10 +466,9 @@ function renderAll(){
   const a = getAssumptions();
   renderFormula();
   renderChannelTable();
-  const outreach = renderColdOutreach(a);
   const adsCombined = renderAdChannels(a);
   renderNotModeled();
-  renderPathROI(a, outreach, adsCombined);
+  renderPathROI(a, adsCombined);
 }
 renderAll();
 </script>
