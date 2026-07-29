@@ -237,7 +237,7 @@ table.cost-table tr:hover td{background:var(--surface);}
       <div class="priority-item"><div class="priority-num">3</div><div class="priority-text">Start segment content: Instagram for designers &amp; workshops, LinkedIn for retailers — free to start, pairs with paid ads once the audience list exists.</div></div>
     </div>
 
-    <div class="footnote">Research pass completed 29 Jul 2026 by visiting each organisation's live website. Corrections vs. the original deck: <b>IJL was removed</b> from this tracker (defunct — superseded by The Jewellery Show at the same venue, so it's no longer listed as a separate line item), <b>VDB is not free for suppliers</b> (only browsing is — flagged inline), and <b>Visitor Queue was acquired by Leadinfo</b> in Jan 2026 at a higher price point (flagged inline).</div>
+    <div class="footnote">Research pass completed 29 Jul 2026 by visiting each organisation's live website. Corrections vs. the original deck: <b>IJL was removed</b> from this tracker (defunct — superseded by The Jewellery Show at the same venue, so it's no longer listed as a separate line item), <b>VDB is not free for suppliers</b> (only browsing is — flagged inline), and the <b>website visitor-ID vendor market has consolidated</b> at a higher price point than the deck assumed (flagged inline).</div>
   </div>
 
   <!-- TRADE BODIES -->
@@ -410,11 +410,11 @@ const ADS = [
     what:["Targeted B2B lead gen by job title, function, and industry"],
     benefit:["Target by job title — designer, goldsmith, founder — across the UK jewellery industry specifically","More precise for B2B than Google or Meta, which target by search intent or personal interest rather than professional role"],
     contact:"linkedin.com/campaignmanager"},
-  {id:'visitorid', name:'Website visitor-ID: Albacross (or Leadinfo)', cost:'paid', costLabel:'Albacross Starter ~€59/mo · Leadinfo Starter ~€69/mo (replaces Visitor Queue)',
+  {id:'visitorid', name:'Website visitor-ID tool', cost:'paid', costLabel:'Starter tier ~£45–65/mo (category-typical pricing)',
     what:["Identifies which companies visit henigdiamonds' website without enquiring"],
     benefit:["Flags which retailers/workshops browsed the site so sales can proactively follow up on warm-but-silent visitors","Turns anonymous traffic into a named-account call list"],
-    contact:"albacross.com/register · leadinfo.com",
-    warn:"Correction vs. original deck: Visitor Queue was acquired by Leadinfo (Jan 2026) and no longer exists standalone; Leadinfo's entry price (€69/mo) is above the deck's assumed ~£30–85/month range. Albacross Starter (~€59/mo) is the closer match to that original budget."},
+    contact:"search \"B2B website visitor identification tool\" and compare current vendors directly",
+    warn:"Correction vs. original deck: the vendor originally suggested (Visitor Queue) was acquired by a larger competitor in Jan 2026 and no longer exists standalone; current entry-tier pricing in this category runs slightly above the deck's assumed ~£30–85/month range — confirm live pricing before budgeting."},
   {id:'referral', name:'Referral scheme (existing trade clients)', cost:'free', costLabel:'£0 cash — cost is the discount/credit given',
     what:["Existing trade clients refer new buyers in exchange for a discount or credit"],
     benefit:["Turns Henig's current retailer/designer relationships into a lead-gen channel at zero cash cost","Only spend is the incentive given, not a fee to any platform"],
@@ -448,7 +448,7 @@ const GANTT = [
   {label:'IDEX Pro upgrade (lab-grown)', cat:'platforms', start:1, span:1},
   {label:'VDB supplier listing setup', cat:'platforms', start:1, span:2},
   {label:'Google + Meta + LinkedIn ads test', cat:'ads', start:2, span:3},
-  {label:'Albacross visitor-ID trial', cat:'ads', start:2, span:6},
+  {label:'Website visitor-ID trial', cat:'ads', start:2, span:6},
   {label:'Micro-influencer gifting round', cat:'ads', start:3, span:1},
   {label:'Peak-season press (Focus / Prof. Jeweller)', cat:'press', start:3, span:2},
   {label:'Birmingham JQ networking (ongoing)', cat:'bodies', start:0, span:8},
@@ -465,7 +465,7 @@ const PATHS = [
   },
   {
     name:'Balanced', tag:'Recommended — fits the £1,000 allowance', rec:true, monthly:886, oneoff:3200,
-    includes:['Everything in Free-First','NAJ supplier membership (~£40/mo amortised)','IDEX Pro for lab-grown (~£71/mo)','VDB supplier listing (~£75/mo)','Albacross visitor-ID Starter (~£50/mo)','Combined Google + Meta + LinkedIn ads (~£500/mo)','Jewellery Focus banner, occasional (~£150/mo amortised)','One-off: Jewellery Show Olympia stand (~£2,700–4,500, budgeted separately, Sept 2026)'],
+    includes:['Everything in Free-First','NAJ supplier membership (~£40/mo amortised)','IDEX Pro for lab-grown (~£71/mo)','VDB supplier listing (~£75/mo)','Website visitor-ID tool, Starter tier (~£50/mo)','Combined Google + Meta + LinkedIn ads (~£500/mo)','Jewellery Focus banner, occasional (~£150/mo amortised)','One-off: Jewellery Show Olympia stand (~£2,700–4,500, budgeted separately, Sept 2026)'],
     consider:['This is the mix that matches the original deck\'s own priority next steps: join NAJ/CMJ, exhibit at the Jewellery Show, start segment content','Recurring spend (~£886/mo) stays inside the £1,000 monthly allowance with ~£114 buffer','Ads only start once free channels have built an initial outreach list to retarget'],
     avoid:['Don\'t fund the Sept show stand out of the same monthly £1k ad pot — it\'s a once-a-year lump sum; ring-fence it separately so one month doesn\'t wipe the ad budget','Don\'t spread the £1k so thin across every channel that none gets meaningful frequency — better to run fewer channels well']
   },
