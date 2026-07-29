@@ -70,7 +70,40 @@ nav.tabs{position:sticky;top:60px;z-index:99;background:var(--surface);border-bo
 .priority-num{width:24px;height:24px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:2px;}
 .priority-text{font-size:13px;color:var(--ink-2);}
 
+/* PACKAGE TEASER CARDS (overview) */
+.pkg-teaser-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:1.5rem;}
+.pkg-teaser{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:1.5rem;cursor:pointer;transition:border-color .15s,transform .15s;}
+.pkg-teaser:hover{border-color:var(--accent-mid);transform:translateY(-2px);}
+.pkg-teaser.rec{border-color:var(--emerald);}
+.pkg-teaser-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;}
+.pkg-teaser.rec .pkg-teaser-tag{color:var(--emerald);font-weight:600;}
+.pkg-teaser-name{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:8px;}
+.pkg-teaser-desc{font-size:12.5px;color:var(--ink-2);margin-bottom:14px;line-height:1.6;}
+.pkg-teaser-stats{display:flex;gap:1rem;border-top:1px solid var(--border);padding-top:12px;}
+.pkg-teaser-stat{flex:1;}
+.pkg-teaser-stat-label{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2px;}
+.pkg-teaser-stat-val{font-size:15px;font-weight:500;}
+
+/* PACKAGE HEADER (inside each package tab) */
+.pkg-header{background:var(--white);border:2px solid var(--accent-mid);border-radius:16px;padding:1.75rem;margin-bottom:1.5rem;}
+.pkg-header.rec{border-color:var(--emerald);}
+.pkg-header-tag{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-pale);padding:3px 10px;border-radius:99px;margin-bottom:10px;}
+.pkg-header.rec .pkg-header-tag{color:var(--emerald);background:var(--emerald-pale);}
+.pkg-header-name{font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;}
+.pkg-header-desc{font-size:13.5px;color:var(--ink-2);margin-bottom:1rem;max-width:800px;}
+.pkg-focus-list{font-size:12.5px;color:var(--ink-2);margin-bottom:1.25rem;padding-left:18px;}
+.pkg-focus-list li{margin-bottom:4px;}
+.pkg-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.pkg-metric{background:var(--white);padding:1rem 1.25rem;}
+.pkg-metric-label{font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px;}
+.pkg-metric-val{font-family:'Playfair Display',serif;font-size:19px;}
+.pkg-metric-sub{font-size:10.5px;color:var(--ink-3);margin-top:2px;}
+.pkg-formula{background:var(--ink);color:#e8ecf5;border-radius:12px;padding:1.1rem 1.4rem;font-family:'DM Sans',monospace;font-size:12px;line-height:1.9;margin-top:1.25rem;overflow-x:auto;white-space:pre-wrap;}
+.pkg-formula .step{color:#93b4f8;}
+.pkg-flag{background:var(--ruby-pale);color:var(--ruby);border-radius:8px;padding:10px 12px;font-size:11.5px;margin-top:1rem;line-height:1.6;}
+
 /* CARD GRID for entities */
+.cat-heading{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:1.5rem 0 0.75rem;padding-bottom:6px;border-bottom:1px solid var(--border);}
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:1.5rem;}
 .item-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.35rem 1.5rem;position:relative;transition:border-color .15s;}
 .item-card.done{border-color:var(--emerald);background:var(--emerald-pale);}
@@ -112,50 +145,36 @@ table.cost-table tr:hover td{background:var(--surface);}
 .cat-shows{background:var(--gold-pale);color:var(--gold);}
 .cat-platforms{background:var(--emerald-pale);color:var(--emerald);}
 .cat-ads{background:var(--ruby-pale);color:var(--ruby);}
+.cat-outreach{background:#e0f2fe;color:#0369a1;}
 
 /* GANTT */
 .gantt-wrap{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.5rem;overflow-x:auto;margin-bottom:1.5rem;}
-.gantt{min-width:920px;}
-.gantt-header{display:grid;grid-template-columns:220px repeat(8,1fr);gap:4px;margin-bottom:8px;}
+.gantt{min-width:820px;}
+.gantt-header{display:grid;grid-template-columns:230px repeat(6,1fr);gap:4px;margin-bottom:8px;}
 .gantt-header div{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);text-align:center;padding:4px 0;}
 .gantt-header div:first-child{text-align:left;}
-.gantt-row{display:grid;grid-template-columns:220px repeat(8,1fr);gap:4px;align-items:center;margin-bottom:6px;}
+.gantt-row{display:grid;grid-template-columns:230px repeat(6,1fr);gap:4px;align-items:center;margin-bottom:6px;}
 .gantt-label{font-size:12px;color:var(--ink-2);padding-right:8px;}
-.gantt-track{grid-column:span 8;position:relative;height:22px;background:var(--surface-2);border-radius:6px;display:grid;grid-template-columns:repeat(8,1fr);}
+.gantt-track{grid-column:span 6;position:relative;height:22px;background:var(--surface-2);border-radius:6px;display:grid;grid-template-columns:repeat(6,1fr);}
 .gantt-bar{height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9.5px;color:#fff;font-weight:500;white-space:nowrap;overflow:hidden;padding:0 4px;}
 .gantt-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:1rem;font-size:11px;color:var(--ink-2);}
 .gantt-legend span{display:inline-flex;align-items:center;gap:5px;}
 .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
 
-/* STRATEGY PATHS */
-.path-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:1.5rem;}
-.path-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:1.5rem;display:flex;flex-direction:column;}
-.path-card.rec{border-color:var(--emerald);}
-.path-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;}
-.path-card.rec .path-tag{color:var(--emerald);font-weight:600;}
-.path-name{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:10px;}
-.path-cost{font-size:26px;font-weight:500;margin-bottom:4px;}
-.path-cost small{font-size:12px;color:var(--ink-3);font-weight:400;}
-.budget-bar-bg{background:var(--surface-2);height:8px;border-radius:99px;margin:10px 0 4px;overflow:hidden;}
-.budget-bar-fill{height:8px;border-radius:99px;}
-.budget-caption{font-size:11px;color:var(--ink-3);margin-bottom:14px;}
-.path-list-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin:12px 0 6px;font-weight:500;}
-.path-list{font-size:12px;color:var(--ink-2);padding-left:0;list-style:none;}
-.path-list li{margin-bottom:6px;padding-left:16px;position:relative;}
-.path-list.includes li::before{content:'✓';position:absolute;left:0;color:var(--emerald);}
-.path-list.consider li::before{content:'→';position:absolute;left:0;color:var(--accent);}
-.path-list.avoid li::before{content:'✕';position:absolute;left:0;color:var(--ruby);}
-
-.budget-control{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
-.budget-control label{font-size:12px;color:var(--ink-2);}
-.budget-control input{font-family:'DM Sans',sans-serif;font-size:14px;border:1px solid var(--border);border-radius:8px;padding:7px 10px;width:120px;}
-
 .footnote{font-size:11px;color:var(--ink-3);margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);line-height:1.7;}
+
+/* COMPARE TABLE */
+table.compare-table{width:100%;border-collapse:collapse;font-size:13px;}
+table.compare-table th{text-align:left;padding:12px 16px;background:var(--surface-2);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500;border-bottom:1px solid var(--border);}
+table.compare-table td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--ink-2);}
+table.compare-table tr:last-child td{border-bottom:none;}
+table.compare-table td.rec-col{background:var(--emerald-pale);}
 
 @media(max-width:900px){
   .stats-row{grid-template-columns:1fr 1fr;}
   .audience-grid{grid-template-columns:1fr;}
-  .path-grid{grid-template-columns:1fr;}
+  .pkg-teaser-grid{grid-template-columns:1fr;}
+  .pkg-metrics{grid-template-columns:1fr;}
   header{padding:0 1rem;}
   .main{padding:1.5rem 1rem 4rem;}
   .hero{padding:1.5rem 1rem 0.5rem;}
@@ -174,7 +193,7 @@ table.cost-table tr:hover td{background:var(--surface);}
 
 <div class="hero">
   <h1>B2B Trade Strategy Tracker</h1>
-  <p>Every trade body, publication, show, platform, and ad channel from the UK B2B expansion strategy — researched against each organisation's actual website, with concrete benefits, real costs, and a checkbox to track progress. Loose diamonds &amp; fine jewellery, UK trade market.</p>
+  <p>Three packages, agency-style — pick a spend level and see exactly what's included, what it costs, what it returns, and how long it takes. Every channel researched against each organisation's actual website. Loose diamonds &amp; fine jewellery, UK trade market.</p>
 </div>
 
 <div class="flow">
@@ -187,13 +206,10 @@ table.cost-table tr:hover td{background:var(--surface);}
 <nav class="tabs">
   <div class="tabs-inner">
     <button class="tab-btn active" data-tab="overview" onclick="showTab('overview')">Overview</button>
-    <button class="tab-btn" data-tab="bodies" onclick="showTab('bodies')">Trade Bodies</button>
-    <button class="tab-btn" data-tab="press" onclick="showTab('press')">Trade Press</button>
-    <button class="tab-btn" data-tab="shows" onclick="showTab('shows')">Trade Shows</button>
-    <button class="tab-btn" data-tab="platforms" onclick="showTab('platforms')">B2B Platforms</button>
-    <button class="tab-btn" data-tab="ads" onclick="showTab('ads')">Ads &amp; Digital</button>
-    <button class="tab-btn" data-tab="cost" onclick="showTab('cost')">Cost &amp; Timeline</button>
-    <button class="tab-btn" data-tab="strategy" onclick="showTab('strategy')">3 Strategy Paths</button>
+    <button class="tab-btn" data-tab="pkg1" onclick="showTab('pkg1')">Package 1 · Website, SEO &amp; Ads</button>
+    <button class="tab-btn" data-tab="pkg2" onclick="showTab('pkg2')">Package 2 · B2B Outreach</button>
+    <button class="tab-btn" data-tab="pkg3" onclick="showTab('pkg3')">Package 3 · Full Package</button>
+    <button class="tab-btn" data-tab="compare" onclick="showTab('compare')">Compare &amp; Formulas</button>
   </div>
 </nav>
 
@@ -201,15 +217,19 @@ table.cost-table tr:hover td{background:var(--surface);}
 
   <!-- OVERVIEW -->
   <div class="tabpanel active" id="tab-overview">
+    <div class="section-title">Three packages</div>
+    <div class="section-desc">Same underlying research, organised the way an agency would price it. Click a package to see full detail.</div>
+    <div class="pkg-teaser-grid" id="pkgTeaserGrid"></div>
+
     <div class="stats-row">
-      <div class="stat-card"><div class="stat-label">Tracked Items</div><div class="stat-val" id="statTotal">—</div><div class="stat-sub">across 5 categories</div></div>
+      <div class="stat-card"><div class="stat-label">Tracked Items</div><div class="stat-val" id="statTotal">—</div><div class="stat-sub">across all 3 packages</div></div>
       <div class="stat-card"><div class="stat-label">Free / No Cash Cost</div><div class="stat-val" style="color:var(--emerald)" id="statFree">—</div><div class="stat-sub">reciprocal or £0</div></div>
       <div class="stat-card"><div class="stat-label">Paid Channels</div><div class="stat-val" style="color:var(--ruby)" id="statPaid">—</div><div class="stat-sub">has a real cost</div></div>
       <div class="stat-card"><div class="stat-label">Your Progress</div><div class="stat-val" style="color:var(--accent)" id="statProgress">0%</div><div class="stat-sub"><span id="statProgressN">0</span> marked done</div></div>
     </div>
 
     <div class="section-title">Who you're selling to</div>
-    <div class="section-desc">Three trade audiences, each reached and won differently. Every channel in this tracker maps to one or more of these.</div>
+    <div class="section-desc">Three trade audiences, each reached and won differently. Every channel in every package maps to one or more of these.</div>
     <div class="audience-grid">
       <div class="aud-card">
         <div class="aud-letter">R</div>
@@ -234,221 +254,231 @@ table.cost-table tr:hover td{background:var(--surface);}
       </div>
     </div>
 
-    <div class="section-title">Priority next steps</div>
-    <div class="section-desc">From the original strategy — still the fastest path in, cross-checked against research below.</div>
-    <div class="priority-list">
-      <div class="priority-item"><div class="priority-num">1</div><div class="priority-text">Register as an exhibitor for <b>The Jewellery Show, Olympia</b> — 2–3 Sept 2026 (confirmed live, free entry, ~3,500 trade visitors). This is the highest-concentration audience per pound of anything in this tracker.</div></div>
-      <div class="priority-item"><div class="priority-num">2</div><div class="priority-text">Apply for <b>CMJ Approved-Supplier status</b> (free — based on trade terms offered) and <b>NAJ membership</b> (paid, from ~£330+VAT/yr).</div></div>
-      <div class="priority-item"><div class="priority-num">3</div><div class="priority-text">Start segment content: Instagram for designers &amp; workshops, LinkedIn for retailers — free to start, pairs with paid ads once the audience list exists.</div></div>
-    </div>
-
     <div class="section-title">Do these actually give us a contact list?</div>
-    <div class="section-desc">A separate, important question from "benefit" — does joining/exhibiting/listing actually hand Henig other companies' names and contacts to reach out to, or is it just Henig getting listed (one-way exposure)? Checked directly on each site — full detail on each card in its own tab.</div>
+    <div class="section-desc">A separate, important question from "benefit" — does joining/exhibiting/listing actually hand Henig other companies' names and contacts to reach out to, or is it just Henig getting listed (one-way exposure)?</div>
     <div class="priority-list">
       <div class="priority-item"><div class="dir-access dir-yes" style="min-width:70px;text-align:center;flex-shrink:0;"><b>YES</b></div><div class="priority-text"><b>RapNet</b> — the only channel here with a genuine searchable Member Directory (company profiles, trading terms, direct contact/message). Everything else is one-way.</div></div>
       <div class="priority-item"><div class="dir-access dir-no" style="min-width:70px;text-align:center;flex-shrink:0;"><b>NO</b></div><div class="priority-text"><b>NAJ, CMJ, SBJ, IDEX</b> — confirmed one-way. Henig gets listed/exposed; none hand over a member/retailer contact list.</div></div>
-      <div class="priority-item"><div class="dir-access dir-unclear" style="min-width:70px;text-align:center;flex-shrink:0;"><b>UNCLEAR</b></div><div class="priority-text"><b>Guild of Jewellery Designers, VDB, The Jewellery Show, CMJ Access</b> — no public evidence either way (leans no for Guild); trade shows in particular may offer attendee/lead-retrieval lists privately to exhibitors — worth asking the organiser directly rather than assuming.</div></div>
+      <div class="priority-item"><div class="dir-access dir-unclear" style="min-width:70px;text-align:center;flex-shrink:0;"><b>UNCLEAR</b></div><div class="priority-text"><b>Guild of Jewellery Designers, VDB, The Jewellery Show, CMJ Access</b> — no public evidence either way (leans no for Guild); worth asking directly rather than assuming.</div></div>
     </div>
 
-    <div class="footnote">Research pass completed 29 Jul 2026 by visiting each organisation's live website. Corrections vs. the original deck: <b>IJL was removed</b> from this tracker (defunct — superseded by The Jewellery Show at the same venue, so it's no longer listed as a separate line item), <b>VDB is not free for suppliers</b> (only browsing is — flagged inline), and the <b>website visitor-ID vendor market has consolidated</b> at a higher price point than the deck assumed (flagged inline).</div>
+    <div class="footnote">Research pass completed 29 Jul 2026 by visiting each organisation's live website. Corrections vs. the original deck: <b>IJL was removed</b> (defunct — superseded by The Jewellery Show), <b>VDB is not free for suppliers</b> (only browsing is), and the <b>website visitor-ID vendor market has consolidated</b> at a higher price point than the deck assumed.</div>
   </div>
 
-  <!-- TRADE BODIES -->
-  <div class="tabpanel" id="tab-bodies">
-    <div class="section-title">Trade bodies to join</div>
-    <div class="section-desc">Membership and partner networks — the base layer of trade credibility and directory visibility.</div>
-    <div class="card-grid" id="grid-bodies"></div>
-  </div>
-
-  <!-- TRADE PRESS -->
-  <div class="tabpanel" id="tab-press">
-    <div class="section-title">Trade press &amp; publications</div>
-    <div class="section-desc">Editorial and advertising reach into UK jewellery decision-makers. Free press-release routes are marked distinctly from paid ad placements.</div>
-    <div class="card-grid" id="grid-press"></div>
-  </div>
-
-  <!-- TRADE SHOWS -->
-  <div class="tabpanel" id="tab-shows">
-    <div class="section-title">Trade shows &amp; exhibitions</div>
-    <div class="section-desc">Face-to-face access — the fastest single move for concentrated audience reach.</div>
-    <div class="card-grid" id="grid-shows"></div>
-  </div>
-
-  <!-- PLATFORMS -->
-  <div class="tabpanel" id="tab-platforms">
-    <div class="section-title">B2B diamond trading platforms</div>
-    <div class="section-desc">Wholesale visibility beyond direct relationships — list inventory, get found by trade buyers.</div>
-    <div class="card-grid" id="grid-platforms"></div>
-  </div>
-
-  <!-- ADS & DIGITAL -->
-  <div class="tabpanel" id="tab-ads">
-    <div class="section-title">Ads &amp; digital tools</div>
-    <div class="section-desc">Supports outreach, doesn't replace it. Same contacts on email + ads = a familiar name, not a cold pitch (account-based marketing).</div>
-    <div class="card-grid" id="grid-ads"></div>
-  </div>
-
-  <!-- COST & TIMELINE -->
-  <div class="tabpanel" id="tab-cost">
-    <div class="section-title">Full cost breakdown</div>
-    <div class="section-desc">Every item across every category, one table. Figures are researched from live sites as of Jul 2026 — confirm directly where marked "quote on request," many are negotiated case-by-case.</div>
-    <div class="cost-table-wrap">
-      <table class="cost-table">
-        <thead><tr><th>Item</th><th>Category</th><th>Cost</th><th>Note</th></tr></thead>
-        <tbody id="costTableBody"></tbody>
-      </table>
+  <!-- PACKAGE 1 -->
+  <div class="tabpanel" id="tab-pkg1">
+    <div id="pkgHeader1"></div>
+    <div id="pkgItems1"></div>
+    <div class="section-title">Timeline — Package 1</div>
+    <div class="gantt-wrap"><div class="gantt" id="gantt1"></div>
+      <div class="gantt-legend"><span><span class="dot" style="background:var(--ruby)"></span>Ads &amp; digital</span></div>
     </div>
+  </div>
 
-    <div class="section-title">Timeline — Aug 2026 to Mar 2027</div>
-    <div class="section-desc">A sequencing suggestion: free/relationship items first, the Jewellery Show around its real Sept date, paid ads once there's an outreach list to retarget, peak-season press spend timed to Nov–Dec gifting season.</div>
-    <div class="gantt-wrap">
-      <div class="gantt" id="ganttChart"></div>
+  <!-- PACKAGE 2 -->
+  <div class="tabpanel" id="tab-pkg2">
+    <div id="pkgHeader2"></div>
+    <div id="pkgItems2"></div>
+    <div class="section-title">Timeline — Package 2</div>
+    <div class="gantt-wrap"><div class="gantt" id="gantt2"></div>
+      <div class="gantt-legend">
+        <span><span class="dot" style="background:var(--accent)"></span>Trade bodies</span>
+        <span><span class="dot" style="background:var(--violet)"></span>Trade press</span>
+        <span><span class="dot" style="background:var(--emerald)"></span>Platforms</span>
+        <span><span class="dot" style="background:#0369a1"></span>Outreach</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKAGE 3 -->
+  <div class="tabpanel" id="tab-pkg3">
+    <div id="pkgHeader3"></div>
+    <div id="pkgItems3"></div>
+    <div class="section-title">Timeline — Package 3 (Aug 2026–Mar 2027)</div>
+    <div class="gantt-wrap"><div class="gantt" id="gantt3"></div>
       <div class="gantt-legend">
         <span><span class="dot" style="background:var(--accent)"></span>Trade bodies</span>
         <span><span class="dot" style="background:var(--violet)"></span>Trade press</span>
         <span><span class="dot" style="background:var(--gold)"></span>Trade shows</span>
         <span><span class="dot" style="background:var(--emerald)"></span>Platforms</span>
         <span><span class="dot" style="background:var(--ruby)"></span>Ads &amp; digital</span>
+        <span><span class="dot" style="background:#0369a1"></span>Outreach</span>
       </div>
     </div>
-    <div class="footnote">Approximate costs based on published 2026 rate cards and live site pricing where available. Where a publication or platform states "quote on request," no independent published rate exists and Henig would need to contact them directly.</div>
   </div>
 
-  <!-- STRATEGY -->
-  <div class="tabpanel" id="tab-strategy">
-    <div class="section-title">3 strategy paths</div>
-    <div class="section-desc">Same tracker, three different spend levels. Henig's monthly B2B marketing allowance — set it below to see which path actually fits.</div>
-    <div class="budget-control">
-      <label for="budgetInput">Monthly allowance (£)</label>
-      <input type="number" id="budgetInput" value="1000" min="0" step="50" oninput="renderPaths()">
-      <span style="font-size:12px;color:var(--ink-3)">Bars below show each path's recurring monthly cost against this cap. One-off costs (show stands, joining fees) are called out separately — they shouldn't eat the recurring ad budget.</span>
+  <!-- COMPARE -->
+  <div class="tabpanel" id="tab-compare">
+    <div class="section-title">Compare the 3 packages</div>
+    <div class="section-desc">Same assumptions applied consistently across all three — full formula below the table.</div>
+    <div class="cost-table-wrap">
+      <table class="compare-table" id="compareTable"></table>
     </div>
-    <div class="path-grid" id="pathGrid"></div>
-    <div class="footnote">"Recurring monthly" = ongoing subscriptions, memberships (amortised), and ad spend. One-off items (trade show stands, joining fees, influencer gifting rounds) are listed separately per path since they hit once, not every month — budget them from a separate annual pot rather than the monthly £1,000 allowance shown above.</div>
+
+    <div class="section-title">How every number is calculated</div>
+    <div class="section-desc">One formula, reused everywhere in this tracker and in the linked ROI Estimator — nothing hidden.</div>
+    <div class="pkg-formula" id="masterFormula"></div>
+
+    <div class="section-title">Full cost breakdown</div>
+    <div class="section-desc">Every item across every package, one table.</div>
+    <div class="cost-table-wrap">
+      <table class="cost-table">
+        <thead><tr><th>Item</th><th>Category</th><th>Package(s)</th><th>Cost</th></tr></thead>
+        <tbody id="costTableBody"></tbody>
+      </table>
+    </div>
+    <div class="footnote">Approximate costs based on published 2026 rate cards and live site pricing where available, plus category-typical estimates for items not researched (SEO retainer, cold-email tooling). Adjust all assumptions live in the <a href="henig_b2b_roi.html">ROI Estimator</a>.</div>
   </div>
 
 </div>
 
 <script>
-/* ================= DATA ================= */
+/* ================= ASSUMPTIONS (shared, matches ROI Estimator defaults) ================= */
+const A = { value:12000, leadPct:0.3, closePct:15, margin:40, outreachConvPct:0.5, overlap:65,
+  adCPL:{google:110, meta:70, linkedin:160} };
+
+/* ================= DATA — every item tagged with which package(s) it belongs to ================= */
 const BODIES = [
-  {id:'naj', name:'NAJ — National Association of Jewellers', cost:'paid', costLabel:'From £330+VAT/yr + £150+VAT one-off join fee',
+  {id:'naj', name:'NAJ — National Association of Jewellers', cost:'paid', costLabel:'From £330+VAT/yr + £150+VAT one-off join fee', annualCost:396, reach:1700, packages:[3],
     what:["UK's central trade body — ~1,700 member businesses","27,000+ employees across those businesses"],
     benefit:["Online directory listing + press-release exposure to the 1,700-member network","Discounted exhibition space at UK/overseas shows","Discounted advertising reaching 1,150+ retail members","Member-to-member trade offers","Free legal helpline","Free credit-checks on prospective retail clients","Copyright / design-fraud protection"],
     contact:"membership@naj.co.uk · naj.co.uk/join · 0121 237 1110",
-    dirAccess:{status:'no', note:"NAJ's \"Find a Jeweller\" directory is a public, consumer-facing tool for finding a jeweller — not a supplier-to-member contact list. No evidence of a member contact database for suppliers."}},
-  {id:'cmj', name:'CMJ — Company of Master Jewellers', cost:'free', costLabel:'No published fee — based on trade terms offered',
+    dirAccess:{status:'no', note:"NAJ's \"Find a Jeweller\" directory is a public, consumer-facing tool for finding a jeweller — not a supplier-to-member contact list."}},
+  {id:'cmj', name:'CMJ — Company of Master Jewellers', cost:'free', costLabel:'No published fee — based on trade terms offered', annualCost:0, reach:160, packages:[3],
     what:["Largest jewellery/watch buying group in UK & Ireland","Runs an Approved Supplier programme, separate from retailer membership"],
     benefit:["Approved Suppliers get listed and gain access to CMJ's 160+ retailer network","Recent approved suppliers include Salvatore Bersani, Worldpay","Site doesn't quantify exact impression numbers for suppliers"],
     contact:"info@masterjewellers.co.uk · 01788 540250",
-    dirAccess:{status:'no', note:"Confirmed one-way: \"Suppliers... gain instant exposure to a network of leading independent retail jewellers\" — exposure only. No retailer contact list found across supplier, membership-benefits, or T&Cs pages."}},
-  {id:'guild', name:'Guild of Jewellery Designers (+ British Pearl Assoc. + GoJR)', cost:'free', costLabel:'Free — discount-for-exposure model, not a cash fee',
+    dirAccess:{status:'no', note:"Confirmed one-way: exposure only. No retailer contact list found across supplier, membership-benefits, or T&Cs pages."}},
+  {id:'guild', name:'Guild of Jewellery Designers (+ British Pearl Assoc. + GoJR)', cost:'free', costLabel:'Free — discount-for-exposure model, not a cash fee', annualCost:0, reach:1200, packages:[2,3],
     what:["1,200+ independent UK designer/maker members","Supplier Partner pool shared across three bodies via the gojdconnect.org portal"],
-    benefit:["Listing in the Supplier Partner Directory, reachable by 1,200+ Guild members plus British Pearl Association and Guild of Jewellery Retailers members combined","Henig offers a trade discount to members in exchange for the listing","180+ existing supplier relationships shows this is an active, already-used channel"],
+    benefit:["Listing in the Supplier Partner Directory, reachable by 1,200+ Guild members plus British Pearl Association and Guild of Jewellery Retailers members combined","Henig offers a trade discount to members in exchange for the listing","180+ existing supplier relationships shows this is an active, already-used channel","The one trade body included in Package 2 — free, and the widest reach-per-pound of the no-cost options"],
     contact:"sales@guildofjewellerydesigners.co.uk",
-    dirAccess:{status:'unclear', note:"The shared GoJD Connect portal has a \"Supplier Partner Directory\" — but it lists suppliers like Henig FOR members to browse, not member contacts for Henig to reach. Leans no; some portal pages couldn't be independently verified."}},
-  {id:'goldsmiths', name:"Goldsmiths' Centre, Hatton Garden", cost:'free', costLabel:'Free to visit — no standard commercial fee published',
+    dirAccess:{status:'unclear', note:"The shared GoJD Connect portal lists suppliers like Henig FOR members to browse, not member contacts for Henig to reach. Leans no."}},
+  {id:'goldsmiths', name:"Goldsmiths' Centre, Hatton Garden", cost:'free', costLabel:'Free to visit — no standard commercial fee published', annualCost:0, reach:null, packages:[3],
     what:["Charitable training/workspace hub (founded 2007)","100+ makers/businesses under one roof","Same postcode district as Henig"],
-    benefit:["Not a directory/ad channel — value is relationship-building, not listings","Visit exhibitions (e.g. \"Shine\") and industry preview events to meet makers-in-training who become future workshop buyers","Can propose event sponsorship or a venue partnership — the Centre says it welcomes this from companies"],
+    benefit:["Not a directory/ad channel — value is relationship-building, not listings","Visit exhibitions (e.g. \"Shine\") and industry preview events to meet makers-in-training who become future workshop buyers","Can propose event sponsorship or a venue partnership"],
     contact:"goldsmiths-centre.org/about-us/contact-us"},
-  {id:'sbj', name:'Society of British Jewellers (SBJ)', cost:'free', costLabel:'Free/reciprocal — Henig offers a member discount in exchange for exposure',
+  {id:'sbj', name:'Society of British Jewellers (SBJ)', cost:'free', costLabel:'Free/reciprocal — Henig offers a member discount in exchange for exposure', annualCost:0, reach:5000, packages:[3],
     what:["Professional body for UK independent jewellery makers/designers/goldsmiths/silversmiths"],
     benefit:["Listed on SBJ's supplier discount page","Pushed through their private Facebook group (reported 5,000+ members, unverified independently)","In exchange, Henig offers members a preferential rate/discount"],
     contact:"tsobj@outlook.com · thesocietyofbritishjewellers.com",
-    dirAccess:{status:'no', note:"Confirmed one-way: the supplier partnership only gets Henig listed on the member discount page. The 5,000+ Facebook group is public-join, not an exportable contact list."}},
+    dirAccess:{status:'no', note:"Confirmed one-way: gets Henig listed on the member discount page. The Facebook group is public-join, not an exportable contact list."}},
 ];
 
 const PRESS = [
-  {id:'thejeweller', name:"The Jeweller (NAJ's magazine)", cost:'mixed', costLabel:'Editorial: free · Ads: quote on request',
+  {id:'thejeweller', name:"The Jeweller (NAJ's magazine)", cost:'mixed', costLabel:'Editorial: free · Ads: quote on request', annualCost:0, reach:1700, packages:[3], overlapWarn:"Same 1,700 base as NAJ membership — don't double-count.",
     what:["NAJ's official quarterly journal","Mailed to every NAJ member + subscriber"],
-    benefit:["Free editorial exposure to NAJ's 1,700 member businesses via a pitched feature on Henig's range/heritage","This is Henig's own buyer base (retailers, designers, setters) reading it","Ad rates not public — inquire directly"],
+    benefit:["Free editorial exposure to NAJ's 1,700 member businesses via a pitched feature","This is Henig's own buyer base (retailers, designers, setters) reading it","Ad rates not public — inquire directly"],
     contact:"editor@naj.co.uk (editorial) · membership@naj.co.uk (ad rates)"},
-  {id:'profjeweller', name:'Professional Jeweller', cost:'mixed', costLabel:'Editorial: free · Print/digital ads: quote on request (~£2,000+/mo full-page benchmark)',
+  {id:'profjeweller', name:'Professional Jeweller', cost:'mixed', costLabel:'Editorial: free · Print/digital ads: ~£2,000+/mo full-page benchmark', annualCost:0, adCostAnnual:24000, reach:5000, packages:[3],
     what:["ITP Media monthly magazine + daily news site","Covers the UK jewellery/watch industry"],
-    benefit:["Free press release reaches magazine circulation of 5,000 monthly industry professionals","Also reaches the daily online news alert list","Paid full-page print ad runs from roughly £2,000+/month (industry rate-card benchmark)"],
+    benefit:["Free press release reaches magazine circulation of 5,000 monthly industry professionals","Also reaches the daily online news alert list","Paid full-page print ad runs from roughly £2,000+/month — included as a Package 3 line item"],
     contact:"harriet.whitaker@itp.com (editorial) · richelle.rimmer@itp.com (ads)"},
-  {id:'retailjeweller', name:'Retail Jeweller', cost:'paid', costLabel:'Subscription £130–142/yr · Ads/sponsorship quote on request (~£1,500–3,000/mo benchmark)',
+  {id:'retailjeweller', name:'Retail Jeweller', cost:'paid', costLabel:'Subscription £130–142/yr · Ads/sponsorship ~£1,500–3,000/mo benchmark', annualCost:null, adCostAnnual:27000, reach:700, packages:[3],
     what:["Emap title, 95+ year heritage","The only paid-subscription trade title in the sector","Runs the UK Jewellery Awards"],
-    benefit:["Prestige placement in front of a subscriber base skewed toward retailers (reported ~70%)","Sponsoring the UK Jewellery Awards (700+ attendees/year) buys visibility at the sector's own awards night, not just a magazine page"],
-    contact:"ruth.faulkner@emap.com (editorial) · ben.crudgington@emap.com (ads) · retail-jeweller.com/advertise"},
-  {id:'jewelleryfocus', name:'Jewellery Focus', cost:'mixed', costLabel:'Press release: free · Banner ~£300–600/mo · Solus email ~£500–1,000/send',
+    benefit:["Prestige placement in front of a subscriber base skewed toward retailers (reported ~70%)","Sponsoring the UK Jewellery Awards (700+ attendees/year) buys visibility at the sector's own awards night"],
+    contact:"ruth.faulkner@emap.com (editorial) · ben.crudgington@emap.com (ads)"},
+  {id:'jewelleryfocus', name:'Jewellery Focus', cost:'mixed', costLabel:'Press release: free · Banner ~£300–600/mo · Solus email ~£500–1,000/send', annualCost:0, reach:6800, packages:[2,3],
     what:["Mulberry Media title — daily news","Daily Briefing email confirmed sent to 6,800 jewellery professionals every weekday morning"],
-    benefit:["Free press release goes to the daily-briefing audience of 6,800 store owners/buyers/designers","Paid solus (dedicated) email puts Henig's message alone in that same inbox, no competing stories"],
+    benefit:["Free press release goes to the daily-briefing audience of 6,800 store owners/buyers/designers","The single trade-press pick for Package 2 — free, and the largest reach-per-pound of any press option researched","Paid solus (dedicated) email available as an upgrade — no competing stories in that inbox"],
     contact:"newsdesk@mulberrymedia.co.uk (editorial) · advertising@mulberrymedia.co.uk (ads)"},
-  {id:'jewelleryoutlook', name:'Jewellery Outlook', cost:'paid', costLabel:'Negotiated directly — no public rate card',
+  {id:'jewelleryoutlook', name:'Jewellery Outlook', cost:'paid', costLabel:'Negotiated directly — no public rate card', annualCost:null, reach:30000, packages:[3],
     what:["One-person operation run by ex-Reuters correspondent David Brough","Covers global trade fairs, diamonds & gemstones"],
-    benefit:["Sponsored brand feature or Instagram Live reaches part of a stated 30,000-strong global trade social following (@jewelleryoutlook)","Smaller and less UK-specific than the others","Useful for international trade-fair visibility"],
+    benefit:["Sponsored brand feature or Instagram Live reaches part of a stated 30,000-strong global trade social following","Smaller and less UK-specific than the others","Useful for international trade-fair visibility"],
     contact:"davidbrough2@btinternet.com · +44 7990 568064"},
 ];
 
 const SHOWS = [
-  {id:'jewelleryshow', name:'The Jewellery Show, Olympia', cost:'paid', costLabel:'Free entry for visitors · Exhibitor stand: quote on request (~£2,700–4,500 est. for 9m² at Olympia rates)',
+  {id:'jewelleryshow', name:'The Jewellery Show, Olympia', cost:'paid', costLabel:'Free entry for visitors · Exhibitor stand ~£2,700–4,500 est.', annualCost:3600, reach:3500, packages:[3],
     what:["CloserStill Media's UK trade-only show","Confirmed 2–3 Sept 2026, National Hall, Olympia London","3,500+ visitors, 200+ exhibitors, 50+ speakers"],
     benefit:["Two days of face-to-face access to 3,500+ trade buyers in one room","Listing in the exhibitor directory/app every attendee uses","Direct networking with retailers, designers and makers simultaneously","The single highest audience-concentration-per-pound in this whole tracker"],
     contact:"thejewelleryshow.co.uk/exhibitors",
-    dirAccess:{status:'unclear', note:"No public mention of an attendee list or lead-retrieval service on the exhibitor pages — but many UK trade shows offer this only via a private exhibitor portal after booking a stand. Ask the organiser directly (info@thejewelleryshow.co.uk) before assuming there's none."}},
-  {id:'cmjaccess', name:'CMJ Access', cost:'flag', costLabel:'Free-entry event for retailers · Stand pricing not published',
+    dirAccess:{status:'unclear', note:"No public mention of an attendee list or lead-retrieval service — ask the organiser directly (info@thejewelleryshow.co.uk)."}},
+  {id:'cmjaccess', name:'CMJ Access', cost:'flag', costLabel:'Free-entry event for retailers · Stand pricing not published', annualCost:null, reach:80, packages:[3],
     what:["New CMJ exhibition for independent UK/Ireland retailers","First edition already ran Tuesday 3 March 2026 (~80 retailers, 100+ suppliers)"],
     benefit:["Potential direct-to-independent-retailer exposure, if eligible"],
     contact:"info@accesstradeshow.com · 01788 540250",
-    warn:"Eligibility unconfirmed: the show appears geared to suppliers already affiliated with CMJ (\"CMJ suppliers have already been invited to book stands\"). Call before budgeting a stand — next edition would be ~March 2027.",
-    dirAccess:{status:'unclear', note:"No public mention of attendee-list access on the show's homepage or about page — check with the organiser directly, especially given the show is new (first edition March 2026)."}},
-  {id:'birmingham', name:'Birmingham Jewellery Quarter', cost:'free', costLabel:'Free — no bookable exhibition',
+    warn:"Eligibility unconfirmed — the show appears geared to suppliers already affiliated with CMJ. Call before budgeting a stand.",
+    dirAccess:{status:'unclear', note:"No public mention of attendee-list access — check with the organiser directly."}},
+  {id:'birmingham', name:'Birmingham Jewellery Quarter', cost:'free', costLabel:'Free — no bookable exhibition', annualCost:0, reach:null, packages:[3],
     what:["500+ business manufacturing/goldsmith cluster (thejewelleryquarter.org)","Run partly by the Jewellery Quarter BID"],
     benefit:["Not a trade show — no stand to book","Value is ongoing B2B relationship-building with the Midlands manufacturing/goldsmith cluster via BID engagement"],
     contact:"thejewelleryquarter.org",
-    warn:"No unified trade exhibition exists here. Scheduled events found (Jewellery Quarter Festival, monthly Artisan Market) are consumer/community-facing, not B2B."},
+    warn:"No unified trade exhibition exists here — this is a networking/BID play, not a bookable show."},
 ];
 
 const PLATFORMS = [
-  {id:'rapnet', name:'RapNet (Rapaport Group)', cost:'paid', costLabel:'Already have — TradeScreen tiers confirmed at $21–29/mo; dealer-listing tier price unconfirmed on current site',
+  {id:'rapnet', name:'RapNet (Rapaport Group)', cost:'paid', costLabel:'Already have — TradeScreen tiers confirmed at $21–29/mo', annualCost:0, reach:null, packages:[3],
     what:["World's largest diamond trading network","Natural diamonds only","Thousands of buyers/sellers in 100+ countries"],
-    benefit:["Inventory already syndicated to the largest natural-diamond trade network","No action needed beyond confirming which membership tier Henig is currently on"],
-    contact:"rapnet.com (existing account) · rapaport.com/trade/rapaport-trade-membership-plans/dealer",
-    dirAccess:{status:'yes', note:"Confirmed: a full searchable Member Directory — find companies by name, location, or inventory, view profiles with trading terms and contact info, and message them directly. The one channel in this tracker that hands Henig a genuine, actionable company contact source."}},
-  {id:'idex', name:'IDEX', cost:'mixed', costLabel:'Basic: free (search only) · Premium: $720/yr (list natural) · Pro: $1,080/yr (list natural + lab-grown)',
+    benefit:["Inventory already syndicated to the largest natural-diamond trade network — no new incremental cost","No action needed beyond confirming which membership tier Henig is currently on"],
+    contact:"rapnet.com (existing account)",
+    dirAccess:{status:'yes', note:"Confirmed: a full searchable Member Directory — find companies by name/location/inventory, view profiles, and message them directly. The one channel here with a genuine contact source."}},
+  {id:'idex', name:'IDEX', cost:'mixed', costLabel:'Basic: free (search only) · Pro: $1,080/yr (list natural + lab-grown)', annualCost:852, reach:null, packages:[3],
     what:["Established B2B diamond platform, more regional focus than RapNet","Lists both natural and lab-grown diamonds"],
-    benefit:["Pro tier is the only one that unlocks listing lab-grown stock to buyers actively browsing IDEX","A genuinely separate channel from RapNet if Henig stocks or expands into lab-grown diamonds"],
+    benefit:["Pro tier unlocks listing lab-grown stock to buyers actively browsing IDEX","A genuinely separate channel from RapNet if Henig expands into lab-grown"],
     contact:"idexonline.com/Register",
-    dirAccess:{status:'no', note:"Platform is inventory-first — search diamonds, not companies. No member/company directory found in navigation or account features."}},
-  {id:'vdb', name:'VDB — Virtual Diamond Boutique', cost:'paid', costLabel:'Browsing: free · Retailer inventory access: $75/mo · Supplier (Henig) listing: volume-based fee, not free',
+    dirAccess:{status:'no', note:"Platform is inventory-first — search diamonds, not companies. No member/company directory found."}},
+  {id:'vdb', name:'VDB — Virtual Diamond Boutique', cost:'paid', costLabel:'Browsing: free · Supplier listing: volume-based fee, ~£85/mo assumed', annualCost:1020, reach:null, packages:[2,3],
     what:["Visual, app-based marketplace connecting retailers and wholesalers worldwide","30,000+ members","1M+ natural + 220,000+ lab-grown diamonds listed","HD/360° visual search"],
-    benefit:["Visual-first (HD/360°) listing reaches designers and retailers who shop by image rather than spec sheet","Ready lab-grown listing option included","This is a paid tier for suppliers, not the free entry point the original deck assumed"],
+    benefit:["Visual-first (HD/360°) listing reaches designers and retailers who shop by image rather than spec sheet","Ready lab-grown listing option included","The one B2B platform included in Package 2, alongside RapNet/IDEX reserved for the Full Package"],
     contact:"support@vdbapp.com · vdbapp.com/supplier-solutions",
-    warn:"Correction vs. original deck: listing your own inventory as a supplier is NOT free — only browsing/sourcing is. Budget for the volume-based wholesaler fee before treating this as a zero-cost entry point.",
-    dirAccess:{status:'unclear', note:"VDB's site blocked automated research, so this is inferred from search snippets only: described as inventory/marketplace search, no directory feature mentioned. Confirm directly with VDB before assuming either way."}},
+    warn:"Correction vs. original deck: listing your own inventory as a supplier is NOT free — only browsing/sourcing is.",
+    dirAccess:{status:'unclear', note:"VDB's site blocked automated research — described as inventory/marketplace search, no directory feature found in public snippets. Confirm directly."}},
 ];
 
 const ADS = [
-  {id:'google', name:'Google Ads', cost:'paid', costLabel:'Self-set budget, no fixed minimum spend', category:'ads',
+  {id:'seo', name:'Website SEO & Keyword Maintenance', cost:'paid', costLabel:'~£300–400/mo retainer (or in-house time equivalent)', annualCost:4200, organicLeadsPerMonth:3, packages:[1,3],
+    what:["Ongoing on-site SEO: keyword targeting, content, technical maintenance","Targets search terms like \"wholesale loose diamonds UK\", \"diamond supplier London\""],
+    benefit:["Compounding, non-paid traffic once rankings mature — the only channel here whose marginal cost per extra visitor trends toward zero","Directly supports Google Ads (same keywords) and gives Ads a cheaper, higher-quality landing experience"],
+    contact:"internal or freelance SEO retainer — no single vendor"},
+  {id:'google', name:'Google Ads', cost:'paid', costLabel:'Self-set budget — modelled at £200/mo', annualCost:2400, cpl:110, packages:[1,3],
     what:["Auction-based search advertising, self-serve"],
     benefit:["Captures buyers actively typing \"wholesale loose diamonds UK\" or \"diamond supplier London\" into Google","High-intent traffic no directory or press listing delivers"],
     contact:"ads.google.com"},
-  {id:'meta', name:'Meta Ads (Instagram/Facebook)', cost:'paid', costLabel:'Self-set budget, no minimum',
+  {id:'meta', name:'Meta Ads (Instagram/Facebook)', cost:'paid', costLabel:'Self-set budget — modelled at £150/mo', annualCost:1800, cpl:70, packages:[1,3],
     what:["Custom Audience retargeting for account-based marketing"],
-    benefit:["Upload Henig's existing outreach contact list as a Custom Audience","Those exact retailers/designers/setters see Henig ads on Instagram/Facebook","Keeps the name familiar between cold-outreach touches instead of being a stranger's pitch"],
+    benefit:["Upload Henig's existing outreach contact list as a Custom Audience","Those exact retailers/designers/setters see Henig ads on Instagram/Facebook","Keeps the name familiar between cold-outreach touches"],
     contact:"business.facebook.com/adsmanager"},
-  {id:'linkedin', name:'LinkedIn Ads', cost:'paid', costLabel:'Self-set budget, flexible — no minimum contract',
+  {id:'linkedin', name:'LinkedIn Ads', cost:'paid', costLabel:'Self-set budget — modelled at £150/mo', annualCost:1800, cpl:160, packages:[1,3],
     what:["Targeted B2B lead gen by job title, function, and industry"],
-    benefit:["Target by job title — designer, goldsmith, founder — across the UK jewellery industry specifically","More precise for B2B than Google or Meta, which target by search intent or personal interest rather than professional role"],
+    benefit:["Target by job title — designer, goldsmith, founder — across the UK jewellery industry specifically","More precise for B2B than Google or Meta"],
     contact:"linkedin.com/campaignmanager"},
-  {id:'visitorid', name:'Website visitor-ID tool', cost:'paid', costLabel:'Starter tier ~£45–65/mo (category-typical pricing)',
+  {id:'visitorid', name:'Website visitor-ID tool', cost:'paid', costLabel:'Starter tier ~£55/mo (category-typical pricing)', annualCost:660, reach:null, packages:[2,3],
     what:["Identifies which companies visit henigdiamonds' website without enquiring"],
-    benefit:["Flags which retailers/workshops browsed the site so sales can proactively follow up on warm-but-silent visitors","Turns anonymous traffic into a named-account call list"],
+    benefit:["Flags which retailers/workshops browsed the site so sales can proactively follow up on warm-but-silent visitors","Names surfaced here feed straight into the cold email / LinkedIn outreach contact pool below — not modelled as separate revenue, to avoid double-counting"],
     contact:"search \"B2B website visitor identification tool\" and compare current vendors directly",
-    warn:"Correction vs. original deck: the vendor originally suggested (Visitor Queue) was acquired by a larger competitor in Jan 2026 and no longer exists standalone; current entry-tier pricing in this category runs slightly above the deck's assumed ~£30–85/month range — confirm live pricing before budgeting."},
-  {id:'referral', name:'Referral scheme (existing trade clients)', cost:'free', costLabel:'£0 cash — cost is the discount/credit given',
+    warn:"Correction vs. original deck: the vendor originally suggested (Visitor Queue) was acquired by a larger competitor in Jan 2026; current entry-tier pricing runs slightly above the deck's original ~£30–85/month assumption."},
+  {id:'referral', name:'Referral scheme (existing trade clients)', cost:'free', costLabel:'£0 cash — cost is the discount/credit given', annualCost:0, reach:null, packages:[3],
     what:["Existing trade clients refer new buyers in exchange for a discount or credit"],
-    benefit:["Turns Henig's current retailer/designer relationships into a lead-gen channel at zero cash cost","Only spend is the incentive given, not a fee to any platform"],
+    benefit:["Turns Henig's current retailer/designer relationships into a lead-gen channel at zero cash cost"],
     contact:"internal programme — no external signup"},
-  {id:'mutualreferral', name:'Mutual referral (independent designers)', cost:'free', costLabel:'£0 — relationship-based, no fee',
-    what:["Reciprocal introductions with independent designers who refer clients to Henig and vice versa"],
-    benefit:["Builds designer-segment reach without any platform, ad, or membership cost","Purely relationship capital"],
+  {id:'mutualreferral', name:'Mutual referral (independent designers)', cost:'free', costLabel:'£0 — relationship-based, no fee', annualCost:0, reach:null, packages:[3],
+    what:["Reciprocal introductions with independent designers"],
+    benefit:["Builds designer-segment reach without any platform, ad, or membership cost"],
     contact:"internal — build via direct designer relationships"},
-  {id:'influencer', name:'Micro-influencer gifting (8–12 creators)', cost:'paid', costLabel:'Approx. £350–400 total (one-off, not monthly)',
-    what:["Gifting product to 8–12 micro-influencers (designers/setters/bench-jewellers on Instagram) in exchange for organic content"],
-    benefit:["Low-cost visual proof-of-quality content reaching designer and workshop audiences on Instagram","Cheaper per-impression than paid social ads","Carries creator credibility paid ads don't"],
+  {id:'influencer', name:'Micro-influencer gifting (8–12 creators)', cost:'paid', costLabel:'Approx. £350–400 total per round (one-off, not monthly)', annualCost:350, reach:null, packages:[3],
+    what:["Gifting product to 8–12 micro-influencers on Instagram in exchange for organic content"],
+    benefit:["Low-cost visual proof-of-quality content reaching designer and workshop audiences","Cheaper per-impression than paid social ads"],
     contact:"internal — direct outreach to chosen creators"},
+];
+
+const OUTREACH = [
+  {id:'coldemail', name:'Cold Email Outreach', cost:'paid', costLabel:'Sequencing/mail-merge tool ~£65/mo', annualCost:780, contactsPerMonth:120, packages:[2,3],
+    what:["Direct cold email to named contacts at target retailers/designers/workshops","Continuous — runs every month, not a one-off campaign"],
+    benefit:["Modelled at 120 contacts/month reached — the highest-volume channel per pound in Package 2","Directly actionable: names come from the database below, not passive exposure"],
+    contact:"internal — sequencing tool + Henig's own prospect list"},
+  {id:'linkedinoutreach', name:'LinkedIn Outreach (DMs)', cost:'paid', costLabel:'Sales Navigator ~£75/mo', annualCost:900, contactsPerMonth:80, packages:[2,3],
+    what:["Direct LinkedIn connection requests + DMs to named contacts","Continuous, same cadence as cold email"],
+    benefit:["Modelled at 80 contacts/month — lower volume than email but typically warmer/higher-trust first touch","Sales Navigator search doubles as the sourcing tool for the contact database below"],
+    contact:"linkedin.com/sales/search"},
+  {id:'database', name:'Contact Database (LinkedIn + Association sourcing)', cost:'free', costLabel:'£0 — time cost of building the list; tooling already covered by LinkedIn Sales Navigator above', annualCost:0, packages:[2,3],
+    what:["Building Henig's own target list by searching LinkedIn (by job title/company) and cross-referencing trade-association membership/directory pages (NAJ, CMJ, Guild) as a targeting source, since none hand over a direct export"],
+    benefit:["Turns Henig's own research effort into the names that cold email and LinkedIn outreach above actually contact","The one place the earlier \"do we get their contact list?\" answer (mostly NO) gets worked around — Henig builds its own list instead of waiting for one"],
+    contact:"internal — no external tool beyond LinkedIn/Sales Navigator"},
+  {id:'leadscoring', name:'Lead Scoring + Warm-Lead Ads/Calling Follow-up', cost:'paid', costLabel:'~£100/mo retarget ad spend + calling time (labour, not cash)', annualCost:1200, packages:[2,3],
+    what:["Scoring replies/engagement from cold email + LinkedIn outreach to flag \"warm\" contacts","Warm contacts get a small retargeting-ad budget plus a follow-up phone call — cold ones don't"],
+    benefit:["Concentrates spend and calling time on the contacts already showing interest, instead of treating every name the same","Its effect is already reflected in the outreach conversion rate used below, not counted as separate revenue — this avoids double-counting the same leads twice"],
+    contact:"internal — CRM tagging + a small Meta/LinkedIn retarget budget"},
 ];
 
 const ALL_ITEMS = [
@@ -457,49 +487,113 @@ const ALL_ITEMS = [
   ...SHOWS.map(x=>({...x,cat:'shows',catLabel:'Trade show'})),
   ...PLATFORMS.map(x=>({...x,cat:'platforms',catLabel:'B2B platform'})),
   ...ADS.map(x=>({...x,cat:'ads',catLabel:'Ads & digital'})),
+  ...OUTREACH.map(x=>({...x,cat:'outreach',catLabel:'B2B Outreach'})),
+];
+const CAT_ORDER = ['bodies','press','shows','platforms','outreach','ads'];
+const CAT_COLOR = {bodies:'var(--accent)',press:'var(--violet)',shows:'var(--gold)',platforms:'var(--emerald)',ads:'var(--ruby)',outreach:'#0369a1'};
+
+/* ================= PACKAGE METADATA ================= */
+const PACKAGES = [
+  {id:1, tab:'pkg1', name:'Package 1', tagline:'Website, SEO & Ads', rec:false,
+    desc:"Pure digital acquisition — no memberships, no trade press, no shows. Ads to Henig's ideal customer profile, retargeting, and website SEO/keyword maintenance so paid traffic lands somewhere search-optimised.",
+    focus:["Running ads to Henig's ideal customer profile (retailers, designers, workshops)","Retargeting through ads — same contacts, repeat exposure","Website maintenance in terms of digital keywords (SEO)"],
+    time:"Ads: first leads in 2–4 weeks · SEO: 3–6 months to compound, then ongoing",
+  },
+  {id:2, tab:'pkg2', name:'Package 2', tagline:'B2B Outreach Channels', rec:false,
+    desc:"Relationship- and outreach-led, deliberately selective rather than everything: cold email, LinkedIn, visitor tracking, and lead-scored follow-up — plus exactly one trade body (Guild of Jewellery Designers), one trade-press pick (Jewellery Focus), and one platform (VDB). Everything else researched sits in the Full Package instead.",
+    focus:["Cold email + LinkedIn DMs, continuous, all year","Website visitor tracking feeding the outreach contact pool","Ads / calling follow-up for lead-scored warm contacts","Database: LinkedIn + association sourcing (since most bodies don't hand over a contact list)","One trade body (Guild), one press pick (Jewellery Focus), one platform (VDB)"],
+    time:"First replies: 1–2 weeks · Meaningful meeting flow: 4–6 weeks · Free listings live: 2–4 weeks",
+  },
+  {id:3, tab:'pkg3', name:'Package 3', tagline:'Full Package', rec:true,
+    desc:"Everything, planned in sequence: every trade body, every press title, every show, every platform, all outreach, and full website tracking — engagement from email/LinkedIn/memberships gets retargeted with ads, and trade shows plus Henig's established network get their own ROI line.",
+    focus:["Everything in Packages 1 & 2, plus every remaining trade body, press title, and show","Email opens + LinkedIn engagement + membership-network engagement retargeted via ads","Full website tracking (not just visitor-ID — complete analytics stack)","ROI for trade shows and promotion within Henig's established network"],
+    time:"First multi-channel signals: 3–4 weeks · Meaningful compounding: 3–6 months · Trade show cycle: annual (next: 2–3 Sept 2026)",
+  },
 ];
 
+/* ================= CALCULATIONS (same formula, reused for every package) ================= */
+function itemsForPackage(pkgId){ return ALL_ITEMS.filter(i=>i.packages && i.packages.includes(pkgId)); }
+
+function computePackage(pkgId){
+  const items = itemsForPackage(pkgId);
+  let cost = 0, reachRevenue = 0, adsRevenue = 0, outreachRevenue = 0, naiveReach = 0, reachItemCount = 0;
+  let unmodeledCost = 0;
+
+  items.forEach(it=>{
+    if(it.annualCost!=null) cost += it.annualCost;
+    if(it.adCostAnnual!=null){ cost += it.adCostAnnual; unmodeledCost += it.adCostAnnual; } // paid press ads: cost counted, revenue not modelled (no published conversion data)
+    if(it.cat!=='ads' && it.cat!=='outreach' && it.reach){ naiveReach += it.reach; reachItemCount++; }
+  });
+
+  // Bodies/press/shows reach -> revenue (apply overlap discount only when many reach items stack, i.e. Package 3)
+  const overlapFactor = reachItemCount>3 ? (A.overlap/100) : 1;
+  const effReach = naiveReach*overlapFactor;
+  const reachLeads = effReach*(A.leadPct/100);
+  const reachAccounts = reachLeads*(A.closePct/100);
+  reachRevenue = reachAccounts*A.value;
+
+  // Ads (google/meta/linkedin): budget/CPL -> leads -> accounts. SEO: organicLeadsPerMonth -> accounts directly (already a lead, apply closePct only)
+  let adsLeadsYear = 0, adsAccounts = 0, seoAccounts = 0;
+  items.filter(i=>i.cat==='ads').forEach(it=>{
+    if(it.cpl){ const leadsMonth = (it.annualCost/12)/it.cpl; adsLeadsYear += leadsMonth*12; }
+    if(it.organicLeadsPerMonth){ seoAccounts += (it.organicLeadsPerMonth*12)*(A.closePct/100); }
+  });
+  adsAccounts = adsLeadsYear*(A.closePct/100);
+  adsRevenue = (adsAccounts+seoAccounts)*A.value;
+
+  // Outreach (cold email + LinkedIn DMs): contacts/month x 12 x single-stage outreach conversion %
+  let outreachContactsYear = 0;
+  items.filter(i=>i.cat==='outreach' && i.contactsPerMonth).forEach(it=>{ outreachContactsYear += it.contactsPerMonth*12; });
+  const outreachAccounts = outreachContactsYear*(A.outreachConvPct/100);
+  outreachRevenue = outreachAccounts*A.value;
+
+  const totalRevenue = reachRevenue + adsRevenue + outreachRevenue;
+  const profit = totalRevenue*(A.margin/100);
+  const roi = cost>0 ? ((profit-cost)/cost*100) : null;
+
+  return {items, cost, unmodeledCost, effReach, reachAccounts, adsAccounts:adsAccounts+seoAccounts, outreachAccounts,
+    totalAccounts: reachAccounts+adsAccounts+seoAccounts+outreachAccounts, totalRevenue, profit, roi};
+}
+
+function fmt(n,dp=0){ return n.toLocaleString(undefined,{maximumFractionDigits:dp,minimumFractionDigits:dp}); }
+function fmtGBP(n){ return '£'+fmt(n); }
+
+/* ================= GANTT DATA ================= */
 const GANTT = [
-  {label:'NAJ membership application', cat:'bodies', start:0, span:1},
-  {label:'CMJ Approved Supplier application', cat:'bodies', start:0, span:1},
-  {label:'Guild/BPA/GoJR partner listing', cat:'bodies', start:0, span:2},
-  {label:'SBJ discount partnership', cat:'bodies', start:1, span:1},
-  {label:'Free press releases (NAJ/PJ/Focus)', cat:'press', start:1, span:2},
-  {label:'Jewellery Show — register & prep stand', cat:'shows', start:0, span:2},
-  {label:'Jewellery Show Olympia — event (2–3 Sept)', cat:'shows', start:1, span:1},
-  {label:'IDEX Pro upgrade (lab-grown)', cat:'platforms', start:1, span:1},
-  {label:'VDB supplier listing setup', cat:'platforms', start:1, span:2},
-  {label:'Google + Meta + LinkedIn ads test', cat:'ads', start:2, span:3},
-  {label:'Website visitor-ID trial', cat:'ads', start:2, span:6},
-  {label:'Micro-influencer gifting round', cat:'ads', start:3, span:1},
-  {label:'Peak-season press (Focus / Prof. Jeweller)', cat:'press', start:3, span:2},
-  {label:'Birmingham JQ networking (ongoing)', cat:'bodies', start:0, span:8},
+  {label:'Website SEO audit & keyword setup', cat:'ads', start:0, span:1, packages:[1,3]},
+  {label:'SEO content publishing (ongoing)', cat:'ads', start:1, span:5, packages:[1,3]},
+  {label:'Google + Meta + LinkedIn ads — launch & optimise', cat:'ads', start:0, span:6, packages:[1,3]},
+  {label:'Contact database build (LinkedIn + association sourcing)', cat:'outreach', start:0, span:1, packages:[2,3]},
+  {label:'Guild of Jewellery Designers partner listing', cat:'bodies', start:0, span:1, packages:[2,3]},
+  {label:'Jewellery Focus press release', cat:'press', start:0, span:1, packages:[2,3]},
+  {label:'VDB supplier listing setup', cat:'platforms', start:0, span:1, packages:[2,3]},
+  {label:'Cold email + LinkedIn outreach (continuous)', cat:'outreach', start:0, span:6, packages:[2,3]},
+  {label:'Website visitor-ID trial', cat:'outreach', start:1, span:5, packages:[2,3]},
+  {label:'Lead scoring + warm-lead retarget/calling', cat:'outreach', start:1, span:5, packages:[2,3]},
+  {label:'NAJ membership application', cat:'bodies', start:0, span:1, packages:[3]},
+  {label:'CMJ Approved Supplier application', cat:'bodies', start:0, span:1, packages:[3]},
+  {label:'SBJ discount partnership', cat:'bodies', start:1, span:1, packages:[3]},
+  {label:'Free press releases (NAJ / Professional Jeweller)', cat:'press', start:1, span:1, packages:[3]},
+  {label:'Jewellery Show — register & prep stand', cat:'shows', start:0, span:2, packages:[3]},
+  {label:'Jewellery Show Olympia — event (2–3 Sept)', cat:'shows', start:1, span:1, packages:[3]},
+  {label:'IDEX Pro upgrade (lab-grown)', cat:'platforms', start:1, span:1, packages:[3]},
+  {label:'Micro-influencer gifting round', cat:'ads', start:3, span:1, packages:[3]},
+  {label:'Peak-season press ads (Prof. Jeweller / Retail Jeweller)', cat:'press', start:3, span:2, packages:[3]},
 ];
-const MONTHS = ['Aug 26','Sep 26','Oct 26','Nov 26','Dec 26','Jan 27','Feb 27','Mar 27'];
-const CAT_COLOR = {bodies:'var(--accent)',press:'var(--violet)',shows:'var(--gold)',platforms:'var(--emerald)',ads:'var(--ruby)'};
+const MONTHS = ['Mo. 1','Mo. 2','Mo. 3','Mo. 4','Mo. 5','Mo. 6'];
 
-const PATHS = [
-  {
-    name:'Free-First / Bootstrap', tag:'Lowest risk', rec:false, monthly:130, oneoff:0,
-    includes:['CMJ Approved Supplier (free)','Guild/BPA/GoJR partner listing (free)','SBJ discount partnership (free)','Free press releases: NAJ, Professional Jeweller, Jewellery Focus','Referral + mutual-referral schemes','IDEX Basic browsing, VDB browsing','Small Google Ads test (~£130/mo)'],
-    consider:['Zero/near-zero cash risk while validating which channels actually generate replies','Builds directory presence & press relationships fast, in parallel with cold outreach','Good default for the first 60–90 days'],
-    avoid:['Don\'t expect fast lead volume — no paid trade show presence','Don\'t skip cold outreach — free visibility alone still doesn\'t close accounts','Don\'t stay here past Q1 — missing the Jewellery Show means missing the highest-concentration audience event of the year']
-  },
-  {
-    name:'Balanced', tag:'Recommended — fits the £1,000 allowance', rec:true, monthly:886, oneoff:3200,
-    includes:['Everything in Free-First','NAJ supplier membership (~£40/mo amortised)','IDEX Pro for lab-grown (~£71/mo)','VDB supplier listing (~£75/mo)','Website visitor-ID tool, Starter tier (~£50/mo)','Combined Google + Meta + LinkedIn ads (~£500/mo)','Jewellery Focus banner, occasional (~£150/mo amortised)','One-off: Jewellery Show Olympia stand (~£2,700–4,500, budgeted separately, Sept 2026)'],
-    consider:['This is the mix that matches the original deck\'s own priority next steps: join NAJ/CMJ, exhibit at the Jewellery Show, start segment content','Recurring spend (~£886/mo) stays inside the £1,000 monthly allowance with ~£114 buffer','Ads only start once free channels have built an initial outreach list to retarget'],
-    avoid:['Don\'t fund the Sept show stand out of the same monthly £1k ad pot — it\'s a once-a-year lump sum; ring-fence it separately so one month doesn\'t wipe the ad budget','Don\'t spread the £1k so thin across every channel that none gets meaningful frequency — better to run fewer channels well']
-  },
-  {
-    name:'Full-Court Press', tag:'Exceeds the £1,000 allowance', rec:false, monthly:5200, oneoff:7000,
-    includes:['Everything in Balanced','Professional Jeweller full-page ad (~£2,000+/mo alone)','Retail Jeweller display ad (~£1,500–3,000/mo)','CMJ Access stand, if eligibility confirmed','RapNet tier upgrade','Full micro-influencer programme (8–12 creators, recurring rounds)'],
-    consider:['Only sensible once Henig\'s monthly B2B budget genuinely grows past £1,000, or fund selectively — e.g. one concentrated £2k push around Nov–Dec gifting season rather than sustaining it year-round','Maximum simultaneous visibility across every channel researched'],
-    avoid:['Do not attempt this at the current £1,000/month allowance — a single Professional Jeweller ad alone exceeds the entire monthly cap','Don\'t run simultaneous paid press campaigns without the outreach/sales capacity to actually convert the resulting leads — the deck\'s own rule: ads support outreach, they don\'t replace it']
-  },
-];
+function renderGantt(pkgId, elId){
+  const rows = GANTT.filter(g=>g.packages.includes(pkgId));
+  let html = '<div class="gantt-header"><div>Initiative</div>'+MONTHS.map(m=>`<div>${m}</div>`).join('')+'</div>';
+  rows.forEach(row=>{
+    html += `<div class="gantt-row"><div class="gantt-label">${row.label}</div><div class="gantt-track">
+      <div class="gantt-bar" style="grid-column:${row.start+1} / span ${row.span};background:${CAT_COLOR[row.cat]}"></div>
+    </div></div>`;
+  });
+  document.getElementById(elId).innerHTML = html;
+}
 
-/* ================= RENDER ================= */
+/* ================= RENDER: item cards (unchanged look) ================= */
 function costBadge(cost){
   if(cost==='free') return '<span class="badge free">Free</span>';
   if(cost==='paid') return '<span class="badge paid">Paid</span>';
@@ -507,12 +601,10 @@ function costBadge(cost){
   if(cost==='flag') return '<span class="badge flag">Flagged</span>';
   return '';
 }
-
 function bullets(val){
   const arr = Array.isArray(val) ? val : [val];
   return `<ul class="field-bullets">${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`;
 }
-
 function renderCard(item){
   const isDone = localStorage.getItem('b2b_'+item.id)==='1';
   return `<div class="item-card ${isDone?'done':''}" id="card-${item.id}">
@@ -530,6 +622,119 @@ function renderCard(item){
   </div>`;
 }
 
+function renderPackageItems(pkgId, elId){
+  const items = itemsForPackage(pkgId);
+  let html = '';
+  CAT_ORDER.forEach(cat=>{
+    const inCat = items.filter(i=>i.cat===cat);
+    if(!inCat.length) return;
+    const catLabel = inCat[0].catLabel;
+    html += `<div class="cat-heading">${catLabel}</div><div class="card-grid">${inCat.map(renderCard).join('')}</div>`;
+  });
+  document.getElementById(elId).innerHTML = html;
+}
+
+/* ================= RENDER: package header (cost / roi / time / formula) ================= */
+function pkgFormulaText(pkgId, r){
+  const lines = [];
+  if(r.reachAccounts>0) lines.push(`<span class="step">Visibility (bodies/press/shows)</span>  Reach × ${A.leadPct}% lead conv. × ${A.closePct}% close = ${fmt(r.reachAccounts,1)} accounts/yr`);
+  if(r.adsAccounts>0) lines.push(`<span class="step">Ads + SEO</span>  Budget ÷ cost-per-lead → leads × ${A.closePct}% close = ${fmt(r.adsAccounts,1)} accounts/yr`);
+  if(r.outreachAccounts>0) lines.push(`<span class="step">Outreach (cold email + LinkedIn DMs)</span>  Contacts/yr × ${A.outreachConvPct}% direct conversion = ${fmt(r.outreachAccounts,1)} accounts/yr`);
+  lines.push(`<span class="step">Revenue</span>  ${fmt(r.totalAccounts,1)} accounts/yr × ${fmtGBP(A.value)} avg. value = ${fmtGBP(r.totalRevenue)}`);
+  lines.push(`<span class="step">Profit</span>  ${fmtGBP(r.totalRevenue)} × ${A.margin}% margin = ${fmtGBP(r.profit)}`);
+  lines.push(`<span class="step">ROI</span>  (${fmtGBP(r.profit)} − ${fmtGBP(r.cost)}) ÷ ${fmtGBP(r.cost)} = ${r.roi>=0?'+':''}${fmt(r.roi)}%`);
+  return lines.join('\n');
+}
+
+function renderPackageHeader(pkg, elId){
+  const r = computePackage(pkg.id);
+  const monthly = r.cost/12;
+  const unmodeledNote = r.unmodeledCost>0 ? `<div class="pkg-flag">⚠ ${fmtGBP(r.unmodeledCost)}/yr of this package's cost is paid press advertising with no published conversion data (Professional Jeweller, Retail Jeweller) — its return isn't in the ROI figure above, so treat that % as a <b>floor, not a ceiling</b>.</div>` : '';
+  document.getElementById(elId).innerHTML = `
+    <div class="pkg-header ${pkg.rec?'rec':''}">
+      <span class="pkg-header-tag">${pkg.rec?'Recommended — full plan':'Package '+pkg.id}</span>
+      <div class="pkg-header-name">${pkg.name} · ${pkg.tagline}</div>
+      <div class="pkg-header-desc">${pkg.desc}</div>
+      <ul class="pkg-focus-list">${pkg.focus.map(f=>`<li>${f}</li>`).join('')}</ul>
+      <div class="pkg-metrics">
+        <div class="pkg-metric"><div class="pkg-metric-label">Estimated expense</div><div class="pkg-metric-val">${fmtGBP(monthly)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /mo</span></div><div class="pkg-metric-sub">${fmtGBP(r.cost)}/yr total</div></div>
+        <div class="pkg-metric"><div class="pkg-metric-label">Estimated ROI</div><div class="pkg-metric-val" style="color:${r.roi>=0?'var(--emerald)':'var(--ruby)'}">${r.roi==null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</div><div class="pkg-metric-sub">${fmt(r.totalAccounts,1)} new accounts/yr modelled</div></div>
+        <div class="pkg-metric"><div class="pkg-metric-label">Time required</div><div class="pkg-metric-val" style="font-size:13px;line-height:1.5;">${pkg.time}</div></div>
+      </div>
+      ${unmodeledNote}
+      <div class="pkg-formula">${pkgFormulaText(pkg.id, r)}</div>
+    </div>`;
+}
+
+/* ================= RENDER: overview teasers ================= */
+function renderTeasers(){
+  const html = PACKAGES.map(pkg=>{
+    const r = computePackage(pkg.id);
+    return `<div class="pkg-teaser ${pkg.rec?'rec':''}" onclick="showTab('${pkg.tab}')">
+      <div class="pkg-teaser-tag">${pkg.rec?'Full plan':'Package '+pkg.id}</div>
+      <div class="pkg-teaser-name">${pkg.name}<br>${pkg.tagline}</div>
+      <div class="pkg-teaser-desc">${pkg.desc}</div>
+      <div class="pkg-teaser-stats">
+        <div class="pkg-teaser-stat"><div class="pkg-teaser-stat-label">Est. cost</div><div class="pkg-teaser-stat-val">${fmtGBP(r.cost/12)}/mo</div></div>
+        <div class="pkg-teaser-stat"><div class="pkg-teaser-stat-label">Est. ROI</div><div class="pkg-teaser-stat-val" style="color:${r.roi>=0?'var(--emerald)':'var(--ruby)'}">${r.roi==null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('pkgTeaserGrid').innerHTML = html;
+}
+
+/* ================= RENDER: compare table + master formula ================= */
+function renderCompare(){
+  const rows = PACKAGES.map(pkg=>{
+    const r = computePackage(pkg.id);
+    return `<tr>
+      <td class="${pkg.rec?'rec-col':''}"><b>${pkg.name}</b><br><span style="font-size:11px;color:var(--ink-3)">${pkg.tagline}</span></td>
+      <td class="${pkg.rec?'rec-col':''}">${r.items.length}</td>
+      <td class="${pkg.rec?'rec-col':''}">${fmtGBP(r.cost/12)}/mo</td>
+      <td class="${pkg.rec?'rec-col':''}">${fmtGBP(r.cost)}/yr</td>
+      <td class="${pkg.rec?'rec-col':''}" style="color:${r.roi>=0?'var(--emerald)':'var(--ruby)'};font-weight:500;">${r.roi==null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</td>
+      <td class="${pkg.rec?'rec-col':''}">${pkg.time}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('compareTable').innerHTML = `
+    <thead><tr><th>Package</th><th>Items</th><th>Monthly cost</th><th>Annual cost</th><th>Est. ROI</th><th>Time to results</th></tr></thead>
+    <tbody>${rows}</tbody>`;
+
+  document.getElementById('masterFormula').innerHTML =
+`<b style="color:#fff;">1. Visibility channels (trade bodies / press / shows)</b>
+   Leads = Reach × ${A.leadPct}%   →   New Accounts = Leads × ${A.closePct}%
+   (Reach is discounted to ${A.overlap}% when a package stacks 4+ channels, since their audiences overlap)
+
+<b style="color:#fff;">2. Paid ads (Google / Meta / LinkedIn)</b>
+   Leads = Monthly Budget ÷ Cost-per-lead   →   New Accounts = Leads(annualised) × ${A.closePct}%
+   Modelled cost-per-lead: Google £${A.adCPL.google} · Meta £${A.adCPL.meta} · LinkedIn £${A.adCPL.linkedin}
+
+<b style="color:#fff;">3. SEO</b>
+   New Accounts = Assumed organic leads/month (3) × 12 × ${A.closePct}%   — already a qualified lead, so it skips the Reach step
+
+<b style="color:#fff;">4. Outreach (cold email + LinkedIn DMs)</b>
+   New Accounts = Contacts reached/month × 12 × ${A.outreachConvPct}%
+   One single conversion rate — direct contact → paying account — instead of a multi-stage funnel, since a chain of separate response/meeting/close assumptions proved too speculative to trust
+
+<b style="color:#fff;">5. Every package</b>
+   Revenue = Total New Accounts × £${fmt(A.value)} avg. annual account value
+   Profit  = Revenue × ${A.margin}% gross margin
+   ROI     = (Profit − Annual Cost) ÷ Annual Cost
+
+All five defaults (lead %, close %, margin, outreach conversion %, avg. account value) are editable in the <a href="henig_b2b_roi.html" style="color:#93b4f8;">ROI Estimator</a> — replace them with Henig's real numbers as they become available.`;
+}
+
+function renderCostTable(){
+  const rows = ALL_ITEMS.map(i=>`<tr>
+    <td><b>${i.name}</b></td>
+    <td><span class="cat-pill cat-${i.cat}">${i.catLabel}</span></td>
+    <td>${i.packages.map(p=>'P'+p).join(', ')}</td>
+    <td>${i.costLabel}</td>
+  </tr>`).join('');
+  document.getElementById('costTableBody').innerHTML = rows;
+}
+
+/* ================= CHECKLIST STATE ================= */
 function toggleDone(id){
   const chk = document.getElementById('chk-'+id);
   const card = document.getElementById('card-'+id);
@@ -537,7 +742,6 @@ function toggleDone(id){
   else { localStorage.removeItem('b2b_'+id); card.classList.remove('done'); }
   updateStats();
 }
-
 function updateStats(){
   const total = ALL_ITEMS.length;
   const free = ALL_ITEMS.filter(i=>i.cost==='free').length;
@@ -550,65 +754,23 @@ function updateStats(){
   document.getElementById('statProgressN').textContent = done;
 }
 
-function renderCostTable(){
-  const rows = ALL_ITEMS.map(i=>`<tr>
-    <td><b>${i.name}</b></td>
-    <td><span class="cat-pill cat-${i.cat}">${i.catLabel}</span></td>
-    <td>${i.costLabel}</td>
-    <td style="font-size:11.5px;color:var(--ink-3)">${i.warn?('⚠ '+i.warn):''}</td>
-  </tr>`).join('');
-  document.getElementById('costTableBody').innerHTML = rows;
-}
-
-function renderGantt(){
-  let html = '<div class="gantt-header"><div>Initiative</div>'+MONTHS.map(m=>`<div>${m}</div>`).join('')+'</div>';
-  GANTT.forEach(row=>{
-    html += `<div class="gantt-row"><div class="gantt-label">${row.label}</div><div class="gantt-track">
-      <div class="gantt-bar" style="grid-column:${row.start+1} / span ${row.span};background:${CAT_COLOR[row.cat]}"></div>
-    </div></div>`;
-  });
-  document.getElementById('ganttChart').innerHTML = html;
-}
-
-function renderPaths(){
-  const budget = parseFloat(document.getElementById('budgetInput').value)||0;
-  const html = PATHS.map(p=>{
-    const pct = budget>0 ? Math.min(100, Math.round(p.monthly/budget*100)) : 0;
-    const over = p.monthly>budget;
-    const barColor = over ? 'var(--ruby)' : 'var(--emerald)';
-    return `<div class="path-card ${p.rec?'rec':''}">
-      <div class="path-tag">${p.tag}</div>
-      <div class="path-name">${p.name}</div>
-      <div class="path-cost">£${p.monthly.toLocaleString()}<small>/mo recurring</small></div>
-      <div class="budget-bar-bg"><div class="budget-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
-      <div class="budget-caption">${over? `£${(p.monthly-budget).toLocaleString()} over your £${budget.toLocaleString()} allowance` : `£${(budget-p.monthly).toLocaleString()} left of your £${budget.toLocaleString()} allowance`}</div>
-      ${p.oneoff>0?`<div class="budget-caption">Plus ~£${p.oneoff.toLocaleString()} one-off (not monthly)</div>`:''}
-      <div class="path-list-title">Includes</div>
-      <ul class="path-list includes">${p.includes.map(x=>`<li>${x}</li>`).join('')}</ul>
-      <div class="path-list-title">Consider</div>
-      <ul class="path-list consider">${p.consider.map(x=>`<li>${x}</li>`).join('')}</ul>
-      <div class="path-list-title">Avoid</div>
-      <ul class="path-list avoid">${p.avoid.map(x=>`<li>${x}</li>`).join('')}</ul>
-    </div>`;
-  }).join('');
-  document.getElementById('pathGrid').innerHTML = html;
-}
-
 function showTab(name){
   document.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   document.querySelector(`.tab-btn[data-tab="${name}"]`).classList.add('active');
+  window.scrollTo(0,0);
 }
 
-document.getElementById('grid-bodies').innerHTML = BODIES.map(renderCard).join('');
-document.getElementById('grid-press').innerHTML = PRESS.map(renderCard).join('');
-document.getElementById('grid-shows').innerHTML = SHOWS.map(renderCard).join('');
-document.getElementById('grid-platforms').innerHTML = PLATFORMS.map(renderCard).join('');
-document.getElementById('grid-ads').innerHTML = ADS.map(renderCard).join('');
+/* ================= INIT ================= */
+renderTeasers();
+PACKAGES.forEach(pkg=>{
+  renderPackageHeader(pkg, 'pkgHeader'+pkg.id);
+  renderPackageItems(pkg.id, 'pkgItems'+pkg.id);
+  renderGantt(pkg.id, 'gantt'+pkg.id);
+});
+renderCompare();
 renderCostTable();
-renderGantt();
-renderPaths();
 updateStats();
 </script>
 </body>
