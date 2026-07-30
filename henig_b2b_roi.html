@@ -377,7 +377,7 @@ const ROI_CHANNELS = [
 const NOT_MODELED = [
   {name:'RapNet / IDEX / VDB', reason:"Inbound-discovery platforms — trade buyers search and find Henig's listing. There's no push-audience size to multiply; value shows up as inbound inquiry volume, which needs Henig's own enquiry data to model."},
   {name:"Goldsmiths' Centre / Birmingham Jewellery Quarter", reason:'Onsite/visit-based, a separate track from the online flow — see the diagram. No publishable audience size exists either way.'},
-  {name:'Referral scheme / Mutual referral / Micro-influencer gifting', reason:"Reach depends on Henig's existing client book or a chosen creator's following — neither is a published, uniform number."},
+  {name:'Micro-influencer gifting', reason:"Reach depends on a chosen creator's following — not a published, uniform number."},
 ];
 
 /* Platforms + misc: cost counts toward a package's total even though no reach/revenue is modelled for them (see "not modelled" above) */
@@ -385,8 +385,6 @@ const NON_REACH_COSTS = [
   {name:'RapNet', annualCost:0, packages:[3]},
   {name:'IDEX Pro', annualCost:852, packages:[3]},
   {name:'VDB supplier listing', annualCost:1020, packages:[2,3]},
-  {name:'Referral scheme', annualCost:0, packages:[3]},
-  {name:'Mutual referral', annualCost:0, packages:[3]},
   {name:'Micro-influencer gifting', annualCost:350, packages:[3]},
 ];
 

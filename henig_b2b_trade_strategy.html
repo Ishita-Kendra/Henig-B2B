@@ -93,7 +93,7 @@ nav.tabs{position:sticky;top:60px;z-index:99;background:var(--surface);border-bo
 .pkg-header-desc{font-size:13.5px;color:var(--ink-2);margin-bottom:1rem;max-width:800px;}
 .pkg-focus-list{font-size:12.5px;color:var(--ink-2);margin-bottom:1.25rem;padding-left:18px;}
 .pkg-focus-list li{margin-bottom:4px;}
-.pkg-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.pkg-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
 .pkg-metric{background:var(--white);padding:1rem 1.25rem;}
 .pkg-metric-label{font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px;}
 .pkg-metric-val{font-family:'Playfair Display',serif;font-size:19px;}
@@ -448,14 +448,6 @@ const ADS = [
     benefit:["Flags which retailers/workshops browsed the site so sales can proactively follow up on warm-but-silent visitors","Names surfaced here feed straight into the cold email / LinkedIn outreach contact pool below — not modelled as separate revenue, to avoid double-counting"],
     contact:"search \"B2B website visitor identification tool\" and compare current vendors directly",
     warn:"Correction vs. original deck: the vendor originally suggested (Visitor Queue) was acquired by a larger competitor in Jan 2026; current entry-tier pricing runs slightly above the deck's original ~£30–85/month assumption."},
-  {id:'referral', name:'Referral scheme (existing trade clients)', cost:'free', costLabel:'£0 cash — cost is the discount/credit given', annualCost:0, reach:null, packages:[3],
-    what:["Existing trade clients refer new buyers in exchange for a discount or credit"],
-    benefit:["Turns Henig's current retailer/designer relationships into a lead-gen channel at zero cash cost"],
-    contact:"internal programme — no external signup"},
-  {id:'mutualreferral', name:'Mutual referral (independent designers)', cost:'free', costLabel:'£0 — relationship-based, no fee', annualCost:0, reach:null, packages:[3],
-    what:["Reciprocal introductions with independent designers"],
-    benefit:["Builds designer-segment reach without any platform, ad, or membership cost"],
-    contact:"internal — build via direct designer relationships"},
   {id:'influencer', name:'Micro-influencer gifting (8–12 creators)', cost:'paid', costLabel:'Approx. £350–400 total per round (one-off, not monthly)', annualCost:350, reach:null, packages:[3],
     what:["Gifting product to 8–12 micro-influencers on Instagram in exchange for organic content"],
     benefit:["Low-cost visual proof-of-quality content reaching designer and workshop audiences","Cheaper per-impression than paid social ads"],
@@ -649,7 +641,12 @@ function pkgFormulaText(pkgId, r){
 function renderPackageHeader(pkg, elId){
   const r = computePackage(pkg.id);
   const monthly = r.cost/12;
-  const unmodeledNote = r.unmodeledCost>0 ? `<div class="pkg-flag">⚠ ${fmtGBP(r.unmodeledCost)}/yr of this package's cost is paid press advertising with no published conversion data (Professional Jeweller, Retail Jeweller) — its return isn't in the ROI figure above, so treat that % as a <b>floor, not a ceiling</b>.</div>` : '';
+  let unmodeledNote = '';
+  if(r.unmodeledCost>0){
+    const coreCost = r.cost - r.unmodeledCost;
+    const coreRoi = coreCost>0 ? ((r.profit-coreCost)/coreCost*100) : null;
+    unmodeledNote = `<div class="pkg-flag">⚠ ${fmtGBP(r.unmodeledCost)}/yr of this package's cost is paid press advertising with no published conversion data (Professional Jeweller, Retail Jeweller) — its return isn't in the ROI figure above. That's exactly why the blended ROI (${r.roi>=0?'+':''}${fmt(r.roi)}%) looks lower than Packages 1 &amp; 2 even though this package makes the <b>most total profit</b> of the three (see the Compare tab) — ROI% is profit ÷ cost, not a total, and this package's cost is inflated by spend with no proven return. Strip out that £${fmt(r.unmodeledCost)}/yr and the <b>core ROI on everything else is ${coreRoi>=0?'+':''}${fmt(coreRoi)}%</b> — treat the headline % as a floor, not a ceiling.</div>`;
+  }
   document.getElementById(elId).innerHTML = `
     <div class="pkg-header ${pkg.rec?'rec':''}">
       <span class="pkg-header-tag">${pkg.rec?'Recommended — full plan':'Package '+pkg.id}</span>
@@ -658,7 +655,8 @@ function renderPackageHeader(pkg, elId){
       <ul class="pkg-focus-list">${pkg.focus.map(f=>`<li>${f}</li>`).join('')}</ul>
       <div class="pkg-metrics">
         <div class="pkg-metric"><div class="pkg-metric-label">Estimated expense</div><div class="pkg-metric-val">${fmtGBP(monthly)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /mo</span></div><div class="pkg-metric-sub">${fmtGBP(r.cost)}/yr total</div></div>
-        <div class="pkg-metric"><div class="pkg-metric-label">Estimated ROI</div><div class="pkg-metric-val" style="color:${r.roi>=0?'var(--emerald)':'var(--ruby)'}">${r.roi==null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</div><div class="pkg-metric-sub">${fmt(r.totalAccounts,1)} new accounts/yr modelled</div></div>
+        <div class="pkg-metric"><div class="pkg-metric-label">Estimated profit</div><div class="pkg-metric-val">${fmtGBP(r.profit)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /yr</span></div><div class="pkg-metric-sub">${fmt(r.totalAccounts,1)} new accounts/yr modelled</div></div>
+        <div class="pkg-metric"><div class="pkg-metric-label">Estimated ROI</div><div class="pkg-metric-val" style="color:${r.roi>=0?'var(--emerald)':'var(--ruby)'}">${r.roi==null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</div><div class="pkg-metric-sub">Profit ÷ cost — efficiency, not scale</div></div>
         <div class="pkg-metric"><div class="pkg-metric-label">Time required</div><div class="pkg-metric-val" style="font-size:13px;line-height:1.5;">${pkg.time}</div></div>
       </div>
       ${unmodeledNote}
@@ -692,12 +690,13 @@ function renderCompare(){
       <td class="${pkg.rec?'rec-col':''}">${r.items.length}</td>
       <td class="${pkg.rec?'rec-col':''}">${fmtGBP(r.cost/12)}/mo</td>
       <td class="${pkg.rec?'rec-col':''}">${fmtGBP(r.cost)}/yr</td>
+      <td class="${pkg.rec?'rec-col':''}"><b>${fmtGBP(r.profit)}</b>/yr</td>
       <td class="${pkg.rec?'rec-col':''}" style="color:${r.roi>=0?'var(--emerald)':'var(--ruby)'};font-weight:500;">${r.roi==null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</td>
       <td class="${pkg.rec?'rec-col':''}">${pkg.time}</td>
     </tr>`;
   }).join('');
   document.getElementById('compareTable').innerHTML = `
-    <thead><tr><th>Package</th><th>Items</th><th>Monthly cost</th><th>Annual cost</th><th>Est. ROI</th><th>Time to results</th></tr></thead>
+    <thead><tr><th>Package</th><th>Items</th><th>Monthly cost</th><th>Annual cost</th><th>Est. profit/yr</th><th>Est. ROI</th><th>Time to results</th></tr></thead>
     <tbody>${rows}</tbody>`;
 
   document.getElementById('masterFormula').innerHTML =
