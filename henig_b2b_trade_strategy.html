@@ -115,11 +115,6 @@ nav.tabs{position:sticky;top:60px;z-index:99;background:var(--surface);border-bo
 .badge.paid{background:var(--ruby-pale);color:var(--ruby);}
 .badge.mixed{background:var(--amber-pale);color:var(--amber);}
 .badge.flag{background:var(--violet-pale);color:var(--violet);}
-.dir-access{border-radius:8px;padding:8px 10px;font-size:11.5px;line-height:1.5;margin-top:8px;}
-.dir-access.dir-yes{background:var(--emerald-pale);color:#0d5c2c;}
-.dir-access.dir-no{background:var(--surface-2);color:var(--ink-2);}
-.dir-access.dir-unclear{background:var(--amber-pale);color:#5c3a0a;}
-.dir-access b{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;}
 .item-field{font-size:12px;margin-bottom:8px;}
 .item-field b{display:block;color:var(--ink-3);font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px;font-weight:500;}
 .item-field span{color:var(--ink-2);}
@@ -254,14 +249,6 @@ table.compare-table td.rec-col{background:var(--emerald-pale);}
       </div>
     </div>
 
-    <div class="section-title">Do these actually give us a contact list?</div>
-    <div class="section-desc">A separate, important question from "benefit" — does joining/exhibiting/listing actually hand Henig other companies' names and contacts to reach out to, or is it just Henig getting listed (one-way exposure)?</div>
-    <div class="priority-list">
-      <div class="priority-item"><div class="dir-access dir-yes" style="min-width:70px;text-align:center;flex-shrink:0;"><b>YES</b></div><div class="priority-text"><b>RapNet</b> — the only channel here with a genuine searchable Member Directory (company profiles, trading terms, direct contact/message). Everything else is one-way.</div></div>
-      <div class="priority-item"><div class="dir-access dir-no" style="min-width:70px;text-align:center;flex-shrink:0;"><b>NO</b></div><div class="priority-text"><b>NAJ, CMJ, SBJ, IDEX</b> — confirmed one-way. Henig gets listed/exposed; none hand over a member/retailer contact list.</div></div>
-      <div class="priority-item"><div class="dir-access dir-unclear" style="min-width:70px;text-align:center;flex-shrink:0;"><b>UNCLEAR</b></div><div class="priority-text"><b>Guild of Jewellery Designers, VDB, The Jewellery Show, CMJ Access</b> — no public evidence either way (leans no for Guild); worth asking directly rather than assuming.</div></div>
-    </div>
-
     <div class="footnote">Research pass completed 29 Jul 2026 by visiting each organisation's live website. Corrections vs. the original deck: <b>IJL was removed</b> (defunct — superseded by The Jewellery Show), <b>VDB is not free for suppliers</b> (only browsing is), and the <b>website visitor-ID vendor market has consolidated</b> at a higher price point than the deck assumed.</div>
   </div>
 
@@ -342,18 +329,15 @@ const BODIES = [
   {id:'naj', name:'NAJ — National Association of Jewellers', cost:'paid', costLabel:'From £330+VAT/yr + £150+VAT one-off join fee', annualCost:396, reach:1700, packages:[3],
     what:["UK's central trade body — ~1,700 member businesses","27,000+ employees across those businesses"],
     benefit:["Online directory listing + press-release exposure to the 1,700-member network","Discounted exhibition space at UK/overseas shows","Discounted advertising reaching 1,150+ retail members","Member-to-member trade offers","Free legal helpline","Free credit-checks on prospective retail clients","Copyright / design-fraud protection"],
-    contact:"membership@naj.co.uk · naj.co.uk/join · 0121 237 1110",
-    dirAccess:{status:'no', note:"NAJ's \"Find a Jeweller\" directory is a public, consumer-facing tool for finding a jeweller — not a supplier-to-member contact list."}},
+    contact:"membership@naj.co.uk · naj.co.uk/join · 0121 237 1110"},
   {id:'cmj', name:'CMJ — Company of Master Jewellers', cost:'free', costLabel:'No published fee — based on trade terms offered', annualCost:0, reach:160, packages:[3],
     what:["Largest jewellery/watch buying group in UK & Ireland","Runs an Approved Supplier programme, separate from retailer membership"],
     benefit:["Approved Suppliers get listed and gain access to CMJ's 160+ retailer network","Recent approved suppliers include Salvatore Bersani, Worldpay","Site doesn't quantify exact impression numbers for suppliers"],
-    contact:"info@masterjewellers.co.uk · 01788 540250",
-    dirAccess:{status:'no', note:"Confirmed one-way: exposure only. No retailer contact list found across supplier, membership-benefits, or T&Cs pages."}},
+    contact:"info@masterjewellers.co.uk · 01788 540250"},
   {id:'guild', name:'Guild of Jewellery Designers (+ British Pearl Assoc. + GoJR)', cost:'free', costLabel:'Free — discount-for-exposure model, not a cash fee', annualCost:0, reach:1200, packages:[2,3],
     what:["1,200+ independent UK designer/maker members","Supplier Partner pool shared across three bodies via the gojdconnect.org portal"],
     benefit:["Listing in the Supplier Partner Directory, reachable by 1,200+ Guild members plus British Pearl Association and Guild of Jewellery Retailers members combined","Henig offers a trade discount to members in exchange for the listing","180+ existing supplier relationships shows this is an active, already-used channel","The one trade body included in Package 2 — free, and the widest reach-per-pound of the no-cost options"],
-    contact:"sales@guildofjewellerydesigners.co.uk",
-    dirAccess:{status:'unclear', note:"The shared GoJD Connect portal lists suppliers like Henig FOR members to browse, not member contacts for Henig to reach. Leans no."}},
+    contact:"sales@guildofjewellerydesigners.co.uk"},
   {id:'goldsmiths', name:"Goldsmiths' Centre, Hatton Garden", cost:'free', costLabel:'Free to visit — no standard commercial fee published', annualCost:0, reach:null, packages:[3],
     what:["Charitable training/workspace hub (founded 2007)","100+ makers/businesses under one roof","Same postcode district as Henig"],
     benefit:["Not a directory/ad channel — value is relationship-building, not listings","Visit exhibitions (e.g. \"Shine\") and industry preview events to meet makers-in-training who become future workshop buyers","Can propose event sponsorship or a venue partnership"],
@@ -361,8 +345,7 @@ const BODIES = [
   {id:'sbj', name:'Society of British Jewellers (SBJ)', cost:'free', costLabel:'Free/reciprocal — Henig offers a member discount in exchange for exposure', annualCost:0, reach:5000, packages:[3],
     what:["Professional body for UK independent jewellery makers/designers/goldsmiths/silversmiths"],
     benefit:["Listed on SBJ's supplier discount page","Pushed through their private Facebook group (reported 5,000+ members, unverified independently)","In exchange, Henig offers members a preferential rate/discount"],
-    contact:"tsobj@outlook.com · thesocietyofbritishjewellers.com",
-    dirAccess:{status:'no', note:"Confirmed one-way: gets Henig listed on the member discount page. The Facebook group is public-join, not an exportable contact list."}},
+    contact:"tsobj@outlook.com · thesocietyofbritishjewellers.com"},
 ];
 
 const PRESS = [
@@ -392,14 +375,12 @@ const SHOWS = [
   {id:'jewelleryshow', name:'The Jewellery Show, Olympia', cost:'paid', costLabel:'Free entry for visitors · Exhibitor stand ~£2,700–4,500 est.', annualCost:3600, reach:3500, packages:[3],
     what:["CloserStill Media's UK trade-only show","Confirmed 2–3 Sept 2026, National Hall, Olympia London","3,500+ visitors, 200+ exhibitors, 50+ speakers"],
     benefit:["Two days of face-to-face access to 3,500+ trade buyers in one room","Listing in the exhibitor directory/app every attendee uses","Direct networking with retailers, designers and makers simultaneously","The single highest audience-concentration-per-pound in this whole tracker"],
-    contact:"thejewelleryshow.co.uk/exhibitors",
-    dirAccess:{status:'unclear', note:"No public mention of an attendee list or lead-retrieval service — ask the organiser directly (info@thejewelleryshow.co.uk)."}},
+    contact:"thejewelleryshow.co.uk/exhibitors"},
   {id:'cmjaccess', name:'CMJ Access', cost:'flag', costLabel:'Free-entry event for retailers · Stand pricing not published', annualCost:null, reach:80, packages:[3],
     what:["New CMJ exhibition for independent UK/Ireland retailers","First edition already ran Tuesday 3 March 2026 (~80 retailers, 100+ suppliers)"],
     benefit:["Potential direct-to-independent-retailer exposure, if eligible"],
     contact:"info@accesstradeshow.com · 01788 540250",
-    warn:"Eligibility unconfirmed — the show appears geared to suppliers already affiliated with CMJ. Call before budgeting a stand.",
-    dirAccess:{status:'unclear', note:"No public mention of attendee-list access — check with the organiser directly."}},
+    warn:"Eligibility unconfirmed — the show appears geared to suppliers already affiliated with CMJ. Call before budgeting a stand."},
   {id:'birmingham', name:'Birmingham Jewellery Quarter', cost:'free', costLabel:'Free — no bookable exhibition', annualCost:0, reach:null, packages:[3],
     what:["500+ business manufacturing/goldsmith cluster (thejewelleryquarter.org)","Run partly by the Jewellery Quarter BID"],
     benefit:["Not a trade show — no stand to book","Value is ongoing B2B relationship-building with the Midlands manufacturing/goldsmith cluster via BID engagement"],
@@ -411,19 +392,16 @@ const PLATFORMS = [
   {id:'rapnet', name:'RapNet (Rapaport Group)', cost:'paid', costLabel:'Already have — TradeScreen tiers confirmed at $21–29/mo', annualCost:0, reach:null, packages:[3],
     what:["World's largest diamond trading network","Natural diamonds only","Thousands of buyers/sellers in 100+ countries"],
     benefit:["Inventory already syndicated to the largest natural-diamond trade network — no new incremental cost","No action needed beyond confirming which membership tier Henig is currently on"],
-    contact:"rapnet.com (existing account)",
-    dirAccess:{status:'yes', note:"Confirmed: a full searchable Member Directory — find companies by name/location/inventory, view profiles, and message them directly. The one channel here with a genuine contact source."}},
+    contact:"rapnet.com (existing account)"},
   {id:'idex', name:'IDEX', cost:'mixed', costLabel:'Basic: free (search only) · Pro: $1,080/yr (list natural + lab-grown)', annualCost:852, reach:null, packages:[3],
     what:["Established B2B diamond platform, more regional focus than RapNet","Lists both natural and lab-grown diamonds"],
     benefit:["Pro tier unlocks listing lab-grown stock to buyers actively browsing IDEX","A genuinely separate channel from RapNet if Henig expands into lab-grown"],
-    contact:"idexonline.com/Register",
-    dirAccess:{status:'no', note:"Platform is inventory-first — search diamonds, not companies. No member/company directory found."}},
+    contact:"idexonline.com/Register"},
   {id:'vdb', name:'VDB — Virtual Diamond Boutique', cost:'paid', costLabel:'Browsing: free · Supplier listing: volume-based fee, ~£85/mo assumed', annualCost:1020, reach:null, packages:[2,3],
     what:["Visual, app-based marketplace connecting retailers and wholesalers worldwide","30,000+ members","1M+ natural + 220,000+ lab-grown diamonds listed","HD/360° visual search"],
     benefit:["Visual-first (HD/360°) listing reaches designers and retailers who shop by image rather than spec sheet","Ready lab-grown listing option included","The one B2B platform included in Package 2, alongside RapNet/IDEX reserved for the Full Package"],
     contact:"support@vdbapp.com · vdbapp.com/supplier-solutions",
-    warn:"Correction vs. original deck: listing your own inventory as a supplier is NOT free — only browsing/sourcing is.",
-    dirAccess:{status:'unclear', note:"VDB's site blocked automated research — described as inventory/marketplace search, no directory feature found in public snippets. Confirm directly."}},
+    warn:"Correction vs. original deck: listing your own inventory as a supplier is NOT free — only browsing/sourcing is."},
 ];
 
 const ADS = [
@@ -605,7 +583,6 @@ function renderCard(item){
     <div class="item-field"><b>What it is</b>${bullets(item.what)}</div>
     <div class="item-field"><b>Benefit for Henig</b>${bullets(item.benefit)}</div>
     <div class="item-field"><b>Contact / next step</b><span class="item-contact">${item.contact}</span></div>
-    ${item.dirAccess?`<div class="dir-access dir-${item.dirAccess.status}"><b>Do we get their contact list? ${item.dirAccess.status==='yes'?'YES':item.dirAccess.status==='no'?'NO':'UNCLEAR'}</b>${item.dirAccess.note}</div>`:''}
     ${item.warn?`<div class="warn-note">⚠ ${item.warn}</div>`:''}
     <div class="check-row">
       <input type="checkbox" id="chk-${item.id}" ${isDone?'checked':''} onchange="toggleDone('${item.id}')">
