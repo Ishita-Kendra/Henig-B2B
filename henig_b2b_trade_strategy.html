@@ -632,7 +632,7 @@ function renderPackageHeader(pkg, elId){
       <ul class="pkg-focus-list">${pkg.focus.map(f=>`<li>${f}</li>`).join('')}</ul>
       <div class="pkg-metrics">
         <div class="pkg-metric"><div class="pkg-metric-label">Estimated expense</div><div class="pkg-metric-val">${fmtGBP(monthly)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /mo</span></div><div class="pkg-metric-sub">${fmtGBP(r.cost)}/yr total</div></div>
-        <div class="pkg-metric"><div class="pkg-metric-label">Estimated profit</div><div class="pkg-metric-val">${fmtGBP(r.profit)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /yr</span></div><div class="pkg-metric-sub">${fmt(r.totalAccounts,1)} new accounts/yr modelled</div></div>
+        <div class="pkg-metric"><div class="pkg-metric-label">Estimated profit</div><div class="pkg-metric-val">${fmtGBP(r.profit/12)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /mo</span></div><div class="pkg-metric-sub">${fmtGBP(r.profit)}/yr · ${fmt(r.totalAccounts,1)} new accounts/yr modelled</div></div>
         <div class="pkg-metric"><div class="pkg-metric-label">Estimated ROI</div><div class="pkg-metric-val" style="color:${r.roi>=0?'var(--emerald)':'var(--ruby)'}">${r.roi==null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</div><div class="pkg-metric-sub">Profit ÷ cost — efficiency, not scale</div></div>
         <div class="pkg-metric"><div class="pkg-metric-label">Time required</div><div class="pkg-metric-val" style="font-size:13px;line-height:1.5;">${pkg.time}</div></div>
       </div>
