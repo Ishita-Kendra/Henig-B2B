@@ -26,8 +26,9 @@ header{background:var(--white);border-bottom:1px solid var(--border);padding:0 3
 .logo .name{font-family:'Playfair Display',serif;font-size:17px;letter-spacing:0.04em;}
 .logo .tag{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);}
 .header-links{display:flex;gap:10px;}
-header a.back{font-size:12px;color:var(--ink-2);text-decoration:none;border:1px solid var(--border);padding:6px 14px;border-radius:8px;}
-header a.back:hover{border-color:var(--accent-mid);color:var(--accent);}
+header a.back,header button.back{font-family:inherit;font-size:12px;color:var(--ink-2);text-decoration:none;border:1px solid var(--border);padding:6px 14px;border-radius:8px;background:none;cursor:pointer;}
+header a.back:hover,header button.back:hover{border-color:var(--accent-mid);color:var(--accent);}
+header button.back:disabled{opacity:.6;cursor:wait;}
 
 .hero{max-width:1180px;margin:0 auto;padding:2.5rem 2rem 0.5rem;}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:400;margin-bottom:8px;}
@@ -134,6 +135,12 @@ table.compare-table td.rec-col{background:var(--emerald-pale);}
 
 .footnote{font-size:11px;color:var(--ink-3);margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);line-height:1.7;}
 
+body.pdf-exporting{min-height:auto !important;}
+.pdf-section-title{display:none;}
+.pdf-exporting header,.pdf-exporting nav.tabs{display:none !important;}
+.pdf-exporting .hero{display:none !important;}
+.pdf-exporting .pdf-section-title{display:block;font-family:'Playfair Display',serif;font-size:26px;padding:2.5rem 2rem 1.25rem;max-width:1180px;margin:0 auto;border-bottom:1px solid var(--border);margin-bottom:0.5rem;}
+
 @media(max-width:900px){
   header{padding:0 1rem;}
   .main{padding:1.5rem 1rem 4rem;}
@@ -147,13 +154,64 @@ table.compare-table td.rec-col{background:var(--emerald-pale);}
 </style>
 </head>
 <body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+async function downloadAllTabsAsPDF(filename, tabs){
+  const btn = document.getElementById('pdfBtn');
+  const label = btn.textContent;
+  btn.disabled = true;
+  const activeBtn = document.querySelector('.tab-btn.active');
+  const originalTab = activeBtn ? activeBtn.getAttribute('data-tab') : tabs[0].key;
+  const titleEl = document.getElementById('pdfSectionTitle');
+  document.body.classList.add('pdf-exporting');
+  const EXPORT_WIDTH = 1300;   // force the full desktop grid layout regardless of the actual browser width
+  const PAGE_WIDTH_PT = 850;   // one page per tab, sized to its own content height — no mid-card slicing
+  try{
+    const { jsPDF } = window.jspdf;
+    let pdf = null;
+    if(document.fonts && document.fonts.ready) await document.fonts.ready;
+    for(let i=0;i<tabs.length;i++){
+      const {key, title} = tabs[i];
+      btn.textContent = `Generating PDF… (${i+1}/${tabs.length})`;
+      showTab(key);
+      if(titleEl) titleEl.textContent = title;
+      await new Promise(r=>setTimeout(r,200));
+      // windowHeight is kept tiny (not pinned to a pre-measurement) so html2canvas measures the CLONE's
+      // own true content height at capture time, instead of trusting a value that can go stale before the async clone/render finishes
+      const canvas = await html2canvas(document.body, {scale:1.5, backgroundColor:'#ffffff', windowWidth:EXPORT_WIDTH, windowHeight:100, useCORS:true});
+      const pageHeightPt = PAGE_WIDTH_PT*(canvas.height/canvas.width);
+      const orientation = pageHeightPt>=PAGE_WIDTH_PT ? 'p' : 'l';   // jsPDF silently swaps w/h to force portrait unless orientation matches the actual aspect
+      if(i===0){ pdf = new jsPDF({orientation, unit:'pt', format:[PAGE_WIDTH_PT, pageHeightPt]}); }
+      else{ pdf.addPage([PAGE_WIDTH_PT, pageHeightPt], orientation); }
+      pdf.addImage(canvas.toDataURL('image/jpeg',0.9),'JPEG',0,0,PAGE_WIDTH_PT,pageHeightPt);
+    }
+    pdf.save(filename);
+  }catch(err){
+    alert('Could not generate the PDF: '+err.message);
+  }finally{
+    document.body.classList.remove('pdf-exporting');
+    showTab(originalTab);
+    btn.textContent = label;
+    btn.disabled = false;
+  }
+}
+</script>
 <header>
   <div class="logo"><span class="name">HENIG DIAMONDS</span><span class="tag">B2B ROI Estimator</span></div>
   <div class="header-links">
+    <button class="back" id="pdfBtn" onclick="downloadAllTabsAsPDF('Henig_B2B_ROI_Estimator.pdf', [
+      {key:'setup', title:'B2B ROI Estimator — Assumptions &amp; Flow'},
+      {key:'pkg1', title:'Package 1 · Website, SEO &amp; Ads'},
+      {key:'pkg2', title:'Package 2 · B2B Outreach Channels'},
+      {key:'pkg3', title:'Package 3 · Full Package'},
+      {key:'compare', title:'Compare'}
+    ])">⬇ Download PDF</button>
     <a class="back" href="henig_b2b_trade_strategy.html">← Trade Strategy Tracker</a>
     <a class="back" href="index.html">All tools</a>
   </div>
 </header>
+<div class="pdf-section-title" id="pdfSectionTitle"></div>
 
 <div class="hero">
   <h1>B2B ROI Estimator</h1>
@@ -329,7 +387,7 @@ table.compare-table td.rec-col{background:var(--emerald-pale);}
     <div class="section-title">Package 2's visibility channels</div>
     <div class="section-desc">Only the ones actually included in Package 2 — Guild (trade body) and Jewellery Focus (trade press). See Package 3 for everything else.</div>
     <div class="roi-table-wrap">
-      <table class="roi-table"><thead><tr><th>Channel</th><th>Category</th><th>Annual cost</th><th>Reach / yr</th><th>Est. accounts / yr</th><th>Est. revenue / yr</th><th>Est. ROI</th></tr></thead><tbody id="roiTableBody2"></tbody></table>
+      <table class="roi-table"><thead><tr><th>Channel</th><th>Category</th><th>Monthly cost</th><th>Reach</th><th>Est. accounts / mo</th><th>Est. revenue / mo</th><th>Est. ROI</th></tr></thead><tbody id="roiTableBody2"></tbody></table>
     </div>
   </div>
 
@@ -340,7 +398,7 @@ table.compare-table td.rec-col{background:var(--emerald-pale);}
     <div class="section-title">Every visibility channel (bodies / press / shows)</div>
     <div class="section-desc">Full Package includes all of these — reach discounted by the overlap factor above since audiences stack.</div>
     <div class="roi-table-wrap">
-      <table class="roi-table"><thead><tr><th>Channel</th><th>Category</th><th>Annual cost</th><th>Reach / yr</th><th>Est. accounts / yr</th><th>Est. revenue / yr</th><th>Est. ROI</th></tr></thead><tbody id="roiTableBody3"></tbody></table>
+      <table class="roi-table"><thead><tr><th>Channel</th><th>Category</th><th>Monthly cost</th><th>Reach</th><th>Est. accounts / mo</th><th>Est. revenue / mo</th><th>Est. ROI</th></tr></thead><tbody id="roiTableBody3"></tbody></table>
     </div>
 
     <div class="section-title">Not modeled the same way</div>
@@ -409,14 +467,15 @@ function fmt(n,dp=0){ return n.toLocaleString(undefined,{maximumFractionDigits:d
 function fmtGBP(n){ return '£'+fmt(n); }
 
 function computeChannel(reach, annualCost, a){
-  const leads = reach * (a.leadPct/100);
+  const monthlyCost = annualCost===null ? null : annualCost/12;
+  const leads = (reach/12) * (a.leadPct/100);
   const accounts = leads * (a.closePct/100);
   const revenue = accounts * a.value;
   let roi = null;
-  if(annualCost===null){ roi = 'costna'; }
-  else if(annualCost===0){ roi = 'free'; }
-  else { roi = ((revenue*(a.margin/100)) - annualCost) / annualCost * 100; }
-  return {accounts, revenue, roi};
+  if(monthlyCost===null){ roi = 'costna'; }
+  else if(monthlyCost===0){ roi = 'free'; }
+  else { roi = ((revenue*(a.margin/100)) - monthlyCost) / monthlyCost * 100; }
+  return {accounts, revenue, roi, monthlyCost};
 }
 function roiCell(roi, revenue, a){
   if(roi==='costna') return `<span class="roi-na">Cost not published</span>`;
@@ -430,11 +489,11 @@ function renderChannelTable(pkgId, elId){
   const rows = ROI_CHANNELS.filter(c=>c.packages.includes(pkgId)).map(c=>{
     const r = computeChannel(c.reach, c.annualCost, a);
     return `<tr>
-      <td><b>${c.name}</b>${c.overlapWarn?`<div class="overlap-note">⚠ ${c.overlapWarn}</div>`:''}${c.costNote?`<div class="overlap-note" style="color:var(--ink-3)">${c.costNote}${c.adCostAnnual?` — optional paid ad ~${fmtGBP(c.adCostAnnual)}/yr, in Package 3's cost, not modelled as revenue`:''}</div>`:''}${(!c.costNote && c.adCostAnnual)?`<div class="overlap-note" style="color:var(--ink-3)">Optional paid ad ~${fmtGBP(c.adCostAnnual)}/yr included in Package 3 cost, not modelled as revenue</div>`:''}</td>
+      <td><b>${c.name}</b>${c.overlapWarn?`<div class="overlap-note">⚠ ${c.overlapWarn}</div>`:''}${c.costNote?`<div class="overlap-note" style="color:var(--ink-3)">${c.costNote}${c.adCostAnnual?` — optional paid ad ~${fmtGBP(c.adCostAnnual/12)}/mo, in Package 3's cost, not modelled as revenue`:''}</div>`:''}${(!c.costNote && c.adCostAnnual)?`<div class="overlap-note" style="color:var(--ink-3)">Optional paid ad ~${fmtGBP(c.adCostAnnual/12)}/mo included in Package 3 cost, not modelled as revenue</div>`:''}</td>
       <td><span class="cat-pill cat-${c.cat}">${c.catLabel}</span></td>
-      <td>${c.annualCost===null?'N/A':fmtGBP(c.annualCost)}</td>
+      <td>${r.monthlyCost===null?'N/A':fmtGBP(r.monthlyCost)}</td>
       <td>${fmt(c.reach)}<div class="overlap-note" style="color:var(--ink-3)">${c.reachLabel}</div></td>
-      <td>${fmt(r.accounts,1)}</td>
+      <td>${fmt(r.accounts,2)}</td>
       <td>${fmtGBP(r.revenue)}</td>
       <td>${roiCell(r.roi, r.revenue, a)}</td>
     </tr>`;
@@ -448,44 +507,42 @@ function computeAdChannel(id, a){
   const budget = parseFloat(document.getElementById('ad'+id+'Budget').value)||0;
   const cpl = parseFloat(document.getElementById('ad'+id+'CPL').value)||1;
   const leadsMonth = budget/cpl;
-  const leadsYear = leadsMonth*12;
-  const accounts = leadsYear * (a.closePct/100);
+  const accounts = leadsMonth * (a.closePct/100);
   const revenue = accounts * a.value;
-  const annualCost = budget*12;
-  const roi = annualCost>0 ? ((revenue*(a.margin/100))-annualCost)/annualCost*100 : null;
-  return {budget, leadsMonth, accounts, revenue, annualCost, roi};
+  const cost = budget;
+  const roi = cost>0 ? ((revenue*(a.margin/100))-cost)/cost*100 : null;
+  return {budget, leadsMonth, accounts, revenue, cost, roi};
 }
 function renderAdChannels(a){
   let totalBudget=0, totalAccounts=0, totalRevenue=0, totalCost=0;
   AD_CHANNELS.forEach(ch=>{
     const r = computeAdChannel(ch.id, a);
-    totalBudget+=r.budget; totalAccounts+=r.accounts; totalRevenue+=r.revenue; totalCost+=r.annualCost;
+    totalBudget+=r.budget; totalAccounts+=r.accounts; totalRevenue+=r.revenue; totalCost+=r.cost;
     document.getElementById('ad'+ch.id+'Results').innerHTML = `
-      <div class="channel-metric"><div class="channel-metric-label">Accounts/yr</div><div class="channel-metric-val">${fmt(r.accounts,1)}</div></div>
-      <div class="channel-metric"><div class="channel-metric-label">Revenue/yr</div><div class="channel-metric-val">${fmtGBP(r.revenue)}</div></div>
-      <div class="channel-metric"><div class="channel-metric-label">Annual cost</div><div class="channel-metric-val" style="font-size:13px;">${fmtGBP(r.annualCost)}</div></div>
+      <div class="channel-metric"><div class="channel-metric-label">Accounts/mo</div><div class="channel-metric-val">${fmt(r.accounts,2)}</div></div>
+      <div class="channel-metric"><div class="channel-metric-label">Revenue/mo</div><div class="channel-metric-val">${fmtGBP(r.revenue)}</div></div>
+      <div class="channel-metric"><div class="channel-metric-label">Monthly cost</div><div class="channel-metric-val" style="font-size:13px;">${fmtGBP(r.cost)}</div></div>
       <div class="channel-metric"><div class="channel-metric-label">ROI</div><div class="channel-metric-val ${r.roi>=0?'roi-pos':'roi-neg'}">${r.roi===null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</div></div>
     `;
   });
   // SEO
   const seoCost = parseFloat(document.getElementById('seoCost').value)||0;
   const seoLeadsMonth = parseFloat(document.getElementById('seoLeads').value)||0;
-  const seoAccounts = (seoLeadsMonth*12)*(a.closePct/100);
+  const seoAccounts = seoLeadsMonth*(a.closePct/100);
   const seoRevenue = seoAccounts*a.value;
-  const seoAnnualCost = seoCost*12;
-  const seoRoi = seoAnnualCost>0 ? ((seoRevenue*(a.margin/100))-seoAnnualCost)/seoAnnualCost*100 : null;
+  const seoRoi = seoCost>0 ? ((seoRevenue*(a.margin/100))-seoCost)/seoCost*100 : null;
   document.getElementById('seoResults').innerHTML = `
-    <div class="channel-metric"><div class="channel-metric-label">Accounts/yr</div><div class="channel-metric-val">${fmt(seoAccounts,1)}</div></div>
-    <div class="channel-metric"><div class="channel-metric-label">Revenue/yr</div><div class="channel-metric-val">${fmtGBP(seoRevenue)}</div></div>
-    <div class="channel-metric"><div class="channel-metric-label">Annual cost</div><div class="channel-metric-val" style="font-size:13px;">${fmtGBP(seoAnnualCost)}</div></div>
+    <div class="channel-metric"><div class="channel-metric-label">Accounts/mo</div><div class="channel-metric-val">${fmt(seoAccounts,2)}</div></div>
+    <div class="channel-metric"><div class="channel-metric-label">Revenue/mo</div><div class="channel-metric-val">${fmtGBP(seoRevenue)}</div></div>
+    <div class="channel-metric"><div class="channel-metric-label">Monthly cost</div><div class="channel-metric-val" style="font-size:13px;">${fmtGBP(seoCost)}</div></div>
     <div class="channel-metric"><div class="channel-metric-label">ROI</div><div class="channel-metric-val ${seoRoi>=0?'roi-pos':'roi-neg'}">${seoRoi===null?'—':(seoRoi>=0?'+':'')+fmt(seoRoi)+'%'}</div></div>
   `;
-  totalBudget += seoCost; totalAccounts += seoAccounts; totalRevenue += seoRevenue; totalCost += seoAnnualCost;
+  totalBudget += seoCost; totalAccounts += seoAccounts; totalRevenue += seoRevenue; totalCost += seoCost;
   const totalRoi = totalCost>0 ? ((totalRevenue*(a.margin/100))-totalCost)/totalCost*100 : null;
   document.getElementById('adsCombinedSummary').innerHTML = `
     <div class="csum-item"><div class="csum-label">Combined spend/mo (ads+SEO)</div><div class="csum-val">${fmtGBP(totalBudget)}</div></div>
-    <div class="csum-item"><div class="csum-label">Combined accounts/yr</div><div class="csum-val">${fmt(totalAccounts,1)}</div></div>
-    <div class="csum-item"><div class="csum-label">Combined revenue/yr</div><div class="csum-val">${fmtGBP(totalRevenue)}</div></div>
+    <div class="csum-item"><div class="csum-label">Combined accounts/mo</div><div class="csum-val">${fmt(totalAccounts,2)}</div></div>
+    <div class="csum-item"><div class="csum-label">Combined revenue/mo</div><div class="csum-val">${fmtGBP(totalRevenue)}</div></div>
     <div class="csum-item"><div class="csum-label">Combined ROI</div><div class="csum-val ${totalRoi>=0?'roi-pos':'roi-neg'}">${totalRoi===null?'—':(totalRoi>=0?'+':'')+fmt(totalRoi)+'%'}</div></div>
   `;
   return {cost:totalCost, accounts:totalAccounts, revenue:totalRevenue};
@@ -497,28 +554,26 @@ function renderOutreach(a){
   const loCost=parseFloat(document.getElementById('loCost').value)||0, loContacts=parseFloat(document.getElementById('loContacts').value)||0;
   const vidCost=parseFloat(document.getElementById('vidCost').value)||0, lsCost=parseFloat(document.getElementById('lsCost').value)||0;
 
-  const ceAccounts = (ceContacts*12)*(a.outreachConv/100);
+  const ceAccounts = ceContacts*(a.outreachConv/100);
   const ceRevenue = ceAccounts*a.value;
-  const ceAnnualCost = ceCost*12;
   document.getElementById('ceResults').innerHTML = `
-    <div class="channel-metric"><div class="channel-metric-label">Accounts/yr</div><div class="channel-metric-val">${fmt(ceAccounts,1)}</div></div>
-    <div class="channel-metric"><div class="channel-metric-label">Revenue/yr</div><div class="channel-metric-val">${fmtGBP(ceRevenue)}</div></div>`;
+    <div class="channel-metric"><div class="channel-metric-label">Accounts/mo</div><div class="channel-metric-val">${fmt(ceAccounts,2)}</div></div>
+    <div class="channel-metric"><div class="channel-metric-label">Revenue/mo</div><div class="channel-metric-val">${fmtGBP(ceRevenue)}</div></div>`;
 
-  const loAccounts = (loContacts*12)*(a.outreachConv/100);
+  const loAccounts = loContacts*(a.outreachConv/100);
   const loRevenue = loAccounts*a.value;
-  const loAnnualCost = loCost*12;
   document.getElementById('loResults').innerHTML = `
-    <div class="channel-metric"><div class="channel-metric-label">Accounts/yr</div><div class="channel-metric-val">${fmt(loAccounts,1)}</div></div>
-    <div class="channel-metric"><div class="channel-metric-label">Revenue/yr</div><div class="channel-metric-val">${fmtGBP(loRevenue)}</div></div>`;
+    <div class="channel-metric"><div class="channel-metric-label">Accounts/mo</div><div class="channel-metric-val">${fmt(loAccounts,2)}</div></div>
+    <div class="channel-metric"><div class="channel-metric-label">Revenue/mo</div><div class="channel-metric-val">${fmtGBP(loRevenue)}</div></div>`;
 
-  const totalOutreachCost = ceAnnualCost + loAnnualCost + (vidCost*12) + (lsCost*12);
+  const totalOutreachCost = ceCost + loCost + vidCost + lsCost;
   const totalOutreachAccounts = ceAccounts + loAccounts;
   const totalOutreachRevenue = ceRevenue + loRevenue;
   const roi = totalOutreachCost>0 ? ((totalOutreachRevenue*(a.margin/100))-totalOutreachCost)/totalOutreachCost*100 : null;
   document.getElementById('outreachCombinedSummary').innerHTML = `
-    <div class="csum-item"><div class="csum-label">Combined outreach spend/mo</div><div class="csum-val">${fmtGBP(totalOutreachCost/12)}</div></div>
-    <div class="csum-item"><div class="csum-label">Combined accounts/yr</div><div class="csum-val">${fmt(totalOutreachAccounts,1)}</div></div>
-    <div class="csum-item"><div class="csum-label">Combined revenue/yr</div><div class="csum-val">${fmtGBP(totalOutreachRevenue)}</div></div>
+    <div class="csum-item"><div class="csum-label">Combined outreach spend/mo</div><div class="csum-val">${fmtGBP(totalOutreachCost)}</div></div>
+    <div class="csum-item"><div class="csum-label">Combined accounts/mo</div><div class="csum-val">${fmt(totalOutreachAccounts,2)}</div></div>
+    <div class="csum-item"><div class="csum-label">Combined revenue/mo</div><div class="csum-val">${fmtGBP(totalOutreachRevenue)}</div></div>
     <div class="csum-item"><div class="csum-label">Combined ROI</div><div class="csum-val ${roi>=0?'roi-pos':'roi-neg'}">${roi===null?'—':(roi>=0?'+':'')+fmt(roi)+'%'}</div></div>
   `;
   return {cost:totalOutreachCost, accounts:totalOutreachAccounts, revenue:totalOutreachRevenue};
@@ -530,11 +585,11 @@ function computePackageTotals(pkgId, a, adsResult, outreachResult){
   const naiveReach = chans.reduce((s,c)=>s+(c.reach||0),0);
   const overlap = chans.length>3 ? (a.overlap/100) : 1;
   const effReach = naiveReach*overlap;
-  const reachAccounts = effReach*(a.leadPct/100)*(a.closePct/100);
+  const reachAccounts = (effReach/12)*(a.leadPct/100)*(a.closePct/100);
   const reachRevenue = reachAccounts*a.value;
-  const bodiesPressCost = chans.reduce((s,c)=>s+(c.annualCost||0)+(c.adCostAnnual||0),0);
-  const unmodeledCost = chans.reduce((s,c)=>s+(c.adCostAnnual||0),0);
-  const nonReachCost = NON_REACH_COSTS.filter(c=>c.packages.includes(pkgId)).reduce((s,c)=>s+c.annualCost,0);
+  const bodiesPressCost = chans.reduce((s,c)=>s+(c.annualCost||0)+(c.adCostAnnual||0),0)/12;
+  const unmodeledCost = chans.reduce((s,c)=>s+(c.adCostAnnual||0),0)/12;
+  const nonReachCost = NON_REACH_COSTS.filter(c=>c.packages.includes(pkgId)).reduce((s,c)=>s+c.annualCost,0)/12;
 
   let cost = bodiesPressCost + nonReachCost, accounts = reachAccounts, revenue = reachRevenue;
   if(pkgId===1 || pkgId===3){ cost+=adsResult.cost; accounts+=adsResult.accounts; revenue+=adsResult.revenue; }
@@ -546,14 +601,14 @@ function computePackageTotals(pkgId, a, adsResult, outreachResult){
 }
 
 function renderPackageHeader(meta, r, elId){
-  const flag = r.unmodeledCost>0 ? `<div class="pkg-flag">⚠ ${fmtGBP(r.unmodeledCost)}/yr of this package's cost is paid press advertising with no published conversion data — its return isn't in the ROI figure, so treat this % as a floor, not a ceiling.</div>` : '';
+  const flag = r.unmodeledCost>0 ? `<div class="pkg-flag">⚠ ${fmtGBP(r.unmodeledCost)}/mo of this package's cost is paid press advertising with no published conversion data — its return isn't in the ROI figure, so treat this % as a floor, not a ceiling.</div>` : '';
   document.getElementById(elId).innerHTML = `
     <div class="pkg-header ${meta.rec?'rec':''}">
       <span class="pkg-header-tag">${meta.rec?'Recommended — full plan':meta.name}</span>
       <div class="pkg-header-name">${meta.name} · ${meta.tagline}</div>
       <div class="pkg-metrics">
-        <div class="pkg-metric"><div class="pkg-metric-label">Estimated expense</div><div class="pkg-metric-val">${fmtGBP(r.cost/12)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /mo</span></div><div class="pkg-metric-sub">${fmtGBP(r.cost)}/yr</div></div>
-        <div class="pkg-metric"><div class="pkg-metric-label">Estimated ROI</div><div class="pkg-metric-val" style="color:${r.roi>=0?'var(--emerald)':'var(--ruby)'}">${r.roi==null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</div><div class="pkg-metric-sub">${fmt(r.accounts,1)} accounts/yr modelled</div></div>
+        <div class="pkg-metric"><div class="pkg-metric-label">Estimated expense</div><div class="pkg-metric-val">${fmtGBP(r.cost)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /mo</span></div><div class="pkg-metric-sub">${fmtGBP(r.cost*12)}/yr</div></div>
+        <div class="pkg-metric"><div class="pkg-metric-label">Estimated ROI</div><div class="pkg-metric-val" style="color:${r.roi>=0?'var(--emerald)':'var(--ruby)'}">${r.roi==null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</div><div class="pkg-metric-sub">${fmt(r.accounts,2)} accounts/mo modelled</div></div>
         <div class="pkg-metric"><div class="pkg-metric-label">Time required</div><div class="pkg-metric-val" style="font-size:13px;">${meta.time}</div></div>
       </div>
       ${flag}
@@ -571,14 +626,14 @@ function renderCompare(p1,p2,p3){
     const meta = PACKAGE_META.find(m=>m.id===id);
     return `<tr>
       <td class="${meta.rec?'rec-col':''}"><b>${meta.name}</b><br><span style="font-size:11px;color:var(--ink-3)">${meta.tagline}</span></td>
-      <td class="${meta.rec?'rec-col':''}">${fmtGBP(r.cost/12)}/mo</td>
-      <td class="${meta.rec?'rec-col':''}">${fmtGBP(r.cost)}/yr</td>
-      <td class="${meta.rec?'rec-col':''}">${fmt(r.accounts,1)}</td>
+      <td class="${meta.rec?'rec-col':''}">${fmtGBP(r.cost)}/mo</td>
+      <td class="${meta.rec?'rec-col':''}">${fmtGBP(r.cost*12)}/yr</td>
+      <td class="${meta.rec?'rec-col':''}">${fmt(r.accounts,2)}</td>
       <td class="${meta.rec?'rec-col':''}" style="color:${r.roi>=0?'var(--emerald)':'var(--ruby)'};font-weight:500;">${r.roi==null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</td>
       <td class="${meta.rec?'rec-col':''}">${meta.time}</td>
     </tr>`;
   }).join('');
-  document.getElementById('compareTable').innerHTML = `<thead><tr><th>Package</th><th>Monthly cost</th><th>Annual cost</th><th>Accounts/yr</th><th>Est. ROI</th><th>Time to results</th></tr></thead><tbody>${rows}</tbody>`;
+  document.getElementById('compareTable').innerHTML = `<thead><tr><th>Package</th><th>Monthly cost</th><th>Annual cost</th><th>Accounts/mo</th><th>Est. ROI</th><th>Time to results</th></tr></thead><tbody>${rows}</tbody>`;
 }
 
 function showTab(name){
