@@ -484,6 +484,11 @@ const PACKAGES = [
 /* ================= CALCULATIONS (same formula, reused for every package) ================= */
 function itemsForPackage(pkgId){ return ALL_ITEMS.filter(i=>i.packages && i.packages.includes(pkgId)); }
 
+// The paid-media ad stack (Google/Meta/LinkedIn) — excludes the SEO retainer and the visitor-ID tool,
+// which are cat:'ads' too but aren't media spend. Used to flag packages that carry no ad budget at all.
+const AD_STACK_IDS = ['google','meta','linkedin'];
+function adStackAnnualCost(){ return ALL_ITEMS.filter(i=>AD_STACK_IDS.includes(i.id)).reduce((s,i)=>s+(i.annualCost||0),0); }
+
 function computePackage(pkgId){
   const items = itemsForPackage(pkgId);
   let cost = 0, reachRevenue = 0, adsRevenue = 0, outreachRevenue = 0, naiveReach = 0, reachItemCount = 0;
@@ -609,7 +614,7 @@ function pkgFormulaText(pkgId, r){
   if(r.reachAccounts>0) lines.push(`<span class="step">Visibility (bodies/press/shows)</span>  Reach × ${A.leadPct}% lead conv. × ${A.closePct}% close = ${fmt(r.reachAccounts,1)} accounts/yr  (${fmt(r.reachAccounts/12,2)}/mo)`);
   if(r.adsAccounts>0) lines.push(`<span class="step">Ads + SEO</span>  Budget ÷ cost-per-lead → leads × ${A.closePct}% close = ${fmt(r.adsAccounts,1)} accounts/yr  (${fmt(r.adsAccounts/12,2)}/mo)`);
   if(r.outreachAccounts>0) lines.push(`<span class="step">Outreach (cold email + LinkedIn DMs)</span>  Contacts/yr × ${A.outreachConvPct}% direct conversion = ${fmt(r.outreachAccounts,1)} accounts/yr  (${fmt(r.outreachAccounts/12,2)}/mo)`);
-  lines.push(`<span class="step">New accounts (total)</span>  ${fmt(r.totalAccounts,1)}/yr  (${fmt(r.totalAccounts/12,2)}/mo)`);
+  lines.push(`<span class="step">New accounts (total)</span>  ${Math.ceil(r.totalAccounts)}/yr rounded up (${fmt(r.totalAccounts,1)} modelled)  (${fmt(r.totalAccounts/12,2)}/mo)`);
   lines.push(`<span class="step">Revenue</span>  ${fmt(r.totalAccounts,1)} accounts/yr × ${fmtGBP(A.value)} avg. value = ${fmtGBP(r.totalRevenue)}/yr  (${fmtGBP(r.totalRevenue/12)}/mo)`);
   lines.push(`<span class="step">Profit</span>  ${fmtGBP(r.totalRevenue)}/yr × ${A.margin}% margin = ${fmtGBP(r.profit)}/yr  (${fmtGBP(r.profit/12)}/mo)`);
   lines.push(`<span class="step">Cost</span>  ${fmtGBP(r.cost)}/yr  (${fmtGBP(r.cost/12)}/mo)`);
@@ -620,6 +625,12 @@ function pkgFormulaText(pkgId, r){
 function renderPackageHeader(pkg, elId){
   const r = computePackage(pkg.id);
   const monthly = r.cost/12;
+  const hasAdStack = r.items.some(i=>AD_STACK_IDS.includes(i.id));
+  const adStackCost = adStackAnnualCost();
+  const focusItems = pkg.focus.slice();
+  if(!hasAdStack){
+    focusItems.push(`Ad spend not included above — adding the Google + Meta + LinkedIn ad stack from Package 1 would cost about ${fmtGBP(adStackCost/12)}/mo (${fmtGBP(adStackCost)}/yr) on top`);
+  }
   let unmodeledNote = '';
   if(r.unmodeledCost>0){
     const coreCost = r.cost - r.unmodeledCost;
@@ -631,10 +642,10 @@ function renderPackageHeader(pkg, elId){
       <span class="pkg-header-tag">${pkg.rec?'Recommended — full plan':'Package '+pkg.id}</span>
       <div class="pkg-header-name">${pkg.name} · ${pkg.tagline}</div>
       <div class="pkg-header-desc">${pkg.desc}</div>
-      <ul class="pkg-focus-list">${pkg.focus.map(f=>`<li>${f}</li>`).join('')}</ul>
+      <ul class="pkg-focus-list">${focusItems.map(f=>`<li>${f}</li>`).join('')}</ul>
       <div class="pkg-metrics">
-        <div class="pkg-metric"><div class="pkg-metric-label">Estimated expense</div><div class="pkg-metric-val">${fmtGBP(monthly)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /mo</span></div><div class="pkg-metric-sub">${fmtGBP(r.cost)}/yr total</div></div>
-        <div class="pkg-metric"><div class="pkg-metric-label">Estimated profit</div><div class="pkg-metric-val">${fmtGBP(r.profit/12)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /mo</span></div><div class="pkg-metric-sub">${fmtGBP(r.profit)}/yr · ${fmt(r.totalAccounts,1)} new accounts/yr modelled</div></div>
+        <div class="pkg-metric"><div class="pkg-metric-label">Estimated expense</div><div class="pkg-metric-val">${fmtGBP(monthly)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /mo</span></div><div class="pkg-metric-sub">${fmtGBP(r.cost)}/yr total${hasAdStack?'':' · excludes ad spend'}</div></div>
+        <div class="pkg-metric"><div class="pkg-metric-label">Estimated profit</div><div class="pkg-metric-val">${fmtGBP(r.profit/12)}<span style="font-size:12px;color:var(--ink-3);font-weight:400;"> /mo</span></div><div class="pkg-metric-sub">${fmtGBP(r.profit)}/yr · ${Math.ceil(r.totalAccounts)} new accounts/yr modelled (rounded up from ${fmt(r.totalAccounts,1)})</div></div>
         <div class="pkg-metric"><div class="pkg-metric-label">Estimated ROI</div><div class="pkg-metric-val" style="color:${r.roi>=0?'var(--emerald)':'var(--ruby)'}">${r.roi==null?'—':(r.roi>=0?'+':'')+fmt(r.roi)+'%'}</div><div class="pkg-metric-sub">Profit ÷ cost — efficiency, not scale</div></div>
         <div class="pkg-metric"><div class="pkg-metric-label">Time required</div><div class="pkg-metric-val" style="font-size:13px;line-height:1.5;">${pkg.time}</div></div>
       </div>
